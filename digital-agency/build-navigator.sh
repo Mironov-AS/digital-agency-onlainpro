@@ -19,9 +19,9 @@ echo "Java: $(java -version 2>&1 | head -1)"
 NAVIGATOR_DIR="/home/user/OSM_Navigator"
 # Проверяем где мы - на VM или локально
 if [ -d "/home/user/digital-agency" ]; then
-    OUTPUT_DIR="/home/user/digital-agency/public/navigator-apk"
+	OUTPUT_DIR="/home/user/digital-agency/public/navigator-apk"
 else
-    OUTPUT_DIR="/home/user/public/navigator-apk"
+	OUTPUT_DIR="/home/user/public/navigator-apk"
 fi
 APK_OUTPUT="$OUTPUT_DIR/osm-navigator.apk"
 
@@ -43,14 +43,14 @@ echo "3. Сборка debug APK..."
 
 echo "4. Копирование APK..."
 if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
-    cp app/build/outputs/apk/debug/app-debug.apk "$APK_OUTPUT"
-    
-    # Метаданные
-    VERSION=$(git describe --tags --always 2>/dev/null || echo "build-$(date +%Y%m%d-%H%M%S)")
-    FILESIZE=$(stat -c%s "$APK_OUTPUT")
-    BUILDDATE=$(date -Iseconds)
-    
-    cat >"$OUTPUT_DIR/version.json" <<EOF
+	cp app/build/outputs/apk/debug/app-debug.apk "$APK_OUTPUT"
+
+	# Метаданные
+	VERSION=$(git describe --tags --always 2>/dev/null || echo "build-$(date +%Y%m%d-%H%M%S)")
+	FILESIZE=$(stat -c%s "$APK_OUTPUT")
+	BUILDDATE=$(date -Iseconds)
+
+	cat >"$OUTPUT_DIR/version.json" <<EOF
 {
   "version": "$VERSION",
   "buildDate": "$BUILDDATE",
@@ -66,13 +66,14 @@ if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
   ]
 }
 EOF
-    
-    # Обновляем versions.json - добавляем новую версию как latest
-    VERSIONS_FILE="$OUTPUT_DIR/versions.json"
-    TEMP_FILE=$(mktemp)
-    
-    # Формируем новую запись версии
-    NEW_VERSION=$(cat <<EOF
+
+	# Обновляем versions.json - добавляем новую версию как latest
+	VERSIONS_FILE="$OUTPUT_DIR/versions.json"
+	TEMP_FILE=$(mktemp)
+
+	# Формируем новую запись версии
+	NEW_VERSION=$(
+		cat <<EOF
 {
     "id": "v-\$(date +%Y%m%d-%H%M%S)",
     "version_name": "v\$(echo $VERSION | head -c 8)",
@@ -92,12 +93,12 @@ EOF
     ]
   }
 EOF
-)
-    
-    # Если versions.json существует, читаем его, иначе создаём пустой массив
-    if [ -f "$VERSIONS_FILE" ]; then
-        # Сохраняем старые версии, добавляя новую в начало
-        python3 -c "
+	)
+
+	# Если versions.json существует, читаем его, иначе создаём пустой массив
+	if [ -f "$VERSIONS_FILE" ]; then
+		# Сохраняем старые версии, добавляя новую в начало
+		python3 -c "
 import json
 with open('$VERSIONS_FILE', 'r') as f:
     old_versions = json.load(f)
@@ -113,16 +114,16 @@ versions = [new_entry] + old_versions
 with open('$TEMP_FILE', 'w') as f:
     json.dump(versions, f, ensure_ascii=False, indent=2)
 "
-        mv "$TEMP_FILE" "$VERSIONS_FILE"
-    else
-        echo "[$NEW_VERSION]" > "$VERSIONS_FILE"
-    fi
-    
-    echo ""
-    echo "=== Сборка завершена! ==="
-    echo "APK: $APK_OUTPUT"
-    echo "Размер: $(du -h "$APK_OUTPUT" | cut -f1)"
+		mv "$TEMP_FILE" "$VERSIONS_FILE"
+	else
+		echo "[$NEW_VERSION]" >"$VERSIONS_FILE"
+	fi
+
+	echo ""
+	echo "=== Сборка завершена! ==="
+	echo "APK: $APK_OUTPUT"
+	echo "Размер: $(du -h "$APK_OUTPUT" | cut -f1)"
 else
-    echo "ОШИБКА: APK не найден после сборки"
-    exit 1
+	echo "ОШИБКА: APK не найден после сборки"
+	exit 1
 fi
