@@ -79,9 +79,8 @@ class MainActivity : AppCompatActivity() {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
 
-            // Центр на Москве по умолчанию
-            controller.setZoom(10.0)
-            controller.setCenter(GeoPoint(55.7558, 37.6173))
+            // Начальная позиция - будет обновлена при получении GPS
+            controller.setZoom(15.0)
 
             // Обработка клика по карте
             val mapEventsOverlay =
@@ -132,6 +131,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnCharging.setOnClickListener {
             toggleChargingStations()
         }
+
+        // Моё местоположение
+        binding.fabMyLocation.setOnClickListener {
+            centerOnMyLocation()
+        }
     }
 
     private fun setupObservers() {
@@ -139,6 +143,10 @@ class MainActivity : AppCompatActivity() {
             location?.let {
                 val geoPoint = GeoPoint(it.latitude, it.longitude)
                 binding.mapView.controller.animateTo(geoPoint)
+                // При первом получении местоположения - зум 15
+                if (binding.mapView.zoomLevelDouble < 10) {
+                    binding.mapView.controller.setZoom(15.0)
+                }
             }
         }
 
@@ -322,6 +330,26 @@ class MainActivity : AppCompatActivity() {
         chargingStationMarkers.forEach { binding.mapView.overlays.remove(it) }
         chargingStationMarkers.clear()
         binding.mapView.invalidate()
+    }
+
+    /**
+     * Центрировать карту на моём местоположении
+     */
+    private fun centerOnMyLocation() {
+        val location = viewModel.currentLocation.value
+        if (location != null) {
+            val geoPoint = GeoPoint(location.latitude, location.longitude)
+            binding.mapView.controller.animateTo(geoPoint)
+            binding.mapView.controller.setZoom(16.0)
+        } else {
+            // Если местоположение ещё не получено
+            myLocationOverlay?.myLocation?.let { location ->
+                binding.mapView.controller.animateTo(location)
+                binding.mapView.controller.setZoom(16.0)
+            } ?: run {
+                Toast.makeText(this, "Ожидание GPS...", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun enableMyLocation() {
