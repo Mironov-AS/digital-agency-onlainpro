@@ -139,11 +139,13 @@ class RouteRepository {
         osrmRoute.legs?.forEach { leg ->
             leg.steps?.forEach { step ->
                 val maneuver = parseManeuver(step.maneuver?.type, step.maneuver?.modifier)
-                val text = step.name ?: getDefaultManeuverText(maneuver)
+                // text = инструкция (Поверните направо), streetName = улица (ул. Ленина)
+                val maneuverText = getDefaultManeuverText(maneuver)
+                val streetName = step.name
 
                 instructions.add(
                     RouteInstruction(
-                        text = text,
+                        text = maneuverText,
                         distanceMeters = step.distance?.toLong() ?: 0,
                         maneuver = maneuver,
                         point =
@@ -151,7 +153,7 @@ class RouteRepository {
                                 step.maneuver?.location?.getOrNull(1) ?: 0.0,
                                 step.maneuver?.location?.getOrNull(0) ?: 0.0,
                             ),
-                        streetName = step.name,
+                        streetName = streetName,
                     ),
                 )
             }
