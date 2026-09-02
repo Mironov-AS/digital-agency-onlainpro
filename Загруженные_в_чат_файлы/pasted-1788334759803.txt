@@ -1,0 +1,16 @@
+error: Your local changes to the following files would be overwritten by merge:
+        .gradle/buildOutputCleanup/buildOutputCleanup.lock
+        .gradle/buildOutputCleanup/cache.properties
+        app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt
+        app/src/main/java/com/osmnav/pro/domain/model/Location.kt
+        app/src/main/java/com/osmnav/pro/domain/model/NavigationState.java
+        app/src/main/java/com/osmnav/pro/presentation/dashboard/DashboardProjectionManager.java
+        app/src/main/java/com/osmnav/pro/presentation/navigation/NavigationActivity.kt
+        app/src/main/java/com/osmnav/pro/presentation/navigation/NavigationViewModel.kt
+        app/src/main/java/com/osmnav/pro/presentation/search/SearchResultsAdapter.kt
+        app/src/main/res/values/colors.xml
+Please commit your changes or stash them before you merge.
+error: The following untracked working tree files would be overwritten by merge:
+        .gradle/buildOutputCleanup/outputFiles.bin
+Please move or remove them before you merge.
+Aborting
