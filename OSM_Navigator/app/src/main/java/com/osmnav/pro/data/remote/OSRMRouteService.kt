@@ -27,11 +27,19 @@ interface OSRMRouteService {
     ): OSRMRouteResponse
 
     companion object {
-        // Основной сервер - project-osrm.org
-        const val BASE_URL = "https://router.project-osrm.org/"
+        // OSRM серверы (в порядке приоритета)
+        // Используем разные серверы для обхода блокировок
+        private val OSRM_SERVERS =
+            listOf(
+                "https://router.project-osrm.org/",
+                "https://routing.openstreetmap.de/routed-car/",
+                "https://osrm.routing.smirnovint.ru/",
+                "https://osrmrouter.fra1.cdn.digitaloceanspaces.com/",
+            )
 
-        // Резервный сервер
+        const val BASE_URL = "https://router.project-osrm.org/"
         const val BACKUP_URL = "https://routing.openstreetmap.de/routed-car/"
+        const val RUSSIAN_URL = "https://osrm.routing.smirnovint.ru/"
 
         fun create(): OSRMRouteService {
             val logging =

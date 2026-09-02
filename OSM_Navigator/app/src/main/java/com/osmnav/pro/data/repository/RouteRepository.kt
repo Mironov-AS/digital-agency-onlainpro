@@ -29,6 +29,13 @@ sealed class RouteResult {
 class RouteRepository {
     private val service = OSRMRouteService.create()
 
+    // Список серверов для fallback (включая российские)
+    private val fallbackServers =
+        listOf(
+            OSRMRouteService.BACKUP_URL, // openstreetmap.de
+            OSRMRouteService.RUSSIAN_URL, // российский сервер
+        )
+
     /**
      * Построить маршрут между двумя точками
      */
@@ -65,7 +72,7 @@ class RouteRepository {
         }
 
     /**
-     * Построить маршрут с fallback на резервный сервер
+     * Построить маршрут с fallback на резервные серверы (включая российские)
      */
     suspend fun buildRouteWithFallback(
         start: Location,
@@ -73,36 +80,36 @@ class RouteRepository {
         strategy: String = "fastest",
     ): RouteResult =
         withContext(Dispatchers.IO) {
-            // Пробуем основной сервер
-            val primaryResult = buildRoute(start, end, strategy)
-            if (primaryResult is RouteResult.Success) {
-                return@withContext primaryResult
-            }
+            val origin = "${start.longitude},${start.latitude}"
+            val destination = "${end.longitude},${end.latitude}"
 
-            // Пробуем резервный сервер
-            try {
-                val origin = "${start.longitude},${start.latitude}"
-                val destination = "${end.longitude},${end.latitude}"
+            // Пробуем все серверы по очереди
+            val allServers = listOf(OSRMRouteService.BASE_URL) + fallbackServers
 
-                val backupService = OSRMRouteService.createWithUrl(OSRMRouteService.BACKUP_URL)
-                val response = backupService.getRoute(origin, destination)
+            for (serverUrl in allServers) {
+                try {
+                    Log.d("RouteRepository", "Trying server: $serverUrl")
+                    val currentService = OSRMRouteService.createWithUrl(serverUrl)
+                    val response = currentService.getRoute(origin, destination)
 
-                if (response.code != "Ok") {
-                    return@withContext RouteResult.Error(
-                        response.message ?: "Ошибка резервного сервера",
-                    )
+                    if (response.code == "Ok") {
+                        val osrmRoute = response.routes?.firstOrNull()
+                        if (osrmRoute != null) {
+                            val route = parseRoute(osrmRoute, start, end)
+                            Log.d("RouteRepository", "Success with server: $serverUrl")
+                            return@withContext RouteResult.Success(route)
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.w("RouteRepository", "Server $serverUrl failed: ${e.message}")
+                    // Продолжаем со следующим сервером
                 }
-
-                val osrmRoute =
-                    response.routes?.firstOrNull()
-                        ?: return@withContext RouteResult.Error("Маршрут не найден")
-
-                val route = parseRoute(osrmRoute, start, end)
-                RouteResult.Success(route)
-            } catch (e: Exception) {
-                Log.e("RouteRepository", "Backup server also failed", e)
-                RouteResult.Error("Оба сервера маршрутов недоступны. Проверьте интернет-соединение.")
             }
+
+            // Все серверы недоступны
+            RouteResult.Error(
+                "Все серверы маршрутов недоступны. Проверьте интернет-соединение или попробуйте позже.",
+            )
         }
 
     /**
