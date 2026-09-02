@@ -38,7 +38,7 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.OSMNavigator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,6 +50,7 @@
         <activity
             android:name=".presentation.search.SearchActivity"
             android:exported="false"
+            android:screenOrientation="landscape"
             android:parentActivityName=".presentation.main.MainActivity" />
             
         <!-- Навигация -->
@@ -65,6 +66,7 @@
         <activity
             android:name=".presentation.settings.SettingsActivity"
             android:exported="false"
+            android:screenOrientation="landscape"
             android:parentActivityName=".presentation.main.MainActivity" />
 
         <!-- AIDL Navigation Service для трансляции на приборную панель (AutoNavi protocol) -->
