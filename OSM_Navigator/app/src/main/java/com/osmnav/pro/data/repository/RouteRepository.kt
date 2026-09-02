@@ -24,18 +24,12 @@ sealed class RouteResult {
 
 /**
  * Repository для работы с маршрутами
- * Использует OSRM API
  */
 class RouteRepository {
     private val service = OSRMRouteService.create()
 
     // OSRM серверы для маршрутизации
-    private val osrmServers =
-        listOf(
-            OSRMRouteService.BASE_URL,
-            "https://routing.openstreetmap.de/routed-car/",
-            "https://osrm.routing.smirnovint.ru/",
-        )
+    private val osrmServers = OSRMRouteService.OSRM_SERVERS
 
     /**
      * Построить маршрут между двумя точками
@@ -46,17 +40,17 @@ class RouteRepository {
         strategy: String = "fastest",
     ): RouteResult =
         withContext(Dispatchers.IO) {
+            // Формат: lat,lon
+            val startLatLon = "${start.latitude},${start.longitude}"
+            val endLatLon = "${end.latitude},${end.longitude}"
+
             try {
-                // OSRM формат: lon1,lat1;lon2,lat2
-                val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
-
-                // Полный URL
-                val baseUrl = OSRMRouteService.BASE_URL.trimEnd('/')
-                val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
-
-                Log.d("RouteRepository", "Building route: $fullUrl")
-
-                val response = service.getRoute(fullUrl)
+                val response =
+                    service.getRoute(
+                        serverUrl = OSRMRouteService.BASE_URL,
+                        startLatLon = startLatLon,
+                        endLatLon = endLatLon,
+                    )
 
                 if (response.code != "Ok") {
                     return@withContext RouteResult.Error(
@@ -69,7 +63,6 @@ class RouteRepository {
                         ?: return@withContext RouteResult.Error("Маршрут не найден")
 
                 val route = parseRoute(osrmRoute, start, end)
-
                 RouteResult.Success(route)
             } catch (e: Exception) {
                 Log.e("RouteRepository", "Error building route", e)
@@ -86,19 +79,22 @@ class RouteRepository {
         strategy: String = "fastest",
     ): RouteResult =
         withContext(Dispatchers.IO) {
-            // OSRM формат: lon1,lat1;lon2,lat2
-            val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
-            Log.d("RouteRepository", "Building route with coordinates: $coordinates")
+            // Формат: lat,lon
+            val startLatLon = "${start.latitude},${start.longitude}"
+            val endLatLon = "${end.latitude},${end.longitude}"
+
+            Log.d("RouteRepository", "Building route: $startLatLon -> $endLatLon")
 
             for ((index, serverUrl) in osrmServers.withIndex()) {
                 try {
-                    val baseUrl = serverUrl.trimEnd('/')
-                    val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
-
                     Log.d("RouteRepository", "[$index] Trying: $serverUrl")
 
-                    val currentService = OSRMRouteService.create()
-                    val response = currentService.getRoute(fullUrl)
+                    val response =
+                        service.getRoute(
+                            serverUrl = serverUrl,
+                            startLatLon = startLatLon,
+                            endLatLon = endLatLon,
+                        )
 
                     Log.d("RouteRepository", "[$index] Response: ${response.code}")
 
@@ -110,21 +106,20 @@ class RouteRepository {
                             return@withContext RouteResult.Success(route)
                         }
                     } else {
-                        Log.w("RouteRepository", "[$index] Error: ${response.code}")
+                        Log.w("RouteRepository", "[$index] Error: ${response.code} - ${response.message}")
                     }
                 } catch (e: Exception) {
                     Log.e("RouteRepository", "[$index] Exception: ${e.message}")
                 }
             }
 
-            // Все серверы недоступны
             RouteResult.Error(
                 "Все серверы маршрутов недоступны. Проверьте интернет-соединение.",
             )
         }
 
     /**
-     * Преобразовать OSRM ответ в нашу модель Route
+     * Преобразовать OSRM ответ в Route
      */
     private fun parseRoute(
         osrmRoute: OSRMRoute,
@@ -133,14 +128,12 @@ class RouteRepository {
     ): Route {
         val points = mutableListOf<Location>()
 
-        // Точки маршрута
         osrmRoute.geometry?.coordinates?.forEach { coord ->
             if (coord.size >= 2) {
                 points.add(Location(coord[1], coord[0]))
             }
         }
 
-        // Инструкции
         val instructions = mutableListOf<RouteInstruction>()
 
         osrmRoute.legs?.forEach { leg ->
@@ -172,9 +165,6 @@ class RouteRepository {
         )
     }
 
-    /**
-     * Преобразовать тип манёвра OSRM в наш enum
-     */
     private fun parseManeuver(
         type: String?,
         modifier: String?,
@@ -237,18 +227,11 @@ class RouteRepository {
                 }
             }
 
-            "start" -> {
-                Maneuver.START
-            }
-
             else -> {
                 Maneuver.CONTINUE
             }
         }
 
-    /**
-     * Получить текст манёвра по умолчанию
-     */
     private fun getDefaultManeuverText(maneuver: Maneuver): String =
         when (maneuver) {
             Maneuver.TURN_LEFT -> "Поверните налево"
@@ -267,9 +250,7 @@ class RouteRepository {
             Maneuver.OFF_RAMP -> "Съезд"
             Maneuver.FORK_LEFT -> "Держитесь левее"
             Maneuver.FORK_RIGHT -> "Держитесь правее"
-            Maneuver.END -> "Завершите маршрут"
-            Maneuver.START -> "Старт"
-            Maneuver.START_FROM_HERE -> "Начните отсюда"
+            else -> "Продолжайте движение"
         }
 }
 
@@ -282,9 +263,6 @@ data class OSRMRouteResponse(
     val routes: List<OSRMRoute>?,
 )
 
-/**
- * Маршрут OSRM
- */
 data class OSRMRoute(
     val geometry: OSRMGeometry?,
     val distance: Double?,
