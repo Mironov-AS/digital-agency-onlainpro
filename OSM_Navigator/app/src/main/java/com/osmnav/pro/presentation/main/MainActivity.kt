@@ -79,6 +79,9 @@ class MainActivity : AppCompatActivity() {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
 
+            // Скрываем встроенные кнопки зума - используем сенсорный ввод
+            setBuiltInZoomControls(false)
+
             // Начальная позиция - будет обновлена при получении GPS
             controller.setZoom(15.0)
 
@@ -355,19 +358,29 @@ class MainActivity : AppCompatActivity() {
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
 
-                // Слушаем первое получение местоположения
-                runOnFirstFix {
-                    this@apply.myLocation?.let { loc ->
-                        viewModel.setCurrentLocation(
-                            Location(
-                                latitude = loc.latitude,
-                                longitude = loc.longitude,
-                            ),
-                        )
-                    }
-                }
+                // Включаем автоследование за местоположением
+                followLocation(true)
             }
         binding.mapView.overlays.add(myLocationOverlay)
+
+        // Также получаем данные через LocationManager для ViewModel
+        val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
+        try {
+            locationManager.requestLocationUpdates(
+                android.location.LocationManager.GPS_PROVIDER,
+                1000L,
+                5f,
+            ) { location ->
+                viewModel.setCurrentLocation(
+                    Location(
+                        latitude = location.latitude,
+                        longitude = location.longitude,
+                    ),
+                )
+            }
+        } catch (e: SecurityException) {
+            // Разрешение уже проверено
+        }
     }
 
     private fun requestLocationPermission() {
