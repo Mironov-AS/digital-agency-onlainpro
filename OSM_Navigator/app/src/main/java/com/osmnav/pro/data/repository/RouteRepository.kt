@@ -2,6 +2,7 @@ package com.osmnav.pro.data.repository
 
 import android.util.Log
 import com.osmnav.pro.data.remote.OSRMRouteService
+import com.osmnav.pro.data.remote.YandexRoutingService
 import com.osmnav.pro.domain.model.Location
 import com.osmnav.pro.domain.model.Maneuver
 import com.osmnav.pro.domain.model.Route
@@ -29,12 +30,15 @@ sealed class RouteResult {
 class RouteRepository {
     private val service = OSRMRouteService.create()
 
-    // Список серверов для fallback (включая российские)
+    // Список OSRM серверов для fallback
     private val fallbackServers =
         listOf(
             OSRMRouteService.BACKUP_URL, // openstreetmap.de
-            OSRMRouteService.RUSSIAN_URL, // российский сервер
         )
+
+    // Яндекс API сервис (для работы без VPN)
+    // Получить API ключ: https://developer.tech.yandex.ru/
+    private val yandexService = YandexRoutingService.createDemo()
 
     /**
      * Построить маршрут между двумя точками
@@ -74,6 +78,10 @@ class RouteRepository {
     /**
      * Построить маршрут с fallback на резервные серверы (включая российские)
      */
+
+    /**
+     * Построить маршрут с fallback на все доступные серверы (OSRM и Яндекс)
+     */
     suspend fun buildRouteWithFallback(
         start: Location,
         end: Location,
@@ -104,6 +112,56 @@ class RouteRepository {
                     Log.w("RouteRepository", "Server $serverUrl failed: ${e.message}")
                     // Продолжаем со следующим сервером
                 }
+            }
+
+            // Все OSRM серверы недоступны - пробуем Яндекс.Маршрутизацию
+            Log.d("RouteRepository", "OSRM servers failed, trying Yandex...")
+
+            try {
+                val yandexResult =
+                    yandexService.buildRoute(
+                        origin = Pair(start.latitude, start.longitude),
+                        destination = Pair(end.latitude, end.longitude),
+                    )
+
+                when (yandexResult) {
+                    is YandexRouteResult.Success -> {
+                        Log.d("RouteRepository", "Yandex route success")
+                        val instructions =
+                            yandexResult.instructions.map { instruction ->
+                                RouteInstruction(
+                                    text = instruction.text,
+                                    distanceMeters = instruction.distance.toLong(),
+                                    maneuver = parseManeuver(instruction.maneuver),
+                                    point =
+                                        instruction.location?.let {
+                                            Location(it.first, it.second)
+                                        } ?: start,
+                                )
+                            }
+
+                        val points =
+                            yandexResult.points.map {
+                                Location(it.first, it.second)
+                            }
+
+                        val route =
+                            Route(
+                                points = points,
+                                instructions = instructions,
+                                distanceMeters = yandexResult.distance.toLong(),
+                                durationSeconds = yandexResult.duration.toLong(),
+                            )
+
+                        return@withContext RouteResult.Success(route)
+                    }
+
+                    is YandexRouteResult.Error -> {
+                        Log.w("RouteRepository", "Yandex also failed: ${yandexResult.message}")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("RouteRepository", "Yandex service error", e)
             }
 
             // Все серверы недоступны
@@ -233,6 +291,30 @@ class RouteRepository {
             else -> {
                 Maneuver.CONTINUE
             }
+        }
+
+    /**
+     * Преобразовать тип манёвра Яндекса в наш enum
+     */
+    private fun parseManeuver(type: String): Maneuver =
+        when (type.lowercase()) {
+            "depart", "heading" -> Maneuver.DEPART
+            "arrive", "destination" -> Maneuver.DESTINATION
+            "turn-left", "turn left", "left" -> Maneuver.TURN_LEFT
+            "turn-right", "turn right", "right" -> Maneuver.TURN_RIGHT
+            "turn-slight-left", "slight left" -> Maneuver.SLIGHT_LEFT
+            "turn-slight-right", "slight right" -> Maneuver.SLIGHT_RIGHT
+            "turn-sharp-left", "sharp left" -> Maneuver.SHARP_LEFT
+            "turn-sharp-right", "sharp right" -> Maneuver.SHARP_RIGHT
+            "turn-via", "u-turn", "uturn", "roundabout" -> Maneuver.U_TURN
+            "continue", "straight" -> Maneuver.CONTINUE
+            "merge", "merge-to-left", "merge-to-right" -> Maneuver.MERGE
+            "fork-left" -> Maneuver.FORK_LEFT
+            "fork-right" -> Maneuver.FORK_RIGHT
+            "roundabout-enter", "roundabout-exit" -> Maneuver.ROUNDABOUT
+            "on-ramp", "ramp" -> Maneuver.ON_RAMP
+            "off-ramp" -> Maneuver.OFF_RAMP
+            else -> Maneuver.CONTINUE
         }
 
     /**
