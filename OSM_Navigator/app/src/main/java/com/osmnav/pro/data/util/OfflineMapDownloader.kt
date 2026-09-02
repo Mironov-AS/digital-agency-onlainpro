@@ -10,14 +10,9 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.osmdroid.config.Configuration
-import org.osmdroid.tileprovider.cachemanager.CacheManager
-import org.osmdroid.tileprovider.cachemanager.DownloadManagerListener
-import org.osmdroid.tileprovider.cachemanager.TileLoader
-import org.osmdroid.tileprovider.cachemanager.TileLoaderListener
 import org.osmdroid.tileprovider.modules.SqlTileWriter
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
-import org.osmdroid.util.BoundingBoxString
 import org.osmdroid.util.GeoPoint
 import java.io.File
 import java.io.FileOutputStream
