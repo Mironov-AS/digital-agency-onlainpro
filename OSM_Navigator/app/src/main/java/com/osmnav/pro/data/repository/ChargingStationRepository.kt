@@ -4,6 +4,8 @@ import android.util.Log
 import com.google.gson.Gson
 import com.osmnav.pro.domain.model.ChargingStation
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,50 +19,112 @@ class ChargingStationRepository {
     private val client =
         OkHttpClient
             .Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
             .build()
     private val gson = Gson()
 
+    // Кеш для станций
+    private val cache = mutableMapOf<String, CachedStations>()
+    private val cacheMutex = Mutex()
+
     companion object {
         private const val TAG = "ChargingRepo"
-        private const val OVERPASS_API_URL = "https://overpass-api.de/api/interpreter"
+
+        // Fallback серверы Overpass
+        private val OVERPASS_SERVERS =
+            listOf(
+                "https://overpass-api.de/api/interpreter",
+                "https://overpass.kumi.systems/api/interpreter",
+                "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+            )
+        private const val CACHE_DURATION_MS = 5 * 60 * 1000L // 5 минут
     }
 
     /**
      * Получить зарядные станции в указанной области
-     * @param boundingBox границы области для поиска
-     * @param zoom текущий зум карты (влияет на радиус поиска)
      */
     suspend fun getStationsInArea(
         boundingBox: BoundingBox,
         zoom: Int = 14,
     ): List<ChargingStation> =
         withContext(Dispatchers.IO) {
-            try {
-                // Overpass QL запрос для поиска зарядных станций
-                val query = buildOverpassQuery(boundingBox)
-                val encodedQuery = java.net.URLEncoder.encode(query, "UTF-8")
-                val url = "$OVERPASS_API_URL?data=$encodedQuery"
+            // Проверяем кеш
+            val cacheKey = boundingBoxToKey(boundingBox)
+            val cached =
+                cacheMutex.withLock {
+                    cache[cacheKey]
+                }
 
-                Log.d(TAG, "Searching stations with URL: $url")
-
-                val request =
-                    Request
-                        .Builder()
-                        .url(url)
-                        .header("User-Agent", "OSMNavigator/1.0")
-                        .build()
-
-                val response = client.newCall(request).execute()
-                val body = response.body?.string() ?: return@withContext emptyList()
-
-                parseOverpassResponse(body)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
+            if (cached != null && System.currentTimeMillis() - cached.timestamp < CACHE_DURATION_MS) {
+                Log.d(TAG, "Using cached stations: ${cached.stations.size}")
+                return@withContext cached.stations
             }
+
+            // Пробуем разные серверы
+            var lastError: Exception? = null
+            for ((index, serverUrl) in OVERPASS_SERVERS.withIndex()) {
+                try {
+                    Log.d(TAG, "Trying server $index: $serverUrl")
+                    val stations = fetchFromServer(serverUrl, boundingBox)
+                    if (stations.isNotEmpty()) {
+                        // Сохраняем в кеш
+                        cacheMutex.withLock {
+                            cache[cacheKey] = CachedStations(stations, System.currentTimeMillis())
+                        }
+                        return@withContext stations
+                    }
+                } catch (e: Exception) {
+                    lastError = e
+                    Log.w(TAG, "Server $index failed: ${e.message}")
+                }
+            }
+
+            // Если все серверы не работают, возвращаем кеш就算 он устарел
+            cached?.let {
+                Log.d(TAG, "Using expired cache as fallback")
+                return@withContext it.stations
+            }
+
+            Log.e(TAG, "All servers failed", lastError)
+            emptyList()
         }
+
+    /**
+     * Загрузить станции с конкретного сервера
+     */
+    private fun fetchFromServer(
+        serverUrl: String,
+        boundingBox: BoundingBox,
+    ): List<ChargingStation> {
+        val query = buildOverpassQuery(boundingBox)
+        val encodedQuery = java.net.URLEncoder.encode(query, "UTF-8")
+        val url = "$serverUrl?data=$encodedQuery"
+
+        Log.d(TAG, "Fetching from: $url")
+
+        val request =
+            Request
+                .Builder()
+                .url(url)
+                .header("User-Agent", "OSMNavigator/1.0 (EV Navigation App)")
+                .build()
+
+        val response = client.newCall(request).execute()
+        val body = response.body?.string() ?: throw Exception("Empty response")
+
+        return parseOverpassResponse(body)
+    }
+
+    /**
+     * Ключ для кеша
+     */
+    private fun boundingBoxToKey(bbox: BoundingBox): String {
+        // Округляем для группировки близких областей
+        val lat = (bbox.latCenter * 100).toInt() / 100.0
+        val lon = (bbox.lonCenter * 100).toInt() / 100.0
+        return "$lat,$lon"
+    }
 
     /**
      * Построить Overpass QL запрос
@@ -252,4 +316,12 @@ private data class OverpassElement(
 private data class OverpassCenter(
     val lat: Double,
     val lon: Double,
+)
+
+/**
+ * Кешированные станции
+ */
+private data class CachedStations(
+    val stations: List<ChargingStation>,
+    val timestamp: Long,
 )
