@@ -306,29 +306,28 @@ class NavigationViewModel(
         val street = instruction.streetName
         val distance = instruction.distanceMeters
 
+        // Всегда добавляем название улицы если есть
+        val streetSuffix = if (!street.isNullOrEmpty()) " на $street" else ""
+
         return when {
             distance <= 50 -> {
-                "Сейчас $maneuverText"
+                "Сейчас $maneuverText$streetSuffix"
             }
 
             distance <= 200 -> {
-                "Через $distance метров $maneuverText"
+                "Через $distance метров $maneuverText$streetSuffix"
             }
 
             distance <= 1000 -> {
                 val km = distance / 1000.0
-                "Через ${String.format(Locale.US, "%.1f", km)} километров $maneuverText"
+                "Через ${String.format(Locale.US, "%.1f", km)} километров $maneuverText$streetSuffix"
             }
 
             else -> {
-                "Через ${distance / 1000} километров $maneuverText"
+                val km = distance / 1000.0
+                "Через ${String.format(Locale.US, "%.0f", km)} километров$streetSuffix"
             }
-        } +
-            if (street != null && street.isNotEmpty()) {
-                " на $street"
-            } else {
-                ""
-            }
+        }
     }
 
     /**

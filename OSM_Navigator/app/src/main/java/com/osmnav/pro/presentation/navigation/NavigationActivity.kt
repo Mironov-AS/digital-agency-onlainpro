@@ -189,13 +189,20 @@ class NavigationActivity : AppCompatActivity() {
             destinationMarker?.let { marker -> binding.mapView.overlays.add(marker) }
         }
 
-        // Показываем весь маршрут
-        if (route.points.isNotEmpty()) {
-            val points = route.points.map { GeoPoint(it.latitude, it.longitude) }
-            val boundingBox =
-                org.osmdroid.util.BoundingBox
-                    .fromGeoPoints(points)
-            binding.mapView.zoomToBoundingBox(boundingBox, true, 50)
+        // Центрируем на текущей позиции пользователя при старте
+        viewModel.currentLocation.value?.let { location ->
+            binding.mapView.controller.animateTo(
+                GeoPoint(location.latitude, location.longitude),
+            )
+            binding.mapView.controller.setZoom(17.0)
+        } ?: run {
+            // Fallback: если позиция не доступна, показываем начало маршрута
+            route.points.firstOrNull()?.let { first ->
+                binding.mapView.controller.animateTo(
+                    GeoPoint(first.latitude, first.longitude),
+                )
+                binding.mapView.controller.setZoom(15.0)
+            }
         }
 
         binding.mapView.invalidate()
