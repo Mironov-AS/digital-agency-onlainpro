@@ -47,6 +47,9 @@ class NavigationActivity : AppCompatActivity() {
     private var routePolyline: Polyline? = null
     private var myLocationMarker: Marker? = null
 
+    private var pendingDestination: NavLocation? = null
+    private var hasFirstLocation = false
+
     private val locationPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions(),
@@ -73,12 +76,13 @@ class NavigationActivity : AppCompatActivity() {
         setupObservers()
         requestLocationPermission()
 
-        // Получаем пункт назначения
+        // Получаем пункт назначения (запомним, начнём навигацию после получения GPS)
         val destLat = intent.getDoubleExtra(EXTRA_DEST_LAT, 0.0)
         val destLon = intent.getDoubleExtra(EXTRA_DEST_LON, 0.0)
 
         if (destLat != 0.0 && destLon != 0.0) {
-            viewModel.startNavigation(NavLocation(destLat, destLon))
+            pendingDestination = NavLocation(destLat, destLon)
+            Log.d(TAG, "Destination set: $destLat, $destLon, waiting for GPS...")
         } else {
             Toast.makeText(this, "Не указан пункт назначения", Toast.LENGTH_SHORT).show()
             finish()
@@ -266,6 +270,13 @@ class NavigationActivity : AppCompatActivity() {
                 override fun onLocationResult(result: LocationResult) {
                     result.lastLocation?.let { location ->
                         viewModel.updateLocation(location)
+
+                        // После получения первой GPS позиции - начинаем навигацию
+                        if (!hasFirstLocation && pendingDestination != null) {
+                            hasFirstLocation = true
+                            Log.d(TAG, "First GPS received, starting navigation")
+                            viewModel.startNavigation(pendingDestination!!)
+                        }
                     }
                 }
             }
