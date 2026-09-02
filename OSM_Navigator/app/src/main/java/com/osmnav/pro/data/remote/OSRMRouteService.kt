@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 interface OSRMRouteService {
     @GET("route/v1/driving/{coordinates}")
     suspend fun getRoute(
-        @Path("coordinates") coordinates: String, // format: "lon1,lat1;lon2,lat2"
+        @Path(value = "coordinates", encoded = true) coordinates: String, // format: "lon1,lat1;lon2,lat2"
         @Query("overview") overview: String = "full",
         @Query("steps") steps: Boolean = true,
         @Query("geometries") geometries: String = "geojson",
@@ -29,7 +29,7 @@ interface OSRMRouteService {
     companion object {
         // OSRM серверы (в порядке приоритета)
         // Используем разные серверы для обхода блокировок
-        private val OSRM_SERVERS =
+        val OSRM_SERVERS =
             listOf(
                 "https://router.project-osrm.org/",
                 "https://routing.openstreetmap.de/routed-car/",
@@ -37,6 +37,7 @@ interface OSRMRouteService {
                 "https://osrmrouter.fra1.cdn.digitaloceanspaces.com/",
             )
 
+        // Основные серверы для маршрутизации
         const val BASE_URL = "https://router.project-osrm.org/"
         const val BACKUP_URL = "https://routing.openstreetmap.de/routed-car/"
         const val RUSSIAN_URL = "https://osrm.routing.smirnovint.ru/"

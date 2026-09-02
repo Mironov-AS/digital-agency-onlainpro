@@ -31,8 +31,10 @@ class RouteRepository {
     private val service = OSRMRouteService.create()
 
     // Список OSRM серверов для fallback
+    // Включаем ВСЕ серверы из OSRMRouteService
     private val fallbackServers =
         listOf(
+            OSRMRouteService.RUSSIAN_URL, // российский сервер (попробуем первым)
             OSRMRouteService.BACKUP_URL, // openstreetmap.de
         )
 
@@ -90,26 +92,35 @@ class RouteRepository {
         withContext(Dispatchers.IO) {
             // OSRM формат: lon1,lat1;lon2,lat2
             val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
+            Log.d("RouteRepository", "Building route with coordinates: $coordinates")
 
             // Пробуем все серверы по очереди
             val allServers = listOf(OSRMRouteService.BASE_URL) + fallbackServers
+            Log.d("RouteRepository", "Total servers to try: ${allServers.size}")
 
-            for (serverUrl in allServers) {
+            for ((index, serverUrl) in allServers.withIndex()) {
                 try {
-                    Log.d("RouteRepository", "Trying server: $serverUrl")
+                    Log.d("RouteRepository", "[$index/${allServers.size}] Trying server: $serverUrl")
                     val currentService = OSRMRouteService.createWithUrl(serverUrl)
                     val response = currentService.getRoute(coordinates)
+
+                    Log.d("RouteRepository", "[$index] Response code: ${response.code}")
 
                     if (response.code == "Ok") {
                         val osrmRoute = response.routes?.firstOrNull()
                         if (osrmRoute != null) {
+                            Log.d("RouteRepository", "[$index] Route found, distance: ${osrmRoute.distance}m")
                             val route = parseRoute(osrmRoute, start, end)
-                            Log.d("RouteRepository", "Success with server: $serverUrl")
+                            Log.d("RouteRepository", "[$index] Success with server: $serverUrl")
                             return@withContext RouteResult.Success(route)
+                        } else {
+                            Log.w("RouteRepository", "[$index] No routes in response")
                         }
+                    } else {
+                        Log.w("RouteRepository", "[$index] Server returned error: ${response.code} - ${response.message}")
                     }
                 } catch (e: Exception) {
-                    Log.w("RouteRepository", "Server $serverUrl failed: ${e.message}")
+                    Log.e("RouteRepository", "[$index] Server $serverUrl failed with exception", e)
                     // Продолжаем со следующим сервером
                 }
             }
