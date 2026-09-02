@@ -6,7 +6,7 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import com.osmnav.pro.data.repository.RouteRepository
-import com.osmnav.pro.data.repository.RouteRepository.RouteResult
+import com.osmnav.pro.data.repository.RouteResult
 import com.osmnav.pro.domain.model.Location
 import kotlinx.coroutines.*
 
@@ -211,7 +211,7 @@ class NaviAIDLService : Service() {
                         )
 
                     when (result) {
-                        is RouteRepository.RouteResult.Success -> {
+                        is RouteResult.Success -> {
                             currentRoute = result.route
                             currentInstructionIndex = 0
                             isNavigating = true
@@ -225,7 +225,7 @@ class NaviAIDLService : Service() {
                             Log.d(TAG, "Route built: ${result.route.distanceMeters}m")
                         }
 
-                        is RouteRepository.RouteResult.Error -> {
+                        is RouteResult.Error -> {
                             Log.e(TAG, "Route error: ${result.message}")
                             broadcastNavigationError(result.message)
                         }
