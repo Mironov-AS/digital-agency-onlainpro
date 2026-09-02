@@ -116,9 +116,18 @@ class NavigationViewModel(
         _error.value = null
 
         viewModelScope.launch {
+            // Используем GPS позицию если доступна, иначе Москва
+            val startLocation =
+                _currentLocation.value?.let {
+                    Location(it.latitude, it.longitude)
+                } ?: Location(55.7558, 37.6173) // Москва по умолчанию
+
+            Log.d(TAG, "Navigation start: ${startLocation.latitude},${startLocation.longitude}")
+            Log.d(TAG, "Navigation end: ${destination.latitude},${destination.longitude}")
+
             val result =
                 routeRepository.buildRouteWithFallback(
-                    start = Location(55.7558, 37.6173), // Москва по умолчанию, заменить на GPS
+                    start = startLocation,
                     end = destination,
                 )
 
