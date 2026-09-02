@@ -92,6 +92,15 @@
                 android:text="Меню"
                 app:icon="@drawable/ic_menu" />
             
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCharging"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Зарядка"
+                app:icon="@drawable/ic_charging_station" />
+            
         </LinearLayout>
         
         <!-- Кнопка начала навигации -->
