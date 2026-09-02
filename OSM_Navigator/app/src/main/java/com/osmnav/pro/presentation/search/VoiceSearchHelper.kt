@@ -97,9 +97,6 @@ class VoiceSearchHelper(
                 "Скажите адрес или название места",
             )
 
-            // Минимальная длина в миллисекундах
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLISECONDS, 1000)
-
             // Максимальное количество результатов
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
 
@@ -132,7 +129,8 @@ class VoiceSearchHelper(
                 listener.onVoiceError("Ничего не распознано. Попробуйте ещё раз.")
                 return false
             }
-        } else if (resultCode == Activity.RESULT_NO_MATCH) {
+        } else if (resultCode == Activity.RESULT_FIRST_USER) {
+            // RESULT_FIRST_USER используется для ERROR_NO_MATCH в некоторых версиях
             listener.onVoiceError("Ничего не распознано. Попробуйте ещё раз.")
             return false
         } else if (resultCode == Activity.RESULT_CANCELED) {
