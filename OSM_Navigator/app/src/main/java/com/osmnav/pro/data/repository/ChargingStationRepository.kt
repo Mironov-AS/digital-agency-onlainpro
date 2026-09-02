@@ -121,8 +121,10 @@ class ChargingStationRepository {
      */
     private fun boundingBoxToKey(bbox: BoundingBox): String {
         // Округляем для группировки близких областей
-        val lat = (bbox.latCenter * 100).toInt() / 100.0
-        val lon = (bbox.lonCenter * 100).toInt() / 100.0
+        val latCenter = (bbox.latNorth + bbox.latSouth) / 2
+        val lonCenter = (bbox.lonEast + bbox.lonWest) / 2
+        val lat = (latCenter * 100).toInt() / 100.0
+        val lon = (lonCenter * 100).toInt() / 100.0
         return "$lat,$lon"
     }
 
