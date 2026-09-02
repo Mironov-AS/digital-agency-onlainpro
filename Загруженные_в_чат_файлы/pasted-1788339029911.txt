@@ -1,0 +1,7 @@
+---------------------------- PROCESS STARTED (12739) for package com.osmnav.pro ----------------------------
+2026-09-02 11:50:05.651 12739-12955 RouteRepository         com.osmnav.pro                       D  Trying server: https://router.project-osrm.org/
+2026-09-02 11:50:05.954 12739-12955 RouteRepository         com.osmnav.pro                       W  Server https://router.project-osrm.org/ failed: HTTP 400 
+2026-09-02 11:50:05.954 12739-12955 RouteRepository         com.osmnav.pro                       D  Trying server: https://routing.openstreetmap.de/routed-car/
+2026-09-02 11:50:06.271 12739-12955 RouteRepository         com.osmnav.pro                       W  Server https://routing.openstreetmap.de/routed-car/ failed: HTTP 400 
+2026-09-02 11:50:06.271 12739-12955 RouteRepository         com.osmnav.pro                       D  OSRM servers failed, trying Yandex...
+2026-09-02 11:50:06.837 12739-12955 RouteRepository         com.osmnav.pro                       W  Yandex also failed: Ошибка: Unable to resolve host "api.yamlq.io": No address associated with hostname
