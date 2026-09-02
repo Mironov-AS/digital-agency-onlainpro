@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardNearestCharging"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|start"
+    android:layout_margin="16dp"
+    android:visibility="gone"
+    app:cardBackgroundColor="@color/charging_active_bg"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <!-- Иконка зарядки -->
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_charging_station"
+            app:tint="@color/white"
+            android:contentDescription="Зарядка" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tvChargingDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.5 км"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvChargingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ул. Мира, 25"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:alpha="0.9"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Стрелка вправо -->
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:src="@android:drawable/ic_media_play"
+            app:tint="@color/white"
+            android:contentDescription="Навигация" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

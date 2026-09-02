@@ -71,6 +71,63 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnDownloadMaps.setOnClickListener {
             showDownloadDialog()
         }
+
+        // Зарядные станции - показывать ближайшую
+        binding.switchShowChargingStations.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("show_nearest_charging", isChecked).apply()
+        }
+        binding.switchShowChargingStations.isChecked = prefs.getBoolean("show_nearest_charging", false)
+
+        // Типы разъёмов
+        setupConnectorChips(prefs)
+    }
+
+    private fun setupConnectorChips(prefs: android.content.SharedPreferences) {
+        // Загружаем сохранённые типы
+        val savedConnectors = prefs.getStringSet("charging_connectors", setOf("CCS", "Type 2")) ?: setOf("CCS", "Type 2")
+
+        binding.chipCcs.isChecked = savedConnectors.contains("CCS")
+        binding.chipType2.isChecked = savedConnectors.contains("Type 2")
+        binding.chipChademo.isChecked = savedConnectors.contains("CHAdeMO")
+        binding.chipTesla.isChecked = savedConnectors.contains("Tesla")
+
+        // Сохраняем при изменении
+        val listener =
+            android.widget.CompoundButton.OnCheckedChangeListener { _, _ ->
+                saveConnectorPreferences()
+            }
+
+        binding.chipCcs.setOnCheckedChangeListener(listener)
+        binding.chipType2.setOnCheckedChangeListener(listener)
+        binding.chipChademo.setOnCheckedChangeListener(listener)
+        binding.chipTesla.setOnCheckedChangeListener(listener)
+    }
+
+    private fun saveConnectorPreferences() {
+        val connectors = mutableSetOf<String>()
+        if (binding.chipCcs.isChecked) connectors.add("CCS")
+        if (binding.chipType2.isChecked) connectors.add("Type 2")
+        if (binding.chipChademo.isChecked) connectors.add("CHAdeMO")
+        if (binding.chipTesla.isChecked) connectors.add("Tesla")
+
+        // Если ничего не выбрано, выбираем CCS по умолчанию
+        if (connectors.isEmpty()) {
+            connectors.add("CCS")
+            binding.chipCcs.isChecked = true
+        }
+
+        getSharedPreferences("osmnav_prefs", MODE_PRIVATE)
+            .edit()
+            .putStringSet("charging_connectors", connectors)
+            .apply()
+    }
+
+    companion object {
+        /**
+         * Получить выбранные типы разъёмов
+         */
+        fun getSelectedConnectors(prefs: android.content.SharedPreferences): Set<String> =
+            prefs.getStringSet("charging_connectors", setOf("CCS", "Type 2")) ?: setOf("CCS", "Type 2")
     }
 
     private fun updateCacheInfo() {

@@ -128,5 +128,10 @@
         app:fabSize="mini"
         app:backgroundTint="@color/surface"
         app:tint="@color/primary" />
+    
+    <!-- Карточка ближайшей зарядной станции -->
+    <include
+        layout="@layout/view_nearest_charging"
+        android:id="@+id/viewNearestCharging" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

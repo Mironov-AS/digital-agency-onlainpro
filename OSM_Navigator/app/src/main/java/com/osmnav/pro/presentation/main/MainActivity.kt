@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,11 @@ class MainActivity : AppCompatActivity() {
     private var destinationMarker: Marker? = null
     private val chargingStationMarkers = mutableListOf<Marker>()
     private var showChargingStations = false
+
+    // Ближайшая зарядная станция
+    private var nearestChargingStation: ChargingStation? = null
+    private var nearestChargingStations: List<ChargingStation> = emptyList()
+    private var searchChargingJob: kotlinx.coroutines.Job? = null
 
     private val locationPermissionRequest =
         registerForActivityResult(
@@ -138,6 +144,27 @@ class MainActivity : AppCompatActivity() {
         // Моё местоположение
         binding.fabMyLocation.setOnClickListener {
             centerOnMyLocation()
+        }
+
+        // Клик на карточку ближайшей зарядной станции
+        binding.viewNearestCharging.cardNearestCharging.setOnClickListener {
+            showRerouteDialog()
+        }
+
+        // Запускаем поиск ближайшей станции
+        checkShowNearestCharging()
+    }
+
+    /**
+     * Проверить настройку и запустить поиск ближайшей станции
+     */
+    private fun checkShowNearestCharging() {
+        val prefs = getSharedPreferences("osmnav_prefs", MODE_PRIVATE)
+        val showNearest = prefs.getBoolean("show_nearest_charging", false)
+
+        if (showNearest) {
+            // Запускаем поиск при изменении местоположения
+            searchNearestChargingStation()
         }
     }
 
@@ -390,6 +417,9 @@ class MainActivity : AppCompatActivity() {
                                 longitude = location.longitude,
                             ),
                         )
+
+                        // Обновляем ближайшую зарядную станцию
+                        checkShowNearestCharging()
                     }
 
                     override fun onProviderEnabled(provider: String) {}
@@ -438,10 +468,157 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        // Проверяем настройки при возобновлении
+        checkShowNearestCharging()
     }
 
     override fun onPause() {
         super.onPause()
         binding.mapView.onPause()
+        searchChargingJob?.cancel()
+    }
+
+    /**
+     * Поиск ближайшей зарядной станции
+     */
+    private fun searchNearestChargingStation() {
+        val prefs = getSharedPreferences("osmnav_prefs", MODE_PRIVATE)
+        val showNearest = prefs.getBoolean("show_nearest_charging", false)
+
+        if (!showNearest) {
+            hideNearestChargingCard()
+            return
+        }
+
+        val currentLocation = viewModel.currentLocation.value ?: return
+        val selectedConnectors = SettingsActivity.getSelectedConnectors(prefs)
+
+        // Отменяем предыдущий поиск
+        searchChargingJob?.cancel()
+
+        searchChargingJob =
+            lifecycleScope.launch {
+                try {
+                    // Расширяем область поиска
+                    val radius = 10.0 // градусы примерно 10км
+                    val bbox =
+                        BoundingBox(
+                            currentLocation.latitude + radius,
+                            currentLocation.longitude + radius,
+                            currentLocation.latitude - radius,
+                            currentLocation.longitude - radius,
+                        )
+
+                    val stations = chargingStationRepository.getStationsInArea(bbox, 14)
+                    nearestChargingStations = stations
+
+                    // Фильтруем по типу разъёмов
+                    val filtered =
+                        stations.filter { station ->
+                            station.connectorTypes.any { connector ->
+                                selectedConnectors.any { selected ->
+                                    connector.contains(selected, ignoreCase = true)
+                                }
+                            }
+                        }
+
+                    // Находим ближайшую
+                    val nearest =
+                        filtered.minByOrNull { station ->
+                            calculateDistance(
+                                currentLocation.latitude,
+                                currentLocation.longitude,
+                                station.latitude,
+                                station.longitude,
+                            )
+                        }
+
+                    if (nearest != null) {
+                        nearestChargingStation = nearest
+                        showNearestChargingCard(nearest, currentLocation)
+                    } else {
+                        hideNearestChargingCard()
+                    }
+                } catch (e: Exception) {
+                    // Игнорируем ошибки
+                }
+            }
+    }
+
+    /**
+     * Показать карточку ближайшей станции
+     */
+    private fun showNearestChargingCard(
+        station: ChargingStation,
+        currentLocation: Location,
+    ) {
+        val distance =
+            calculateDistance(
+                currentLocation.latitude,
+                currentLocation.longitude,
+                station.latitude,
+                station.longitude,
+            )
+
+        val distanceText =
+            if (distance < 1000) {
+                "${distance.toInt()} м"
+            } else {
+                String.format("%.1f км", distance / 1000)
+            }
+
+        runOnUiThread {
+            binding.viewNearestCharging.cardNearestCharging.visibility = View.VISIBLE
+            binding.viewNearestCharging.tvChargingDistance.text = distanceText
+            binding.viewNearestCharging.tvChargingName.text = station.address ?: station.name ?: "Зарядная станция"
+        }
+    }
+
+    /**
+     * Скрыть карточку
+     */
+    private fun hideNearestChargingCard() {
+        runOnUiThread {
+            binding.viewNearestCharging.cardNearestCharging.visibility = View.GONE
+        }
+    }
+
+    /**
+     * Показать диалог перестроения маршрута
+     */
+    private fun showRerouteDialog() {
+        val station = nearestChargingStation ?: return
+
+        AlertDialog
+            .Builder(this)
+            .setTitle("Ближайшая зарядная станция")
+            .setMessage(
+                "${station.name ?: "Зарядная станция"}\n" +
+                    "${station.address ?: ""}\n" +
+                    "Разъёмы: ${station.connectorTypes.joinToString(", ")}",
+            ).setPositiveButton("Построить маршрут") { _, _ ->
+                navigateToChargingStation(station)
+            }.setNegativeButton("Отмена", null)
+            .show()
+    }
+
+    /**
+     * Рассчитать расстояние между двумя точками (приблизительно)
+     */
+    private fun calculateDistance(
+        lat1: Double,
+        lon1: Double,
+        lat2: Double,
+        lon2: Double,
+    ): Double {
+        val r = 6371000.0 // радиус Земли в метрах
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        return r * c
     }
 }
