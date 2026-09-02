@@ -1,0 +1,1966 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ВиброДиагностика — Профессиональная диагностика подвески</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg-primary: #0c0b0a;
+        --bg-secondary: #141311;
+        --bg-card: #1a1917;
+        --bg-surface: #232220;
+        --accent: #ff3600;
+        --accent-hover: #e62f00;
+        --accent-light: rgba(255, 54, 0, 0.12);
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.72);
+        --text-muted: rgba(255, 255, 255, 0.48);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-accent: rgba(255, 54, 0, 0.35);
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+        --radius: 20px;
+        --radius-sm: 12px;
+      }
+
+      html {
+        font-family:
+          "Golos Text",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.5;
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        min-height: 100vh;
+      }
+
+      /* === HEADER === */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(12, 11, 10, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .header__inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--text-primary);
+      }
+
+      .logo__icon {
+        width: 44px;
+        height: 44px;
+        background: var(--accent);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: -0.03em;
+      }
+
+      .logo__text {
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+      }
+
+      .logo__text span {
+        color: var(--accent);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav__link {
+        padding: 10px 16px;
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 8px;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+
+      .nav__link:hover {
+        color: var(--text-primary);
+        background: var(--bg-surface);
+      }
+
+      .nav__link--accent {
+        background: var(--accent);
+        color: var(--text-primary);
+      }
+
+      .nav__link--accent:hover {
+        background: var(--accent-hover);
+      }
+
+      .header__cta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .header__phone {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -0.01em;
+      }
+
+      /* === HERO === */
+      .hero {
+        padding: 180px 32px 120px;
+        background: linear-gradient(
+          160deg,
+          var(--bg-primary) 0%,
+          var(--bg-secondary) 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -200px;
+        width: 900px;
+        height: 900px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 54, 0, 0.1) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+
+      .hero__inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 64px;
+        align-items: center;
+      }
+
+      .hero__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: var(--accent-light);
+        border: 1px solid var(--border-accent);
+        border-radius: 500px;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--accent);
+        margin-bottom: 24px;
+      }
+
+      .hero__badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .hero__title {
+        font-weight: 700;
+        font-size: clamp(36px, 5vw, 56px);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        margin-bottom: 24px;
+      }
+
+      .hero__title span {
+        color: var(--accent);
+      }
+
+      .hero__subtitle {
+        font-size: 18px;
+        line-height: 1.65;
+        color: var(--text-secondary);
+        max-width: 540px;
+        margin-bottom: 40px;
+      }
+
+      .hero__actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 32px;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn--primary {
+        background: var(--accent);
+        color: var(--text-primary);
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+
+      .btn--primary:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+      }
+
+      .btn--secondary {
+        background: var(--bg-surface);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+
+      .btn--secondary:hover {
+        background: var(--bg-card);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .hero__trust {
+        display: flex;
+        gap: 32px;
+        margin-top: 48px;
+        padding-top: 40px;
+        border-top: 1px solid var(--border);
+      }
+
+      .trust-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .trust-item__value {
+        font-weight: 700;
+        font-size: 28px;
+        letter-spacing: -0.03em;
+        color: var(--accent);
+      }
+
+      .trust-item__label {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      /* Hero Visual */
+      .hero__visual {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero__image-frame {
+        width: 100%;
+        aspect-ratio: 1;
+        background: radial-gradient(
+          ellipse 120% 100% at 50% 60%,
+          rgba(20, 10, 5, 0.9) 0%,
+          rgba(12, 11, 10, 1) 100%
+        );
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 54, 0, 0.15);
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          0 0 80px rgba(255, 54, 0, 0.18),
+          0 0 160px rgba(255, 54, 0, 0.08),
+          inset 0 0 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .hero__image-frame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 50% 45%,
+            rgba(255, 54, 0, 0.12) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 54, 0, 0.05) 0%,
+            transparent 30%,
+            transparent 70%,
+            rgba(255, 54, 0, 0.08) 100%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .hero__image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        /* Инверсия: белый фон → тёмный, чёрные линии → светлые → оранжевые */
+        filter: invert(1) sepia(1) saturate(2) hue-rotate(-15deg)
+          brightness(0.9) contrast(1.1);
+        mix-blend-mode: normal;
+      }
+
+      .hero__checklist {
+        position: absolute;
+        bottom: -20px;
+        left: -30px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 20px 24px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .check-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      .check-item::before {
+        content: "✓";
+        width: 22px;
+        height: 22px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      /* === SECTION === */
+      .section {
+        padding: 100px 32px;
+      }
+
+      .section--alt {
+        background: var(--bg-secondary);
+      }
+
+      .section__header {
+        text-align: center;
+        max-width: 680px;
+        margin: 0 auto 64px;
+      }
+
+      .section__eyebrow {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+
+      .section__title {
+        font-weight: 700;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        margin-bottom: 16px;
+      }
+
+      .section__desc {
+        font-size: 17px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* === PROBLEMS === */
+      .problems-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .problem-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        display: flex;
+        gap: 20px;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+
+      .problem-card:hover {
+        border-color: var(--border-accent);
+        background: var(--accent-light);
+      }
+
+      .problem-card__icon {
+        width: 56px;
+        height: 56px;
+        background: var(--accent-light);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .problem-card__content {
+        flex: 1;
+      }
+
+      .problem-card__title {
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .problem-card__desc {
+        font-size: 15px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* === HOW IT WORKS === */
+      .steps {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        position: relative;
+      }
+
+      .steps::before {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: var(--accent);
+        opacity: 0.25;
+      }
+
+      .step {
+        text-align: center;
+        position: relative;
+      }
+
+      .step__number {
+        width: 80px;
+        height: 80px;
+        background: var(--bg-card);
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 28px;
+        color: var(--accent);
+        margin: 0 auto 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step__title {
+        font-weight: 700;
+        font-size: 17px;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .step__desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* === DIAGNOSTICS TYPES === */
+      .diagnostics-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .diagnostic-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+
+      .diagnostic-card:hover {
+        border-color: var(--border-accent);
+        transform: translateY(-4px);
+      }
+
+      .diagnostic-card__icon {
+        width: 64px;
+        height: 64px;
+        background: var(--accent-light);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .diagnostic-card__title {
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+      }
+
+      .diagnostic-card__desc {
+        font-size: 15px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .diagnostic-card__list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .diagnostic-card__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .diagnostic-card__item::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* === PRICING === */
+      .pricing-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 40px;
+        position: relative;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+
+      .pricing-card--featured {
+        border-color: var(--accent);
+        background: linear-gradient(
+          180deg,
+          var(--accent-light) 0%,
+          var(--bg-card) 40%
+        );
+      }
+
+      .pricing-card__badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--accent);
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 12px;
+        padding: 6px 20px;
+        border-radius: 500px;
+        letter-spacing: 0.02em;
+      }
+
+      .pricing-card__name {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .pricing-card__desc {
+        font-size: 15px;
+        color: var(--text-secondary);
+        margin-bottom: 32px;
+      }
+
+      .pricing-card__price {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-bottom: 32px;
+      }
+
+      .pricing-card__price-value {
+        font-weight: 800;
+        font-size: 48px;
+        letter-spacing: -0.03em;
+      }
+
+      .pricing-card__price-suffix {
+        font-weight: 600;
+        font-size: 20px;
+        color: var(--text-muted);
+      }
+
+      .pricing-card__features {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+
+      .pricing-card__feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--text-secondary);
+      }
+
+      .pricing-card__feature::before {
+        content: "✓";
+        width: 22px;
+        height: 22px;
+        background: var(--accent-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .pricing-card .btn {
+        width: 100%;
+      }
+
+      /* === ADVANTAGES === */
+      .advantages-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .advantage-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+        text-align: center;
+      }
+
+      .advantage-card__icon {
+        width: 64px;
+        height: 64px;
+        background: var(--accent-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+
+      .advantage-card__title {
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+      }
+
+      .advantage-card__desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* === TESTIMONIALS === */
+      .testimonials-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .testimonial-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+      }
+
+      .testimonial-card__stars {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 20px;
+      }
+
+      .testimonial-card__star {
+        width: 18px;
+        height: 18px;
+        background: var(--accent);
+        clip-path: polygon(
+          50% 0%,
+          61% 35%,
+          98% 35%,
+          68% 57%,
+          79% 91%,
+          50% 70%,
+          21% 91%,
+          32% 57%,
+          2% 35%,
+          39% 35%
+        );
+      }
+
+      .testimonial-card__text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .testimonial-card__author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .testimonial-card__avatar {
+        width: 48px;
+        height: 48px;
+        background: var(--bg-surface);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--accent);
+      }
+
+      .testimonial-card__name {
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .testimonial-card__role {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      /* === FAQ === */
+      .faq-list {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .faq-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 24px;
+      }
+
+      .faq-item__question {
+        font-weight: 600;
+        font-size: 17px;
+        letter-spacing: -0.01em;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .faq-item__question::before {
+        content: "?";
+        width: 28px;
+        height: 28px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .faq-item__answer {
+        font-size: 15px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        padding-left: 40px;
+      }
+
+      /* === CTA === */
+      .cta {
+        background: linear-gradient(
+          135deg,
+          var(--bg-card) 0%,
+          var(--bg-surface) 100%
+        );
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .cta__inner {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 100px 32px;
+      }
+
+      .cta__title {
+        font-weight: 700;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        margin-bottom: 16px;
+      }
+
+      .cta__desc {
+        font-size: 18px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+      }
+
+      .cta__form {
+        display: flex;
+        gap: 16px;
+        max-width: 540px;
+        margin: 0 auto;
+      }
+
+      .cta__input {
+        flex: 1;
+        padding: 16px 20px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: 16px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .cta__input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .cta__input:focus {
+        border-color: var(--accent);
+      }
+
+      .cta__note {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 16px;
+      }
+
+      .cta__phone {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+        transition: color 0.2s;
+      }
+
+      .cta__phone:hover {
+        color: var(--accent);
+      }
+
+      /* === FOOTER === */
+      .footer {
+        background: var(--bg-primary);
+        padding: 64px 32px 32px;
+      }
+
+      .footer__inner {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .footer__top {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 48px;
+        padding-bottom: 48px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .footer__brand-desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-top: 16px;
+        max-width: 320px;
+      }
+
+      .footer__col-title {
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer__link {
+        font-size: 14px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .footer__link:hover {
+        color: var(--text-primary);
+      }
+
+      .footer__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 32px;
+      }
+
+      .footer__copyright {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      .footer__contacts {
+        display: flex;
+        gap: 24px;
+      }
+
+      .footer__contact {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
+
+      .footer__contact:hover {
+        color: var(--text-primary);
+      }
+
+      /* === RESPONSIVE === */
+      @media (max-width: 1024px) {
+        .hero__inner {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+
+        .problems-grid,
+        .diagnostics-grid,
+        .testimonials-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .steps {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .steps::before {
+          display: none;
+        }
+
+        .advantages-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer__top {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header__inner {
+          padding: 0 20px;
+        }
+
+        .nav {
+          display: none;
+        }
+
+        .hero {
+          padding: 140px 20px 80px;
+        }
+
+        .section {
+          padding: 64px 20px;
+        }
+
+        .hero__trust {
+          gap: 24px;
+          flex-wrap: wrap;
+        }
+
+        .problems-grid,
+        .diagnostics-grid,
+        .testimonials-grid,
+        .advantages-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .steps {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .cta__form {
+          flex-direction: column;
+        }
+
+        .footer__top {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+
+        .footer__bottom {
+          flex-direction: column;
+          gap: 24px;
+          text-align: center;
+        }
+
+        .hero__checklist {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__inner">
+        <a href="#" class="logo">
+          <div class="logo__icon">VD</div>
+          <div class="logo__text">Вибро<span>Диагностика</span></div>
+        </a>
+        <nav class="nav">
+          <a href="#problems" class="nav__link">Зачем это нужно</a>
+          <a href="#how" class="nav__link">Как работает</a>
+          <a href="#services" class="nav__link">Услуги</a>
+          <a href="#pricing" class="nav__link">Цены</a>
+          <a href="#faq" class="nav__link">FAQ</a>
+        </nav>
+        <div class="header__cta">
+          <a href="tel:+79258457923" class="header__phone">+7 925 845 79 23</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <div class="hero__badge">Вибростенд Vibrocar</div>
+          <h1 class="hero__title">
+            Найдём любую<br />
+            неисправность<br />
+            <span>подвески за 20 минут</span>
+          </h1>
+          <p class="hero__subtitle">
+            Профессиональная вибродиагностика на современном оборудовании.
+            Выявляем стуки, скрипы и люфты с точностью до конкретного элемента —
+            без разборки и догадок.
+          </p>
+          <div class="hero__actions">
+            <a href="#record" class="btn btn--primary"
+              >Записаться на диагностику</a
+            >
+            <a href="#how" class="btn btn--secondary">Узнать больше</a>
+          </div>
+          <div class="hero__trust">
+            <div class="trust-item">
+              <div class="trust-item__value">500+</div>
+              <div class="trust-item__label">Автомобилей проверено</div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-item__value">20 мин</div>
+              <div class="trust-item__label">Среднее время</div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-item__value">98%</div>
+              <div class="trust-item__label">Точность</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__image-frame">
+            <img
+              src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/942033752/cfc1b01b-8120-4db4-bcf5-2579ae3f34c3/ce5c7677-7a21-40f7-b148-dbdbe8d4a91b-IMG_20260828_113834.png"
+              alt="Автомобиль на вибростенде — диагностика подвески"
+              width="520"
+              height="390"
+            />
+          </div>
+          <div class="hero__checklist">
+            <div class="check-item">Амортизаторы</div>
+            <div class="check-item">Сайлентблоки</div>
+            <div class="check-item">Рычаги и опоры</div>
+            <div class="check-item">Люфты и стуки</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMS -->
+    <section id="problems" class="section section--alt">
+      <div class="section__header">
+        <div class="section__eyebrow">Проблема</div>
+        <h2 class="section__title">Почему обычная проверка не помогает?</h2>
+        <p class="section__desc">
+          Большинство неисправностей подвески невозможно обнаружить без
+          специального оборудования
+        </p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <!-- Wrench icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+              />
+            </svg>
+          </div>
+          <div class="problem-card__content">
+            <h3 class="problem-card__title">Стук при движении</h3>
+            <p class="problem-card__desc">
+              Классическая проблема — вы ездите и слышите стук, но механик на
+              подъёмнике ничего не находит. Без нагрузки всё скрыто.
+            </p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <!-- Question mark icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="problem-card__content">
+            <h3 class="problem-card__title">Много «подозреваемых»</h3>
+            <p class="problem-card__desc">
+              На развалке говорят менять всё, на другом сервисе — только
+              половину. Кому верить? Диагностика без данных — это гадание.
+            </p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <!-- Money icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div class="problem-card__content">
+            <h3 class="problem-card__title">Лишние расходы</h3>
+            <p class="problem-card__desc">
+              Меняете сайлентблоки — стук остаётся. Оказывается, проблема в
+              амортизаторе. Точная диагностика экономит ваши деньги.
+            </p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <!-- Alert triangle icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+              />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="problem-card__content">
+            <h3 class="problem-card__title">Безопасность</h3>
+            <p class="problem-card__desc">
+              Неисправная подвеска — это потеря управления на неровностях.
+              Особенно опасно зимой и на высокой скорости.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <div class="section__header">
+        <div class="section__eyebrow">Процесс</div>
+        <h2 class="section__title">Как проходит диагностика</h2>
+        <p class="section__desc">
+          Быстро, точно и без лишних манипуляций с вашим автомобилем
+        </p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__number">1</div>
+          <h3 class="step__title">Запись</h3>
+          <p class="step__desc">
+            Запишитесь по телефону или онлайн. Удобное время для вас
+          </p>
+        </div>
+        <div class="step">
+          <div class="step__number">2</div>
+          <h3 class="step__title">Заезд</h3>
+          <p class="step__desc">
+            Пригоните автомобиль. Диагностика занимает всего 20 минут
+          </p>
+        </div>
+        <div class="step">
+          <div class="step__number">3</div>
+          <h3 class="step__title">Проверка</h3>
+          <p class="step__desc">
+            Вибростенд выявляет все проблемы под нагрузкой — то, что не слышно
+            на подъёмнике
+          </p>
+        </div>
+        <div class="step">
+          <div class="step__number">4</div>
+          <h3 class="step__title">Результат</h3>
+          <p class="step__desc">
+            Получите подробный отчёт с перечнем неисправностей и рекомендациями
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGNOSTICS TYPES -->
+    <section id="services" class="section section--alt">
+      <div class="section__header">
+        <div class="section__eyebrow">Услуги</div>
+        <h2 class="section__title">Что мы диагностируем</h2>
+        <p class="section__desc">
+          Полная проверка всех элементов подвески вашего автомобиля
+        </p>
+      </div>
+      <div class="diagnostics-grid">
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Shock absorber / Spring icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 2v4" />
+              <path d="M12 18v4" />
+              <path d="M6 6h12" />
+              <path d="M6 18h12" />
+              <path
+                d="M9 6c0-1.5 1.5-3 3-3s3 1.5 3 3v2c0 1.5-1.5 3-3 3s-3-1.5-3-3V6z"
+              />
+              <path
+                d="M9 18c0 1.5 1.5 3 3 3s3-1.5 3-3v-2c0-1.5-1.5-3-3-3s-3 1.5-3 3v2z"
+              />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Амортизаторы</h3>
+          <p class="diagnostic-card__desc">
+            Проверка работоспособности и эффективности демпфирования
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Течь масла</div>
+            <div class="diagnostic-card__item">Снижение характеристик</div>
+            <div class="diagnostic-card__item">Стуки и скрипы</div>
+          </div>
+        </div>
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Control arm icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="5" cy="12" r="3" />
+              <circle cx="19" cy="12" r="3" />
+              <path d="M8 12h8" />
+              <circle cx="12" cy="6" r="2" />
+              <circle cx="12" cy="18" r="2" />
+              <path d="M12 8v4" />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Рычаги и опоры</h3>
+          <p class="diagnostic-card__desc">
+            Проверка состояния рычагов, шаровых опор и сайлентблоков
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Люфт шаровых</div>
+            <div class="diagnostic-card__item">Износ сайлентблоков</div>
+            <div class="diagnostic-card__item">Трещины рычагов</div>
+          </div>
+        </div>
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Rubber bushing icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="8" width="18" height="8" rx="4" />
+              <circle cx="7" cy="12" r="1.5" fill="#ff3600" />
+              <circle cx="17" cy="12" r="1.5" fill="#ff3600" />
+              <path d="M7 8v-2c0-1 .5-2 1.5-2.5" />
+              <path d="M17 8v-2c0-1-.5-2-1.5-2.5" />
+              <path d="M7 16v2c0 1 .5 2 1.5 2.5" />
+              <path d="M17 16v2c0 1-.5 2-1.5 2.5" />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Сайлентблоки</h3>
+          <p class="diagnostic-card__desc">
+            Проверка состояния сайлентблоков всех элементов подвески
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Люфт в соединениях</div>
+            <div class="diagnostic-card__item">Износ резиновых втулок</div>
+            <div class="diagnostic-card__item">Стуки при вибрации</div>
+          </div>
+        </div>
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Stabilizer bar icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 12h16" />
+              <path d="M4 12l-2-3" />
+              <path d="M4 12l-2 3" />
+              <path d="M20 12l2-3" />
+              <path d="M20 12l2 3" />
+              <circle cx="12" cy="6" r="3" />
+              <circle cx="8" cy="6" r="2" />
+              <circle cx="16" cy="6" r="2" />
+              <path d="M8 9v3" />
+              <path d="M16 9v3" />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Стабилизаторы</h3>
+          <p class="diagnostic-card__desc">
+            Проверка стабилизаторов поперечной устойчивости
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Втулки стабилизатора</div>
+            <div class="diagnostic-card__item">Стойки стабилизатора</div>
+            <div class="diagnostic-card__item">Люфт в соединениях</div>
+          </div>
+        </div>
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Steering wheel icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 9v-3" />
+              <path d="M12 18v-3" />
+              <path d="M9 12H3" />
+              <path d="M21 12h-6" />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Рулевое управление</h3>
+          <p class="diagnostic-card__desc">
+            Диагностика рулевой рейки, наконечников и тяг
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Люфт рулевой рейки</div>
+            <div class="diagnostic-card__item">Состояние наконечников</div>
+            <div class="diagnostic-card__item">Течь жидкости</div>
+          </div>
+        </div>
+        <div class="diagnostic-card">
+          <div class="diagnostic-card__icon">
+            <!-- Checklist icon -->
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 11l3 3L22 4" />
+              <path
+                d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+              />
+            </svg>
+          </div>
+          <h3 class="diagnostic-card__title">Комплексная проверка</h3>
+          <p class="diagnostic-card__desc">
+            Полная диагностика всей подвески за одно посещение
+          </p>
+          <div class="diagnostic-card__list">
+            <div class="diagnostic-card__item">Все элементы</div>
+            <div class="diagnostic-card__item">Приоритет по критичности</div>
+            <div class="diagnostic-card__item">Подробный отчёт</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="section">
+      <div class="section__header">
+        <div class="section__eyebrow">Цены</div>
+        <h2 class="section__title">Стоимость диагностики</h2>
+        <p class="section__desc">
+          Прозрачные цены без скрытых доплат. Результат — подробный отчёт
+        </p>
+      </div>
+      <div class="diagnostics-grid">
+        <div class="pricing-card">
+          <div class="pricing-card__name">Быстрая проверка</div>
+          <div class="pricing-card__desc">
+            Проверка одного узла или поиск конкретного стука
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__price-value">1 500</div>
+            <div class="pricing-card__price-suffix">₽</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">Один элемент подвески</div>
+            <div class="pricing-card__feature">Время: 15 минут</div>
+            <div class="pricing-card__feature">Устное заключение</div>
+          </div>
+          <a href="#record" class="btn btn--secondary">Записаться</a>
+        </div>
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">Популярный</div>
+          <div class="pricing-card__name">Полная диагностика</div>
+          <div class="pricing-card__desc">
+            Комплексная проверка всей подвески спереди и сзади
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__price-value">2 500</div>
+            <div class="pricing-card__price-suffix">₽</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">Все элементы подвески</div>
+            <div class="pricing-card__feature">Время: 20-30 минут</div>
+            <div class="pricing-card__feature">Письменный отчёт</div>
+            <div class="pricing-card__feature">Фото/видео неисправностей</div>
+            <div class="pricing-card__feature">Рекомендации по ремонту</div>
+          </div>
+          <a href="#record" class="btn btn--primary">Записаться</a>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-card__name">Расширенная</div>
+          <div class="pricing-card__desc">
+            Полная диагностика всей подвески + рулевое управление
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__price-value">4 000</div>
+            <div class="pricing-card__price-suffix">₽</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">Полная подвеска</div>
+            <div class="pricing-card__feature">Рулевое управление</div>
+            <div class="pricing-card__feature">Подробный отчёт</div>
+            <div class="pricing-card__feature">Консультация по ремонту</div>
+          </div>
+          <a href="#record" class="btn btn--secondary">Записаться</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADVANTAGES -->
+    <section class="section section--alt">
+      <div class="section__header">
+        <div class="section__eyebrow">Преимущества</div>
+        <h2 class="section__title">Почему выбирают нас</h2>
+      </div>
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="advantage-card__icon">
+            <!-- Clock icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <h3 class="advantage-card__title">20 минут</h3>
+          <p class="advantage-card__desc">
+            Полная проверка всей подвески за 20 минут. Не нужно оставлять машину
+            на день
+          </p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-card__icon">
+            <!-- Target icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" />
+              <circle cx="12" cy="12" r="2" />
+            </svg>
+          </div>
+          <h3 class="advantage-card__title">Точность 98%</h3>
+          <p class="advantage-card__desc">
+            Вибростенд выявляет проблемы, которые не слышны на слух и не видны
+            на подъёмнике
+          </p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-card__icon">
+            <!-- File text icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </div>
+          <h3 class="advantage-card__title">Отчёт</h3>
+          <p class="advantage-card__desc">
+            Получаете подробный отчёт с фото и рекомендациями. Решаете сами, что
+            ремонтировать
+          </p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-card__icon">
+            <!-- Wallet icon -->
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ff3600"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+              <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+              <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" />
+            </svg>
+          </div>
+          <h3 class="advantage-card__title">Экономия</h3>
+          <p class="advantage-card__desc">
+            Точная диагностика экономит деньги — ремонтируем только то, что
+            реально неисправно
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section">
+      <div class="section__header">
+        <div class="section__eyebrow">Отзывы</div>
+        <h2 class="section__title">Что говорят клиенты</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+          </div>
+          <p class="testimonial-card__text">
+            «Ездил два месяца со стуком, три сервиса посетил — никто не нашёл.
+            Здесь за 20 минут выявили износ сайлентблока. Мастера реально знают
+            своё дело»
+          </p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">МК</div>
+            <div>
+              <div class="testimonial-card__name">Михаил К.</div>
+              <div class="testimonial-card__role">BMW X3, Москва</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+          </div>
+          <p class="testimonial-card__text">
+            «Приехала на диагностику перед покупкой авто. Нашли люфт в ступичном
+            подшипнике — продавец снизил цену на 40 000₽. Одна диагностика
+            окупилась в 16 раз!»
+          </p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">ЕС</div>
+            <div>
+              <div class="testimonial-card__name">Елена С.</div>
+              <div class="testimonial-card__role">Mercedes C-Class</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+            <div class="testimonial-card__star"></div>
+          </div>
+          <p class="testimonial-card__text">
+            «Отличный сервис! Быстро, четко, без воды. Получил отчёт, сам решил
+            что ремонтировать. Рекомендую всем, кто хочет понять реальное
+            состояние подвески»
+          </p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">АВ</div>
+            <div>
+              <div class="testimonial-card__name">Андрей В.</div>
+              <div class="testimonial-card__role">Toyota Camry</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section section--alt">
+      <div class="section__header">
+        <div class="section__eyebrow">Вопросы</div>
+        <h2 class="section__title">Частые вопросы</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-item__question">Нужно ли записываться заранее?</h3>
+          <p class="faq-item__answer">
+            Да, лучше записаться заранее по телефону, чтобы выбрать удобное
+            время. Но если вы подъедете без записи, мы постараемся принять вас в
+            тот же день.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-item__question">
+            Сколько времени занимает диагностика?
+          </h3>
+          <p class="faq-item__answer">
+            Полная проверка подвески занимает 20-30 минут. Быстрая проверка
+            одного узла — около 15 минут.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-item__question">Что входит в отчёт?</h3>
+          <p class="faq-item__answer">
+            Письменный отчёт с перечнем всех проверенных элементов, выявленных
+            проблемах, рекомендациях по ремонту в порядке приоритета. При
+            необходимости — фото и видео неисправностей.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-item__question">
+            Можно ли диагностировать любой автомобиль?
+          </h3>
+          <p class="faq-item__answer">
+            Да, вибростенд подходит для большинства легковых автомобилей и
+            кроссоверов. Для внедорожников и коммерческого транспорта уточняйте
+            по телефону.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-item__question">Нужно ли ремонтироваться у вас?</h3>
+          <p class="faq-item__answer">
+            Нет, вы получаете только результат диагностики. Ремонт делаете там,
+            где удобно. Мы не навязываем услуги и не давим на принятие решений.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="record" class="section cta">
+      <div class="cta__inner">
+        <h2 class="cta__title">Оставьте заявку</h2>
+        <a href="tel:+79258457923" class="cta__phone">+7 925 845 79 23</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__top">
+          <div>
+            <a href="#" class="logo">
+              <div class="logo__icon">VD</div>
+              <div class="logo__text">Вибро<span>Диагностика</span></div>
+            </a>
+            <p class="footer__brand-desc">
+              Профессиональная диагностика подвески автомобилей на вибростенде.
+              Быстро, точно, без навязывания ремонта.
+            </p>
+          </div>
+          <div>
+            <div class="footer__col-title">Услуги</div>
+            <div class="footer__links">
+              <a href="#services" class="footer__link">Быстрая проверка</a>
+              <a href="#services" class="footer__link">Полная диагностика</a>
+              <a href="#services" class="footer__link">Расширенная проверка</a>
+              <a href="#pricing" class="footer__link">Цены</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer__col-title">Контакты</div>
+            <div class="footer__links">
+              <a href="tel:+79258457923" class="footer__link"
+                >+7 925 845 79 23</a
+              >
+              <a href="mailto:maxima-gbo@mail.ru" class="footer__link"
+                >maxima-gbo@mail.ru</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <div class="footer__copyright">
+            © 2024 ВиброДиагностика. Все права защищены.
+          </div>
+          <div class="footer__contacts">
+            <a href="tel:+79258457923" class="footer__contact"
+              >+7 925 845 79 23</a
+            >
+            <span class="footer__contact">г. Москва</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ReginApp Widget -->
+    <script src="https://w.reginapp.ru/ria.js?wid=3710"></script>
+  </body>
+</html>

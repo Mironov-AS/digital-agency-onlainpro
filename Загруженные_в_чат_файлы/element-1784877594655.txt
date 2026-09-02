@@ -1,0 +1,210 @@
+# Инфраструктура: Простой проект
+Лендинг, промо-сайт, простая CMS или небольшой сайт без тяжёлой серверной логики.
+## Метаданные
+- Тип: Облачный сервер
+- Ключ ресурса: cloud-server
+- Service type: vm
+- Статус: live
+- Render service ID: 8404551
+- URL: ssh://root@5.129.252.107
+- Project ID: f1b125c1-003d-4eec-83d1-1bb7b36e98c8
+- Sandbox ID: cfc1b01b-8120-4db4-bcf5-2579ae3f34c3
+- Framework / engine: server
+- Timeweb type: server
+- Preset ID: 4799
+- Availability zone: msk-1
+- OS ID: 99
+- Bandwidth: 1000
+- Specs: preset 4799, msk-1, server
+## VM доступ
+- Host/IP: 5.129.252.107
+- SSH command: ssh -i /home/user/.promto/deploy-keys/cloud-server-3721eb53 root@5.129.252.107
+- SSH URL: ssh://root@5.129.252.107
+- Логин: root
+- Root пароль: e+@K93nBJy#gnZ
+## VM информация
+- Тип: Облачный сервер
+- Framework: ubuntu
+- Language: linux
+- IP: 5.129.252.107
+- Создан: 2026-06-18T12:02:49.580016
+- Запущен: 2026-06-18T06:02:49.000Z
+- Timeweb status: on
+- Status: live
+## VM ресурсы
+- CPU: 2 vCPU · 3.3 GHz
+- RAM: 2 GB
+- OS: ubuntu 24.04
+- Локация: ru-3 · msk-1
+- Статус изменён: 2026-06-18T12:03:10.000Z
+- QEMU agent: Включён
+- DDoS guard: Выключен
+- Диски: [object Object]
+- Сеть: [object Object]
+- Публичные IP: 2a03:6f00:a::2:d99, 5.129.252.107
+## Resource spec
+```json
+{
+  "type": "vm",
+  "friendly_name": "Простой проект",
+  "description": "Лендинг, промо-сайт, простая CMS или небольшой сайт без тяжёлой серверной логики.",
+  "availability_zone": "msk-1",
+  "os_id": 99,
+  "bandwidth": 1000,
+  "preset_id": 4799,
+  "deploy_id": "8404551",
+  "deploy_url": "ssh://root@5.129.252.107",
+  "live_status": "live",
+  "live_url": "ssh://root@5.129.252.107",
+  "tw_type": "server"
+}
+```
+## Deployment
+```json
+{
+  "id": 510,
+  "render_service_id": "8404551",
+  "service_name": "cloud-server",
+  "service_type": "vm",
+  "service_url": "ssh://root@5.129.252.107",
+  "status": "live",
+  "config": {
+    "os_id": 99,
+    "location": "ru-3",
+    "ssh_user": "root",
+    "bandwidth": 1000,
+    "preset_id": 4799,
+    "public_ip": "5.129.252.107",
+    "tw_service": "server",
+    "description": "Лендинг, промо-сайт, простая CMS или небольшой сайт без тяжёлой серверной логики.",
+    "ssh_command": "ssh -i /home/user/.promto/deploy-keys/cloud-server-3721eb53 root@5.129.252.107",
+    "friendly_name": "Простой проект",
+    "floating_ip_id": "ad1c3157-afde-4e01-ba05-137c4760a067",
+    "availability_zone": "msk-1",
+    "timeweb_ssh_key_id": 709919,
+    "sandbox_relinked_at": "2026-07-08 14:05:11.716731+03",
+    "ssh_public_key_path": "/home/user/.promto/deploy-keys/cloud-server-3721eb53.pub",
+    "ssh_private_key_path": "/home/user/.promto/deploy-keys/cloud-server-3721eb53",
+    "sandbox_relink_reason": "sandbox_upgrade_backfill",
+    "migrated_to_sandbox_id": "cfc1b01b-8120-4db4-bcf5-2579ae3f34c3",
+    "ssh_access_repaired_at": "2026-06-29T05:50:07.701164Z",
+    "migrated_from_sandbox_id": "3721eb53-9f28-4eda-8b14-a8253a7877d0",
+    "sandbox_upgrade_operation_id": "80b992a6-8d6a-4d4e-8354-037abd26b37b"
+  },
+  "created_at": "2026-06-18T12:02:49.580016",
+  "last_commit_sha": null,
+  "last_commit_msg": null,
+  "scheduled_deletion_at": null
+}
+```
+## Live detail snapshot
+```json
+{
+  "app": {
+    "id": "8404551",
+    "name": "promto-cloud-server-ed416451",
+    "status": "live",
+    "tw_status": "on",
+    "type": "vm",
+    "service_type": "vm",
+    "framework": "ubuntu",
+    "language": "linux",
+    "domains": [],
+    "ip": "5.129.252.107",
+    "envs": {},
+    "commit_sha": null,
+    "branch_name": "",
+    "build_cmd": "",
+    "run_cmd": null,
+    "index_dir": null,
+    "start_time": "2026-06-18T06:02:49.000Z",
+    "preset_id": 4799,
+    "is_auto_deploy": false,
+    "cpu": 2,
+    "ram_mb": 2048,
+    "cpu_frequency": "3.3",
+    "location": "ru-3",
+    "availability_zone": "msk-1",
+    "os": {
+      "id": 99,
+      "name": "ubuntu",
+      "version": "24.04"
+    },
+    "disks": [
+      {
+        "size": 40960,
+        "used": 18613,
+        "id": 25091061,
+        "type": "nvme",
+        "is_mounted": true,
+        "is_system": true,
+        "status": "done",
+        "system_name": "vda",
+        "is_auto_backup": false,
+        "comment": "",
+        "display_name": ""
+      }
+    ],
+    "networks": [
+      {
+        "type": "public",
+        "bandwidth": 1000,
+        "ips": [
+          {
+            "ip": "2a03:6f00:a::2:d99",
+            "is_main": true,
+            "ptr": null,
+            "type": "ipv6"
+          },
+          {
+            "ip": "5.129.252.107",
+            "id": "ad1c3157-afde-4e01-ba05-137c4760a067",
+            "is_main": true,
+            "ptr": null,
+            "type": "ipv4"
+          }
+        ],
+        "blocked_ports": []
+      }
+    ],
+    "root_login": "root",
+    "root_pass": "e+@K93nBJy#gnZ",
+    "vnc_pass": "",
+    "is_ddos_guard": false,
+    "is_qemu_agent": true,
+    "status_changed_at": "2026-06-18T12:03:10.000Z"
+  },
+  "deployment": {
+    "id": 510,
+    "service_name": "cloud-server",
+    "service_url": "ssh://root@5.129.252.107",
+    "created_at": "2026-06-18T12:02:49.580016",
+    "config": {
+      "os_id": 99,
+      "location": "ru-3",
+      "ssh_user": "root",
+      "bandwidth": 1000,
+      "preset_id": 4799,
+      "public_ip": "5.129.252.107",
+      "tw_service": "server",
+      "description": "Лендинг, промо-сайт, простая CMS или небольшой сайт без тяжёлой серверной логики.",
+      "ssh_command": "ssh -i /home/user/.promto/deploy-keys/cloud-server-3721eb53 root@5.129.252.107",
+      "friendly_name": "Простой проект",
+      "floating_ip_id": "ad1c3157-afde-4e01-ba05-137c4760a067",
+      "availability_zone": "msk-1",
+      "timeweb_ssh_key_id": 709919,
+      "sandbox_relinked_at": "2026-07-08 14:05:11.716731+03",
+      "ssh_public_key_path": "/home/user/.promto/deploy-keys/cloud-server-3721eb53.pub",
+      "ssh_private_key_path": "/home/user/.promto/deploy-keys/cloud-server-3721eb53",
+      "sandbox_relink_reason": "sandbox_upgrade_backfill",
+      "migrated_to_sandbox_id": "cfc1b01b-8120-4db4-bcf5-2579ae3f34c3",
+      "ssh_access_repaired_at": "2026-06-29T05:50:07.701164Z",
+      "migrated_from_sandbox_id": "3721eb53-9f28-4eda-8b14-a8253a7877d0",
+      "sandbox_upgrade_operation_id": "80b992a6-8d6a-4d4e-8354-037abd26b37b"
+    }
+  },
+  "deploys": [],
+  "logs": []
+}
+```
+Используй этот контекст, когда пользователь попросит изменить, подключить, проверить или отладить этот инфраструктурный ресурс.

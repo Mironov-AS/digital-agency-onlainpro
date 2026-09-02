@@ -1,0 +1,6 @@
+{"type":"session","version":3,"id":"1e1c336f-2788-4269-bc0f-c5125f2371a6","timestamp":"2026-08-17T11:18:39.240Z","cwd":"/home/user"}
+{"type":"model_change","id":"0858f51b","parentId":null,"timestamp":"2026-08-17T11:18:39.252Z","provider":"openrouter","modelId":"openrouter/auto"}
+{"type":"thinking_level_change","id":"09da180c","parentId":"0858f51b","timestamp":"2026-08-17T11:18:39.252Z","thinkingLevel":"off"}
+{"type":"custom","customType":"model-snapshot","data":{"timestamp":1786965519395,"provider":"openrouter","modelApi":"openai-completions","modelId":"openrouter/auto"},"id":"84430cea","parentId":"09da180c","timestamp":"2026-08-17T11:18:39.396Z"}
+{"type":"message","id":"b4df6b0d","parentId":"84430cea","timestamp":"2026-08-17T11:18:39.512Z","message":{"role":"user","content":"[OpenClaw heartbeat poll]","timestamp":1786965517916}}
+{"type":"message","id":"9fa25b44","parentId":"b4df6b0d","timestamp":"2026-08-17T11:18:44.527Z","message":{"role":"assistant","content":[{"type":"text","text":"HEARTBEAT_OK"}],"api":"openai-completions","provider":"openrouter","model":"openrouter/auto","usage":{"input":27129,"output":118,"cacheRead":0,"cacheWrite":0,"reasoningTokens":112,"totalTokens":27247,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"stopReason":"stop","timestamp":1786965519542,"responseId":"gen-1786965520-FwNpzteVMznpXfL6kvkZ"}}

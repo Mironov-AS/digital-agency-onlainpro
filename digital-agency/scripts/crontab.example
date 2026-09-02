@@ -1,0 +1,10 @@
+# =============================================================================
+# Example crontab entries for digital-agency backups
+# Add to crontab with: crontab -e
+# =============================================================================
+
+# Daily backup at 3 AM (runs as the user who owns the digital-agency dir)
+0 3 * * * /home/user/digital-agency/scripts/backup.sh --keep 14
+
+# Or with docker (if running inside docker-compose environment):
+# 0 3 * * * docker exec digital-agency_gateway_1 /repo/scripts/backup.sh --keep 14

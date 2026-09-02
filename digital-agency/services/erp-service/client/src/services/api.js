@@ -1,0 +1,181 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: '/api/erp',
+  headers: { 'Content-Type': 'application/json' },
+});
+
+// Prevent browser/proxy caching of GET requests
+api.interceptors.request.use((config) => {
+  if (!config.method || config.method.toLowerCase() === 'get') {
+    config.headers['Cache-Control'] = 'no-cache';
+    config.headers['Pragma'] = 'no-cache';
+  }
+  return config;
+});
+
+// Set / clear the Authorization header on the shared instance
+export function setApiAuthToken(token) {
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common['Authorization'];
+  }
+}
+
+// Contracts API
+export const contractsApi = {
+  list: () => api.get('/contracts'),
+  get: (id) => api.get(`/contracts/${id}`),
+  create: (data) => api.post('/contracts', data),
+  update: (id, data) => api.put(`/contracts/${id}`, data),
+  delete: (id) => api.delete(`/contracts/${id}`),
+  analyzeFile: (file) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    return api.post('/contracts/analyze-file', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+  },
+  // Files
+  getAllFiles: () => api.get('/contracts/files/all'),
+  getFiles: (contractId) => api.get(`/contracts/${contractId}/files`),
+  uploadFile: (contractId, file, onProgress) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post(`/contracts/${contractId}/files`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress,
+    });
+  },
+  downloadFile: (contractId, fileId) =>
+    api.get(`/contracts/${contractId}/files/${fileId}/download`, { responseType: 'blob' }),
+  deleteFile: (contractId, fileId) => api.delete(`/contracts/${contractId}/files/${fileId}`),
+};
+
+// Orders API
+export const ordersApi = {
+  list: () => api.get('/orders'),
+  get: (id) => api.get(`/orders/${id}`),
+  create: (data) => api.post('/orders', data),
+  update: (id, data) => api.put(`/orders/${id}`, data),
+  delete: (id) => api.delete(`/orders/${id}`),
+};
+
+// Invoices API
+export const invoicesApi = {
+  list: () => api.get('/invoices'),
+  get: (id) => api.get(`/invoices/${id}`),
+  create: (data) => api.post('/invoices', data),
+  update: (id, data) => api.put(`/invoices/${id}`, data),
+  addPayment: (id, amount, paidDate, notes) => api.post(`/invoices/${id}/payments`, { amount, paidDate, notes }),
+  deletePayment: (id, paymentId) => api.delete(`/invoices/${id}/payments/${paymentId}`),
+  deactivate: (id) => api.patch(`/invoices/${id}/deactivate`),
+  importPayments: (file, onProgress) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post('/invoices/import', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress,
+    });
+  },
+};
+
+// Payments API
+export const paymentsApi = {
+  list: () => api.get('/payments'),
+  get: (id) => api.get(`/payments/${id}`),
+  update: (id, data) => api.put(`/payments/${id}`, data),
+};
+
+// Shipments API
+export const shipmentsApi = {
+  list: () => api.get('/shipments'),
+  get: (id) => api.get(`/shipments/${id}`),
+  create: (data) => api.post('/shipments', data),
+  update: (id, data) => api.put(`/shipments/${id}`, data),
+  confirm: (id) => api.put(`/shipments/${id}/confirm`),
+};
+
+// Drivers API
+export const driversApi = {
+  list: () => api.get('/drivers'),
+  create: (data) => api.post('/drivers', data),
+  update: (id, data) => api.put(`/drivers/${id}`, data),
+};
+
+// Delivery Routes API
+export const deliveryRoutesApi = {
+  list: (date) => api.get('/delivery-routes', { params: date ? { date } : {} }),
+  create: (data) => api.post('/delivery-routes', data),
+  update: (id, data) => api.put(`/delivery-routes/${id}`, data),
+};
+
+// Claims API
+export const claimsApi = {
+  list: () => api.get('/claims'),
+  get: (id) => api.get(`/claims/${id}`),
+  create: (data) => api.post('/claims', data),
+  update: (id, data) => api.put(`/claims/${id}`, data),
+};
+
+// Counterparties API
+export const counterpartiesApi = {
+  list: () => api.get('/counterparties'),
+  get: (id) => api.get(`/counterparties/${id}`),
+  create: (data) => api.post('/counterparties', data),
+  update: (id, data) => api.put(`/counterparties/${id}`, data),
+  delete: (id) => api.delete(`/counterparties/${id}`),
+};
+
+// Production API
+export const productionApi = {
+  tasks: () => api.get('/production/tasks'),
+  lines: () => api.get('/production/lines'),
+  createTask: (data) => api.post('/production/tasks', data),
+  updateTask: (id, data) => api.put(`/production/tasks/${id}`, data),
+  // Order-centric production endpoints
+  productionOrders: () => api.get('/production/orders'),
+  markOrderReady: (id) => api.put(`/production/orders/${id}/ready`),
+  updateOrderItem: (orderId, itemId, data) => api.put(`/production/orders/${orderId}/items/${itemId}`, data),
+};
+
+// Notifications API
+export const notificationsApi = {
+  list: () => api.get('/notifications'),
+  markRead: (id) => api.put(`/notifications/${id}/read`),
+  markAllRead: () => api.put('/notifications/read-all'),
+};
+
+// Audit API
+export const auditApi = {
+  list: (limit = 50, offset = 0) => api.get('/audit', { params: { limit, offset } }),
+};
+
+// Nomenclature API
+export const nomenclatureApi = {
+  list: () => api.get('/nomenclature'),
+  get: (id) => api.get(`/nomenclature/${id}`),
+  create: (data) => api.post('/nomenclature', data),
+  update: (id, data) => api.put(`/nomenclature/${id}`, data),
+  delete: (id) => api.delete(`/nomenclature/${id}`),
+};
+
+// Settings API
+export const settingsApi = {
+  get: () => api.get('/settings'),
+  update: (data) => api.put('/settings', data),
+};
+
+// Auth API
+export const authApi = {
+  login: (email, password) => api.post('/auth/login', { email, password }),
+  setupMfa: (mfaToken) => api.post('/auth/mfa/setup', { mfaToken }),
+  verifyMfa: (mfaToken, code) => api.post('/auth/mfa/verify', { mfaToken, code }),
+  enableMfa: (mfaToken, code) => api.post('/auth/mfa/enable', { mfaToken, code }),
+  resetPasswordRequest: (email) => api.post('/auth/reset-password/request', { email }),
+  resetPasswordConfirm: (token, password) => api.post('/auth/reset-password/confirm', { token, password }),
+  logout: () => api.post('/auth/logout'),
+  me: () => api.get('/auth/me'),
+  refresh: () => api.post('/auth/refresh'),
+};
+
+export default api;

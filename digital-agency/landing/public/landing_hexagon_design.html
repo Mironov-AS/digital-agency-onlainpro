@@ -1,0 +1,3938 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Цифровое агентство ОнлайнПро.РФ — ваш помощник в мире современных
+      технологий
+    </title>
+    <meta
+      name="description"
+      content="Разрабатываем сайты, запускаем MVP за 2 недели, автоматизируем бизнес. 15+ лет опыта. Работаем по всей России."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --purple: #a855f7;
+        --purple-light: #c084fc;
+        --purple-dark: #7c3aed;
+        --cyan: #22d3ee;
+        --cyan-light: #67e8f9;
+        --cyan-dark: #06b6d4;
+        --bg: #0a0a0f;
+        --bg-secondary: #111118;
+        --bg-card: #16161d;
+        --bg-card-hover: #1e1e28;
+        --text: #ffffff;
+        --text-muted: #a1a1aa;
+        --text-dim: #71717a;
+        --border: #27272a;
+        --gradient-brand: linear-gradient(
+          135deg,
+          #a855f7 0%,
+          #22d3ee 50%,
+          #a855f7 100%
+        );
+        --gradient-purple: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+        --gradient-cyan: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* Background Effects */
+      .bg-effects {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .bg-glow {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        filter: blur(150px);
+        opacity: 0.3;
+        animation: float 20s ease-in-out infinite;
+      }
+
+      .bg-glow-purple {
+        background: var(--purple);
+        top: -200px;
+        left: -100px;
+      }
+
+      .bg-glow-cyan {
+        background: var(--cyan);
+        bottom: -200px;
+        right: -100px;
+        animation-delay: -10s;
+      }
+
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(30px, 30px) scale(1.1);
+        }
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 44px;
+        height: 44px;
+      }
+
+      .logo-text {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .logo-text span {
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-brand);
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .nav-dropdown-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0;
+        font-family: inherit;
+      }
+
+      .nav-dropdown-btn:hover {
+        color: var(--text);
+      }
+
+      .nav-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 12px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 8px;
+        min-width: 200px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .nav-dropdown:hover .nav-dropdown-menu {
+        display: block;
+      }
+
+      .nav-dropdown-menu a {
+        display: block;
+        padding: 10px 16px;
+        color: var(--text-muted);
+        font-size: 14px;
+        border-radius: 6px;
+        transition:
+          color 0.2s,
+          background-color 0.2s;
+      }
+
+      .nav-dropdown-menu a:hover {
+        background: var(--bg-card-hover);
+        color: var(--text);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--gradient-purple);
+        color: white;
+        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
+      }
+
+      .btn-secondary {
+        background: rgba(34, 211, 238, 0.1);
+        color: var(--cyan);
+        border: 1px solid rgba(34, 211, 238, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(34, 211, 238, 0.2);
+        border-color: var(--cyan);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--purple);
+        color: var(--purple);
+      }
+
+      /* Main Content */
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 120px 32px 80px;
+      }
+
+      .hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .hero-content {
+        max-width: 600px;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(168, 85, 247, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--purple-light);
+        margin-bottom: 24px;
+      }
+
+      .hero-title {
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        letter-spacing: -1px;
+      }
+
+      .hero-title .gradient {
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 20px;
+        color: var(--text-muted);
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 48px;
+        margin-top: 48px;
+        padding-top: 48px;
+        border-top: 1px solid var(--border);
+      }
+
+      .stat {
+        text-align: left;
+      }
+
+      .stat-value {
+        font-size: 40px;
+        font-weight: 800;
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      /* Hero Visual */
+      .hero-visual {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .hero-content {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .hero-logo {
+        width: 320px;
+        height: 320px;
+        animation: pulse-glow 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
+        }
+        50% {
+          filter: drop-shadow(0 0 60px rgba(168, 85, 247, 0.8));
+        }
+      }
+
+      /* Services Section */
+      .services {
+        padding: 100px 32px;
+        background: var(--bg-secondary);
+      }
+
+      .section-header {
+        max-width: 1280px;
+        margin: 0 auto 60px;
+        text-align: center;
+      }
+
+      .section-label {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--purple);
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -1px;
+      }
+
+      .section-subtitle {
+        font-size: 18px;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .services-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .service-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-brand);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .service-card:hover {
+        border-color: var(--purple);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15);
+      }
+
+      .service-card:hover::before {
+        opacity: 1;
+      }
+
+      .service-icon {
+        width: 100px;
+        height: 100px;
+        background: transparent;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .service-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: none;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .service-category {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--cyan);
+        margin-bottom: 8px;
+      }
+
+      .service-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .service-desc {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .service-price {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--purple-light);
+      }
+
+      .service-price small {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      /* Features Section */
+      .features {
+        padding: 100px 32px;
+      }
+
+      .features-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px;
+        display: flex;
+        gap: 24px;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .feature-card:hover {
+        border-color: var(--cyan);
+        transform: translateY(-4px);
+      }
+
+      .feature-icon {
+        width: 100px;
+        height: 100px;
+        background: transparent;
+        border: none;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .feature-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: none;
+        fill: none;
+      }
+
+      .feature-content h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .feature-content p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* Why Section */
+      .why {
+        padding: 100px 32px;
+        background: var(--bg-secondary);
+      }
+
+      .why-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+      }
+
+      .why-item {
+        text-align: center;
+        padding: 32px 24px;
+      }
+
+      .why-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 24px;
+        background: transparent;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .why-icon svg {
+        width: 100%;
+        height: 100%;
+        stroke: none;
+        fill: none;
+      }
+
+      .why-item h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .why-item p {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 120px 32px;
+        text-align: center;
+        position: relative;
+      }
+
+      .cta-inner {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cta-title {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 24px;
+      }
+
+      .cta-title .gradient {
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .cta-subtitle {
+        font-size: 20px;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+      }
+
+      /* Footer */
+      footer {
+        padding: 60px 32px;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-logo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      .footer-contact {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .footer-contact a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+
+      .footer-contact a:hover {
+        color: var(--purple);
+      }
+
+      /* Mobile Menu */
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .hero-logo {
+          width: 240px;
+          height: 240px;
+        }
+
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .why-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero {
+          padding: 100px 20px 60px;
+        }
+
+        .hero-title {
+          font-size: 36px;
+        }
+
+        .hero-subtitle {
+          font-size: 16px;
+        }
+
+        .hero-stats {
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .services,
+        .features,
+        .why,
+        .cta {
+          padding: 60px 20px;
+        }
+
+        .section-title {
+          font-size: 32px;
+        }
+
+        .services-grid,
+        .features-grid,
+        .why-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-inner {
+          flex-direction: column;
+          gap: 24px;
+          text-align: center;
+        }
+
+        .cta-title {
+          font-size: 32px;
+        }
+      }
+
+      /* Container */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      /* Page Sections */
+      .page-section {
+        min-height: 100vh;
+        padding-top: 80px;
+        display: none;
+      }
+      .page-section.active,
+      .page-section.show {
+        display: block !important;
+      }
+
+      /* About Page */
+      .page-hero {
+        background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        padding: 80px 20px;
+        text-align: center;
+      }
+      .page-hero-inner {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .page-hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #22d3ee 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .page-hero p {
+        font-size: 20px;
+        color: #94a3b8;
+        line-height: 1.7;
+      }
+      .about-content,
+      .values-section,
+      .team-section {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .about-content h2,
+      .values-section h2,
+      .team-section h2,
+      .stats-section h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: #fff;
+      }
+      .about-content p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #94a3b8;
+        margin-bottom: 20px;
+      }
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+      }
+      .value-card {
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.1) 0%,
+          rgba(34, 211, 238, 0.1) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 16px;
+        padding: 30px;
+      }
+      .value-card h3 {
+        font-size: 20px;
+        color: #a855f7;
+        margin-bottom: 12px;
+      }
+      .value-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+      }
+      .team-card {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.1) 0%,
+          rgba(34, 211, 238, 0.1) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 20px;
+        padding: 40px;
+      }
+      .team-avatar {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .team-info h3 {
+        font-size: 24px;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .team-role {
+        display: block;
+        color: #a855f7;
+        font-size: 16px;
+        margin-bottom: 16px;
+      }
+      .team-info p {
+        color: #94a3b8;
+        line-height: 1.7;
+      }
+
+      /* Cases Page */
+      .cases-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .case-card {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 46, 0.8) 0%,
+          rgba(15, 15, 26, 0.9) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 20px;
+        padding: 30px;
+      }
+      .case-header {
+        margin-bottom: 20px;
+      }
+      .case-header h3 {
+        font-size: 22px;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .case-tags {
+        display: inline-block;
+        background: rgba(168, 85, 247, 0.2);
+        color: #a855f7;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+      .case-section {
+        margin-bottom: 16px;
+      }
+      .case-section h4 {
+        font-size: 12px;
+        color: #22d3ee;
+        margin-bottom: 6px;
+        letter-spacing: 1px;
+      }
+      .case-section p {
+        color: #94a3b8;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+      .case-metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(168, 85, 247, 0.2);
+      }
+      .case-metrics span {
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.2) 0%,
+          rgba(34, 211, 238, 0.2) 100%
+        );
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        max-width: 1000px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .stat-card {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.1) 0%,
+          rgba(34, 211, 238, 0.05) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 16px;
+      }
+      .stat-number {
+        font-size: 48px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+      .stat-label {
+        color: #94a3b8;
+        font-size: 16px;
+      }
+
+      .stats-section {
+        max-width: 1000px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .stats-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      /* Product Pages */
+      .product-hero {
+        background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        padding: 80px 20px;
+        text-align: center;
+      }
+      .product-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .product-stats {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        padding: 40px 20px;
+        background: rgba(168, 85, 247, 0.05);
+        border-top: 1px solid rgba(168, 85, 247, 0.2);
+        border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+      }
+      .pstat {
+        text-align: center;
+      }
+      .pstat-num {
+        font-size: 36px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .pstat-label {
+        color: #94a3b8;
+        font-size: 14px;
+        margin-top: 8px;
+      }
+      .product-section {
+        max-width: 1000px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .product-section h2 {
+        font-size: 32px;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .product-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+      .pstep {
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.1) 0%,
+          rgba(34, 211, 238, 0.05) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+      }
+      .pstep-num {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #a855f7 0%, #22d3ee 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 auto 20px;
+      }
+      .pstep h3 {
+        font-size: 20px;
+        color: #fff;
+        margin-bottom: 12px;
+      }
+      .pstep p {
+        color: #94a3b8;
+        line-height: 1.6;
+      }
+      .audience-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+      }
+      .audience-card {
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.1) 0%,
+          rgba(34, 211, 238, 0.05) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+      .audience-card h3 {
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .audience-card p {
+        color: #94a3b8;
+        font-size: 14px;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .feature-card {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 46, 0.8) 0%,
+          rgba(15, 15, 26, 0.9) 100%
+        );
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: 16px;
+        padding: 30px;
+      }
+      .feature-card h3 {
+        font-size: 18px;
+        color: #a855f7;
+        margin-bottom: 12px;
+      }
+      .feature-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Routing
+        function showPage() {
+          const hash = window.location.hash;
+          // Hide all page sections
+          document
+            .querySelectorAll(".page-section")
+            .forEach(function (section) {
+              section.classList.remove("show");
+              section.style.display = "none";
+            });
+          // Remove active from all nav links
+          document
+            .querySelectorAll(".nav-links a, .mobile-menu a")
+            .forEach(function (link) {
+              link.classList.remove("active");
+            });
+
+          const routes = {
+            "#about": "about-page",
+            "#cases": "cases-page",
+            "#product-queue": "product-queue",
+            "#product-booking": "product-booking",
+            "#product-crm": "product-crm",
+            "#product-erp": "product-erp",
+            "#product-store": "product-store",
+            "#product-ozon": "product-ozon",
+          };
+
+          if (routes[hash] && document.getElementById(routes[hash])) {
+            const targetSection = document.getElementById(routes[hash]);
+            targetSection.classList.add("show");
+            targetSection.style.display = "block";
+            // Find and highlight the nav link
+            const linkSelector =
+              hash === "#about"
+                ? 'a[href="#about"]'
+                : hash === "#cases"
+                  ? 'a[href="#cases"]'
+                  : hash === "#product-queue"
+                    ? 'a[href="#product-queue"]'
+                    : hash === "#product-booking"
+                      ? 'a[href="#product-booking"]'
+                      : hash === "#product-crm"
+                        ? 'a[href="#product-crm"]'
+                        : hash === "#product-erp"
+                          ? 'a[href="#product-erp"]'
+                          : hash === "#product-store"
+                            ? 'a[href="#product-store"]'
+                            : 'a[href="#product-ozon"]';
+            document.querySelector(linkSelector)?.classList.add("active");
+          } else {
+            // Show home page
+            const homePage = document.getElementById("home-page");
+            if (homePage) {
+              homePage.classList.add("show");
+              homePage.style.display = "block";
+            }
+          }
+        }
+
+        window.addEventListener("hashchange", showPage);
+        showPage();
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+      <div class="bg-glow bg-glow-purple"></div>
+      <div class="bg-glow bg-glow-cyan"></div>
+      <div class="bg-grid"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <svg class="logo-icon" viewBox="0 0 100 100" fill="none">
+            <!-- Hexagon outer -->
+            <polygon
+              points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5"
+              stroke="url(#logo-grad)"
+              stroke-width="3"
+              fill="none"
+            >
+              <animate
+                attributeName="stroke-dasharray"
+                values="0,500;500,0"
+                dur="3s"
+                fill="freeze"
+              />
+            </polygon>
+            <!-- Hexagon middle -->
+            <polygon
+              points="50,20 75,35 75,65 50,80 25,65 25,35"
+              stroke="url(#logo-grad)"
+              stroke-width="2"
+              fill="none"
+              opacity="0.6"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 50 50"
+                to="360 50 50"
+                dur="20s"
+                repeatCount="indefinite"
+              />
+            </polygon>
+            <!-- Hexagon inner -->
+            <polygon
+              points="50,35 60,42.5 60,57.5 50,65 40,57.5 40,42.5"
+              fill="url(#logo-grad)"
+              opacity="0.8"
+            >
+              <animate
+                attributeName="opacity"
+                values="0.8;1;0.8"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </polygon>
+            <!-- Glow center -->
+            <circle cx="50" cy="50" r="8" fill="url(#logo-grad)">
+              <animate
+                attributeName="r"
+                values="8;10;8"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <!-- Glow filter -->
+            <defs>
+              <linearGradient
+                id="logo-grad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #a855f7" />
+                <stop offset="50%" style="stop-color: #22d3ee" />
+                <stop offset="100%" style="stop-color: #a855f7" />
+              </linearGradient>
+            </defs>
+            <!-- Corner nodes -->
+            <circle cx="50" cy="5" r="4" fill="#a855f7">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <circle cx="90" cy="27.5" r="4" fill="#22d3ee">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+                begin="0.25s"
+              />
+            </circle>
+            <circle cx="90" cy="72.5" r="4" fill="#a855f7">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+                begin="0.5s"
+              />
+            </circle>
+            <circle cx="50" cy="95" r="4" fill="#22d3ee">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+                begin="0.75s"
+              />
+            </circle>
+            <circle cx="10" cy="72.5" r="4" fill="#a855f7">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+                begin="1s"
+              />
+            </circle>
+            <circle cx="10" cy="27.5" r="4" fill="#22d3ee">
+              <animate
+                attributeName="opacity"
+                values="0.5;1;0.5"
+                dur="1.5s"
+                repeatCount="indefinite"
+                begin="1.25s"
+              />
+            </circle>
+          </svg>
+          <span class="logo-text">ОнлайнПро<span>.рф</span></span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#skills">Навыки</a><a href="#pricing">Цены</a
+          ><a href="#services">Услуги</a><a href="#about">О нас</a
+          ><a href="#cases">Кейсы</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-btn">Продукты ▾</button>
+            <div class="nav-dropdown-menu">
+              <a href="#product-queue">Электронная очередь</a
+              ><a href="#product-booking">Онлайн-запись</a
+              ><a href="#product-crm">CRM Light</a
+              ><a href="#product-erp">ERP Light</a
+              ><a href="#product-store">Управление магазином</a
+              ><a href="#product-ozon">Этикетки Ozon</a>
+            </div>
+          </div>
+          <a href="#contacts">Контакты</a
+          ><a href="/app/" class="btn btn-primary">Войти</a>
+        </div>
+
+        <button class="mobile-menu-btn" aria-label="Меню">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="home-page" class="page-section">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M8 1L10 6L15 7L11.5 10.5L12.5 15.5L8 13L3.5 15.5L4.5 10.5L1 7L6 6L8 1Z"
+                  fill="currentColor"
+                />
+              </svg>
+              15+ лет на рынке
+            </div>
+
+            <h1 class="hero-title">
+              Цифровое агентство:<br />
+              <span class="gradient"
+                >ваш помощник в мире современных технологий</span
+              >
+            </h1>
+
+            <p class="hero-subtitle">
+              Помогаем развивать продукты. Разрабатываем сайты, запускаем MVP за
+              2 недели, автоматизируем бизнес-процессы и внедряем ИИ.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="#contact" class="btn btn-primary"
+                >Обсудить проект<svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" /></svg></a
+              ><a href="#services" class="btn btn-secondary">Наши услуги</a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <div class="stat-value">15+</div>
+                <div class="stat-label">лет опыта</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">проектов</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">поддержка</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <svg class="hero-logo" viewBox="0 0 200 200" fill="none">
+              <!-- Outer glow -->
+              <defs>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <linearGradient
+                  id="hex-grad"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" style="stop-color: #a855f7" />
+                  <stop offset="50%" style="stop-color: #22d3ee" />
+                  <stop offset="100%" style="stop-color: #a855f7" />
+                </linearGradient>
+              </defs>
+
+              <!-- Outer hexagon -->
+              <polygon
+                points="100,10 173,50 173,150 100,190 27,150 27,50"
+                stroke="url(#hex-grad)"
+                stroke-width="3"
+                fill="none"
+                filter="url(#glow)"
+              >
+                <animate
+                  attributeName="stroke-dasharray"
+                  values="0,600;600,0"
+                  dur="2s"
+                  fill="freeze"
+                />
+              </polygon>
+
+              <!-- Middle hexagon -->
+              <polygon
+                points="100,35 145,60 145,140 100,165 55,140 55,60"
+                stroke="url(#hex-grad)"
+                stroke-width="2"
+                fill="none"
+                opacity="0.6"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 100 100"
+                  to="360 100 100"
+                  dur="30s"
+                  repeatCount="indefinite"
+                />
+              </polygon>
+
+              <!-- Inner hexagon -->
+              <polygon
+                points="100,55 125,70 125,130 100,145 75,130 75,70"
+                stroke="url(#hex-grad)"
+                stroke-width="2"
+                fill="rgba(168,85,247,0.1)"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 100 100"
+                  to="-360 100 100"
+                  dur="20s"
+                  repeatCount="indefinite"
+                />
+              </polygon>
+
+              <!-- Center hexagon -->
+              <polygon
+                points="100,70 115,80 115,120 100,130 85,120 85,80"
+                fill="url(#hex-grad)"
+                opacity="0.9"
+              >
+                <animate
+                  attributeName="opacity"
+                  values="0.9;1;0.9"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </polygon>
+
+              <!-- Center dot -->
+              <circle cx="100" cy="100" r="12" fill="url(#hex-grad)">
+                <animate
+                  attributeName="r"
+                  values="12;16;12"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="1;0.8;1"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+
+              <!-- Orbiting particles -->
+              <circle cx="100" cy="20" r="5" fill="#a855f7" opacity="0.8">
+                <animate
+                  attributeName="opacity"
+                  values="0.4;1;0.4"
+                  dur="1.5s"
+                  repeatCount="indefinite"
+                />
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 100 100"
+                  to="360 100 100"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="100" cy="20" r="5" fill="#22d3ee" opacity="0.8">
+                <animate
+                  attributeName="opacity"
+                  values="0.4;1;0.4"
+                  dur="1.5s"
+                  repeatCount="indefinite"
+                  begin="0.5s"
+                />
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="120 100 100"
+                  to="480 100 100"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="100" cy="20" r="5" fill="#a855f7" opacity="0.8">
+                <animate
+                  attributeName="opacity"
+                  values="0.4;1;0.4"
+                  dur="1.5s"
+                  repeatCount="indefinite"
+                  begin="1s"
+                />
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="240 100 100"
+                  to="600 100 100"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+
+              <!-- Corner accents -->
+              <circle cx="100" cy="10" r="4" fill="#a855f7">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="173" cy="50" r="4" fill="#22d3ee">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="0.33s"
+                />
+              </circle>
+              <circle cx="173" cy="150" r="4" fill="#a855f7">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="0.66s"
+                />
+              </circle>
+              <circle cx="100" cy="190" r="4" fill="#22d3ee">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="1s"
+                />
+              </circle>
+              <circle cx="27" cy="150" r="4" fill="#a855f7">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="1.33s"
+                />
+              </circle>
+              <circle cx="27" cy="50" r="4" fill="#22d3ee">
+                <animate
+                  attributeName="opacity"
+                  values="0.5;1;0.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="1.66s"
+                />
+              </circle>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="services" id="pricing">
+        <div class="section-header">
+          <span class="section-label">Наши услуги</span>
+          <h2 class="section-title">Понятные решения для вашего бизнеса</h2>
+          <p class="section-subtitle">
+            Выберите подходящий вариант или закажите индивидуальную разработку
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter id="gw1" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gw2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                  <linearGradient id="gw3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gw3)" />
+                <ellipse
+                  cx="60"
+                  cy="70"
+                  rx="45"
+                  ry="40"
+                  fill="#a855f7"
+                  fill-opacity="0.15"
+                />
+                <rect
+                  x="22"
+                  y="30"
+                  width="76"
+                  height="50"
+                  rx="6"
+                  fill="#16161d"
+                  stroke="url(#gw2)"
+                  stroke-width="2"
+                />
+                <rect
+                  x="28"
+                  y="36"
+                  width="64"
+                  height="38"
+                  rx="3"
+                  fill="#0a0a0f"
+                />
+                <rect
+                  x="34"
+                  y="44"
+                  width="26"
+                  height="3"
+                  rx="1.5"
+                  fill="#a855f7"
+                />
+                <rect
+                  x="34"
+                  y="52"
+                  width="40"
+                  height="3"
+                  rx="1.5"
+                  fill="#22d3ee"
+                />
+                <rect
+                  x="34"
+                  y="60"
+                  width="18"
+                  height="3"
+                  rx="1.5"
+                  fill="#a855f7"
+                />
+                <path
+                  d="M54 80 L54 86 L46 94 L74 94 L66 86 L66 80"
+                  fill="#16161d"
+                />
+                <rect
+                  x="46"
+                  y="94"
+                  width="28"
+                  height="4"
+                  rx="2"
+                  fill="#27272a"
+                />
+                <circle cx="94" cy="32" r="3" fill="#a855f7">
+                  <animate
+                    attributeName="opacity"
+                    values="0.5;1;0.5"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="20" cy="52" r="2.5" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.4;1"
+                    dur="1.8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <span class="service-category">Сайты</span>
+            <h3 class="service-title">Landing Page</h3>
+            <p class="service-desc">
+              Одностраничный сайт для продвижения продукта или услуги.
+            </p>
+            <div class="service-price">от 15 000 ₽</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter id="gm1" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gm2" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#7c3aed" />
+                    <stop offset="50%" stop-color="#a855f7" />
+                    <stop offset="100%" stop-color="#c084fc" />
+                  </linearGradient>
+                  <linearGradient id="gm3" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#a855f7" />
+                  </linearGradient>
+                  <linearGradient id="gm4" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gm4)" />
+                <line
+                  x1="12"
+                  y1="32"
+                  x2="45"
+                  y2="32"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                >
+                  <animate
+                    attributeName="x1"
+                    values="12;20;12"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <line
+                  x1="8"
+                  y1="52"
+                  x2="38"
+                  y2="52"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                >
+                  <animate
+                    attributeName="x1"
+                    values="8;16;8"
+                    dur="1.2s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <ellipse
+                  cx="60"
+                  cy="92"
+                  rx="18"
+                  ry="22"
+                  fill="#22d3ee"
+                  fill-opacity="0.3"
+                >
+                  <animate
+                    attributeName="ry"
+                    values="22;28;22"
+                    dur="0.3s"
+                    repeatCount="indefinite"
+                  />
+                </ellipse>
+                <path
+                  d="M60 22 C60 22 78 40 78 62 L78 72 L42 72 L42 62 C42 40 60 22 60 22 Z"
+                  fill="url(#gm2)"
+                  filter="url(#gm1)"
+                />
+                <path
+                  d="M60 18 C60 18 68 30 68 35 L52 35 C52 30 60 18 60 18 Z"
+                  fill="#c084fc"
+                />
+                <circle
+                  cx="60"
+                  cy="48"
+                  r="9"
+                  fill="#0a0a0f"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="60"
+                  cy="48"
+                  r="5"
+                  fill="#22d3ee"
+                  fill-opacity="0.3"
+                />
+                <path d="M46 72 L52 90 L58 80 L64 90 L74 72" fill="url(#gm3)">
+                  <animate
+                    attributeName="d"
+                    values="M46 72 L52 90 L58 80 L64 90 L74 72;M46 72 L50 95 L58 82 L66 95 L74 72;M46 72 L52 90 L58 80 L64 90 L74 72"
+                    dur="0.2s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            <span class="service-category">Веб-приложения</span>
+            <h3 class="service-title">MVP за 2 недели</h3>
+            <p class="service-desc">
+              Быстрый запуск рабочего приложения. Проверьте идею!
+            </p>
+            <div class="service-price">от 70 000 ₽</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter id="ga1" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="ga2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                  <linearGradient id="ga3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#ga3)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="48"
+                  ry="48"
+                  fill="#22d3ee"
+                  fill-opacity="0.08"
+                />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="34"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="24"
+                  stroke="#22d3ee"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-dasharray="4 4"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 60 60"
+                    to="360 60 60"
+                    dur="10s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="14"
+                  fill="#a855f7"
+                  fill-opacity="0.3"
+                />
+                <path d="M52 55 Q60 46 68 55 Q60 64 52 55" fill="#22d3ee">
+                  <animate
+                    attributeName="d"
+                    values="M52 55 Q60 46 68 55 Q60 64 52 55;M50 55 Q60 44 70 55 Q60 66 50 55;M52 55 Q60 46 68 55 Q60 64 52 55"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <path
+                  d="M52 65 Q60 74 68 65"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <circle cx="36" cy="46" r="3.5" fill="#a855f7">
+                  <animate
+                    attributeName="r"
+                    values="3.5;4.5;3.5"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="84" cy="46" r="3.5" fill="#22d3ee">
+                  <animate
+                    attributeName="r"
+                    values="3.5;4.5;3.5"
+                    dur="1.8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <span class="service-category">ИИ</span>
+            <h3 class="service-title">AI решения</h3>
+            <p class="service-desc">
+              Внедрим ИИ, который работает уже сейчас. Автоматизация.
+            </p>
+            <div class="service-price">от 50 000 ₽</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter id="gc1" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gc2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                  <linearGradient id="gc3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gc3)" />
+                <ellipse
+                  cx="60"
+                  cy="55"
+                  rx="40"
+                  ry="40"
+                  fill="#a855f7"
+                  fill-opacity="0.08"
+                />
+                <rect
+                  x="26"
+                  y="32"
+                  width="68"
+                  height="48"
+                  rx="8"
+                  fill="#1a1a2e"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <rect
+                  x="26"
+                  y="32"
+                  width="68"
+                  height="11"
+                  rx="8"
+                  fill="#a855f7"
+                  fill-opacity="0.25"
+                />
+                <circle cx="36" cy="37.5" r="2.5" fill="#ef4444" />
+                <circle cx="45" cy="37.5" r="2.5" fill="#fbbf24" />
+                <circle cx="54" cy="37.5" r="2.5" fill="#22c55e" />
+                <rect
+                  x="33"
+                  y="52"
+                  width="24"
+                  height="3.5"
+                  rx="1.75"
+                  fill="#22d3ee"
+                />
+                <rect
+                  x="33"
+                  y="60"
+                  width="38"
+                  height="3"
+                  rx="1.5"
+                  fill="#a855f7"
+                  fill-opacity="0.5"
+                />
+                <rect
+                  x="33"
+                  y="67"
+                  width="28"
+                  height="3"
+                  rx="1.5"
+                  fill="#a855f7"
+                  fill-opacity="0.3"
+                />
+                <rect
+                  x="33"
+                  y="88"
+                  width="54"
+                  height="7"
+                  rx="3.5"
+                  fill="#1a1a2e"
+                  stroke="#22d3ee"
+                  stroke-width="1.5"
+                />
+                <rect
+                  x="35"
+                  y="90"
+                  width="18"
+                  height="3"
+                  rx="1.5"
+                  fill="#a855f7"
+                >
+                  <animate
+                    attributeName="width"
+                    values="18;32;18"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+              </svg>
+            </div>
+            <span class="service-category">CRM</span>
+            <h3 class="service-title">CRM Light</h3>
+            <p class="service-desc">
+              Учёт клиентов, сотрудников, услуг. Справочники и экспорт.
+            </p>
+            <div class="service-price">от 490 ₽/мес</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter id="gq1" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gq2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                  <linearGradient id="gq3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gq3)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="45"
+                  ry="45"
+                  fill="#22d3ee"
+                  fill-opacity="0.06"
+                />
+                <rect
+                  x="22"
+                  y="28"
+                  width="76"
+                  height="66"
+                  rx="10"
+                  fill="#1a1a2e"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <rect
+                  x="27"
+                  y="33"
+                  width="66"
+                  height="14"
+                  rx="5"
+                  fill="#a855f7"
+                  fill-opacity="0.2"
+                />
+                <text
+                  x="60"
+                  y="44"
+                  text-anchor="middle"
+                  fill="#a855f7"
+                  font-size="9"
+                  font-weight="bold"
+                >
+                  ТАЛОН
+                </text>
+                <text
+                  x="60"
+                  y="70"
+                  text-anchor="middle"
+                  fill="#22d3ee"
+                  font-size="30"
+                  font-weight="bold"
+                >
+                  A
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.7;1"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </text>
+                <text
+                  x="60"
+                  y="82"
+                  text-anchor="middle"
+                  fill="#a855f7"
+                  font-size="7"
+                >
+                  5 мин
+                </text>
+                <rect
+                  x="32"
+                  y="96"
+                  width="56"
+                  height="7"
+                  rx="3.5"
+                  fill="#22d3ee"
+                  fill-opacity="0.25"
+                />
+                <rect
+                  x="32"
+                  y="96"
+                  width="14"
+                  height="7"
+                  rx="3.5"
+                  fill="#22d3ee"
+                >
+                  <animate
+                    attributeName="width"
+                    values="14;42;14"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+              </svg>
+            </div>
+            <span class="service-category">Автоматизация</span>
+            <h3 class="service-title">Электронная очередь</h3>
+            <p class="service-desc">
+              QR-запись, табло, аналитика. Управление очередью.
+            </p>
+            <div class="service-price">от 1 000 ₽/мес</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter
+                    id="gck1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gck2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                  <linearGradient id="gck3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gck3)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="40"
+                  ry="40"
+                  fill="#a855f7"
+                  fill-opacity="0.1"
+                />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="34"
+                  stroke="#a855f7"
+                  stroke-width="3"
+                  fill="none"
+                />
+                <path
+                  d="M42 60 L54 72 L80 46"
+                  stroke="url(#gck2)"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                >
+                  <animate
+                    attributeName="stroke-dasharray"
+                    values="0 55;55 0"
+                    dur="0.8s"
+                    fill="freeze"
+                  />
+                </path>
+                <circle cx="32" cy="36" r="3.5" fill="#a855f7">
+                  <animate
+                    attributeName="opacity"
+                    values="0.5;1;0.5"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="88" cy="36" r="3" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.5;1"
+                    dur="1.7s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="32" cy="84" r="3" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="0.6;1;0.6"
+                    dur="2.2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="88" cy="84" r="3.5" fill="#a855f7">
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.6;1"
+                    dur="1.8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <span class="service-category">Результат</span>
+            <h3 class="service-title">Гарантия качества</h3>
+            <p class="service-desc">
+              Проверка процессов и подготовка плана автоматизации.
+            </p>
+            <div class="service-price">от 2 000 ₽</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section class="features" id="services">
+        <div class="section-header">
+          <span class="section-label">Возможности</span>
+          <h2 class="section-title">Наши ключевые навыки</h2>
+          <p class="section-subtitle">Найдём точки роста вашего бизнеса</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter
+                    id="gda1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gda2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                  <linearGradient id="gda3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gda2)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="45"
+                  ry="45"
+                  fill="#a855f7"
+                  fill-opacity="0.06"
+                />
+                <rect
+                  x="28"
+                  y="70"
+                  width="12"
+                  height="25"
+                  rx="3"
+                  fill="#a855f7"
+                  fill-opacity="0.4"
+                />
+                <rect
+                  x="44"
+                  y="55"
+                  width="12"
+                  height="40"
+                  rx="3"
+                  fill="#a855f7"
+                  fill-opacity="0.6"
+                >
+                  <animate
+                    attributeName="height"
+                    values="40;35;40"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="y"
+                    values="55;60;55"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <rect
+                  x="60"
+                  y="45"
+                  width="12"
+                  height="50"
+                  rx="3"
+                  fill="url(#gda3)"
+                />
+                <rect
+                  x="76"
+                  y="35"
+                  width="12"
+                  height="60"
+                  rx="3"
+                  fill="#22d3ee"
+                  fill-opacity="0.8"
+                >
+                  <animate
+                    attributeName="height"
+                    values="60;55;60"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="y"
+                    values="35;40;35"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <path
+                  d="M34 68 L50 53 L66 43 L82 33"
+                  stroke="#22d3ee"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  fill="none"
+                  filter="url(#gda1)"
+                >
+                  <animate
+                    attributeName="d"
+                    values="M34 68 L50 53 L66 43 L82 33;M34 65 L50 55 L66 48 L82 38;M34 68 L50 53 L66 43 L82 33"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <circle
+                  cx="34"
+                  cy="68"
+                  r="4"
+                  fill="#22d3ee"
+                  filter="url(#gda1)"
+                >
+                  <animate
+                    attributeName="cy"
+                    values="68;65;68"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle
+                  cx="50"
+                  cy="53"
+                  r="4"
+                  fill="#a855f7"
+                  filter="url(#gda1)"
+                >
+                  <animate
+                    attributeName="cy"
+                    values="53;55;53"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle
+                  cx="66"
+                  cy="43"
+                  r="4"
+                  fill="#22d3ee"
+                  filter="url(#gda1)"
+                >
+                  <animate
+                    attributeName="cy"
+                    values="43;48;43"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle
+                  cx="82"
+                  cy="33"
+                  r="5"
+                  fill="#a855f7"
+                  filter="url(#gda1)"
+                >
+                  <animate
+                    attributeName="r"
+                    values="5;6;5"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <line
+                  x1="24"
+                  y1="95"
+                  x2="96"
+                  y2="95"
+                  stroke="#a855f7"
+                  stroke-width="1"
+                  stroke-opacity="0.3"
+                />
+                <circle cx="95" cy="18" r="3" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>Анализ данных</h3>
+              <p>
+                Анализируем бизнес-процессы, находим узкие места и внедряем
+                автоматизацию. Применяем инструменты с искусственным
+                интеллектом.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter
+                    id="gmvp1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gmvp2" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#7c3aed" />
+                    <stop offset="50%" stop-color="#a855f7" />
+                    <stop offset="100%" stop-color="#c084fc" />
+                  </linearGradient>
+                  <linearGradient id="gmvp3" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#a855f7" />
+                  </linearGradient>
+                  <linearGradient
+                    id="gmvp4"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gmvp4)" />
+                <line
+                  x1="12"
+                  y1="32"
+                  x2="45"
+                  y2="32"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                >
+                  <animate
+                    attributeName="x1"
+                    values="12;20;12"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <line
+                  x1="8"
+                  y1="52"
+                  x2="38"
+                  y2="52"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                >
+                  <animate
+                    attributeName="x1"
+                    values="8;16;8"
+                    dur="1.2s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <ellipse
+                  cx="60"
+                  cy="92"
+                  rx="18"
+                  ry="22"
+                  fill="#22d3ee"
+                  fill-opacity="0.3"
+                >
+                  <animate
+                    attributeName="ry"
+                    values="22;28;22"
+                    dur="0.3s"
+                    repeatCount="indefinite"
+                  />
+                </ellipse>
+                <path
+                  d="M60 22 C60 22 78 40 78 62 L78 72 L42 72 L42 62 C42 40 60 22 60 22 Z"
+                  fill="url(#gmvp2)"
+                  filter="url(#gmvp1)"
+                />
+                <path
+                  d="M60 18 C60 18 68 30 68 35 L52 35 C52 30 60 18 60 18 Z"
+                  fill="#c084fc"
+                />
+                <circle
+                  cx="60"
+                  cy="48"
+                  r="9"
+                  fill="#0a0a0f"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="60"
+                  cy="48"
+                  r="5"
+                  fill="#22d3ee"
+                  fill-opacity="0.3"
+                />
+                <path d="M46 72 L52 90 L58 80 L64 90 L74 72" fill="url(#gmvp3)">
+                  <animate
+                    attributeName="d"
+                    values="M46 72 L52 90 L58 80 L64 90 L74 72;M46 72 L50 95 L58 82 L66 95 L74 72;M46 72 L52 90 L58 80 L64 90 L74 72"
+                    dur="0.2s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>Быстрый старт</h3>
+              <p>
+                Запустим MVP за 2 недели. Проверим вашу бизнес-идею на реальных
+                пользователях без больших вложений.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter
+                    id="gtu1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gtu2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                  <linearGradient id="gtu3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gtu2)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="45"
+                  ry="45"
+                  fill="#a855f7"
+                  fill-opacity="0.06"
+                />
+                <circle
+                  cx="60"
+                  cy="42"
+                  r="14"
+                  fill="url(#gtu3)"
+                  filter="url(#gtu1)"
+                />
+                <circle cx="56" cy="39" r="3" fill="#fff" />
+                <circle cx="64" cy="39" r="3" fill="#fff" />
+                <path
+                  d="M54 46 Q60 52 66 46"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  fill="none"
+                />
+                <ellipse cx="60" cy="78" rx="18" ry="14" fill="url(#gtu3)" />
+                <circle
+                  cx="30"
+                  cy="50"
+                  r="10"
+                  fill="#a855f7"
+                  fill-opacity="0.6"
+                />
+                <ellipse
+                  cx="30"
+                  cy="80"
+                  rx="12"
+                  ry="10"
+                  fill="#a855f7"
+                  fill-opacity="0.6"
+                />
+                <circle
+                  cx="90"
+                  cy="50"
+                  r="10"
+                  fill="#22d3ee"
+                  fill-opacity="0.6"
+                >
+                  <animate
+                    attributeName="r"
+                    values="10;11;10"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <ellipse
+                  cx="90"
+                  cy="80"
+                  rx="12"
+                  ry="10"
+                  fill="#22d3ee"
+                  fill-opacity="0.6"
+                />
+                <path
+                  d="M44 48 Q52 40 60 38"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-dasharray="4 4"
+                  fill="none"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="0;8"
+                    dur="1s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <path
+                  d="M76 48 Q68 40 60 38"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-dasharray="4 4"
+                  fill="none"
+                  opacity="0.6"
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="8;0"
+                    dur="1s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="35"
+                  stroke="url(#gtu3)"
+                  stroke-width="2"
+                  fill="none"
+                  opacity="0.3"
+                >
+                  <animate
+                    attributeName="r"
+                    values="35;45;35"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0.3;0;0.3"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="20" cy="30" r="2" fill="#67e8f9">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="100" cy="30" r="2" fill="#c084fc">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="60" cy="100" r="2" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="1.8s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>Команда под задачу</h3>
+              <p>
+                Вам не нужно искать разработчиков — мы формируем команду и
+                управляем ей. Полный контроль без головной боли.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 120 120" fill="none">
+                <defs>
+                  <filter
+                    id="gag1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <linearGradient id="gag2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a2e" />
+                    <stop offset="100%" stop-color="#0f0f1a" />
+                  </linearGradient>
+                  <linearGradient id="gag3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7" />
+                    <stop offset="50%" stop-color="#22d3ee" />
+                    <stop offset="100%" stop-color="#06b6d4" />
+                  </linearGradient>
+                </defs>
+                <rect width="120" height="120" rx="20" fill="url(#gag2)" />
+                <ellipse
+                  cx="60"
+                  cy="60"
+                  rx="45"
+                  ry="45"
+                  fill="#22d3ee"
+                  fill-opacity="0.06"
+                />
+                <g filter="url(#gag1)">
+                  <path
+                    d="M60 22 L65 30 L75 28 L76 38 L85 42 L82 52 L90 58 L84 66 L90 74 L82 80 L85 90 L75 88 L65 94 L60 102 L55 94 L45 88 L35 90 L38 80 L30 74 L22 66 L28 58 L20 52 L17 42 L26 38 L27 28 L37 30 L45 22 L55 22 L60 22 Z"
+                    fill="url(#gag3)"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 60 60"
+                      to="360 60 60"
+                      dur="8s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <circle cx="60" cy="60" r="15" fill="#1a1a2e" />
+                  <circle cx="60" cy="60" r="10" fill="url(#gag3)" />
+                </g>
+                <g filter="url(#gag1)">
+                  <path
+                    d="M95 15 L98 20 L105 18 L106 25 L112 28 L110 35 L116 40 L112 46 L116 52 L110 56 L112 63 L105 62 L98 66 L95 72 L92 66 L85 62 L78 63 L80 56 L74 52 L70 46 L74 40 L68 35 L66 28 L72 25 L73 18 L80 20 L83 15 L88 15 L95 15 Z"
+                    fill="#a855f7"
+                    fill-opacity="0.7"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="360 95 42"
+                      to="0 95 42"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <circle cx="95" cy="42" r="8" fill="#1a1a2e" />
+                  <circle cx="95" cy="42" r="5" fill="#a855f7" />
+                </g>
+                <circle cx="78" cy="32" r="3" fill="#22d3ee">
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.4;1"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="42" cy="78" r="3" fill="#a855f7">
+                  <animate
+                    attributeName="opacity"
+                    values="0.4;1;0.4"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="25" cy="55" r="2" fill="#67e8f9">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <circle cx="95" cy="85" r="2" fill="#c084fc">
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>Автоматизация</h3>
+              <p>
+                Заменим бумажные процессы на удобные цифровые решения. Экономьте
+                время и снижайте ошибки.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Section -->
+      <section class="why" id="why">
+        <div class="section-header">
+          <span class="section-label">Преимущества</span>
+          <h2 class="section-title">Почему выбирают нас</h2>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h3>15+ лет опыта</h3>
+            <p>Реализовали 50+ проектов от стартапов до корпораций</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                />
+              </svg>
+            </div>
+            <h3>Индивидуальный подход</h3>
+            <p>Не продаём шаблоны — делаем под вас</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <h3>Гибкие цены</h3>
+            <p>Решения под ваш бюджет и сроки</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <h3>Прозрачность</h3>
+            <p>Еженедельные отчёты и понятный процесс</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta" id="contacts">
+        <div class="cta-inner">
+          <h2 class="cta-title">Хотите обсудить проект?</h2>
+          <p class="cta-subtitle">
+            Свяжитесь с нами, и мы подготовим личное предложение для вашего
+            бизнеса
+          </p>
+          <div class="hero-buttons" style="justify-content: center">
+            <a href="mailto:Andrey.OnlinePro@yandex.ru" class="btn btn-primary"
+              >Связаться<svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" /></svg></a
+            ><a href="tel:+79161586826" class="btn btn-secondary"
+              >+7 (916) 158 68 26</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- About Page -->
+    <section id="about-page" class="page-section">
+      <div class="page-hero">
+        <div class="page-hero-inner">
+          <h1>О компании ОнлайнПро.РФ</h1>
+          <p>
+            С 2009 года помогаем бизнесу расти через цифровые технологии. Не
+            продаём шаблоны — проектируем решения под задачи клиента.
+          </p>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">2009</div>
+          <div class="stat-label">год основания</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">реализованных проектов</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">лет в цифровых продуктах</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">фокус на результат</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <h2>Наша история</h2>
+        <p>
+          Компания ОнлайнПро.РФ начала свой путь в 2009 году как небольшая
+          команда разработчиков, специализирующаяся на веб-сайтах для малого
+          бизнеса. За годы работы мы прошли путь от простых лендингов до сложных
+          корпоративных систем: ERP, CRM, систем электронной очереди и записи,
+          автоматизированных рабочих мест.
+        </p>
+        <p>
+          Сегодня мы — полноценное цифровое агентство с экспертизой в
+          веб-разработке, автоматизации бизнес-процессов и внедрении решений на
+          базе искусственного интеллекта. Наши продукты работают в клиниках,
+          МФЦ, банках, салонах красоты, мебельных производствах и розничных
+          магазинах по всей России.
+        </p>
+        <p>
+          Мы верим, что технологии должны решать реальные задачи бизнеса.
+          Поэтому каждый проект начинается с анализа процессов, а не с выбора
+          шаблона.
+        </p>
+      </div>
+      <div class="values-section">
+        <h2>Наши ценности</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <h3>Результат важнее процесса</h3>
+            <p>
+              Мы измеряем успех проекта метриками бизнеса, а не количеством
+              страниц документации.
+            </p>
+          </div>
+          <div class="value-card">
+            <h3>Прозрачность на каждом этапе</h3>
+            <p>
+              Еженедельные отчёты, доступ к задачам и прямое общение с командой
+              без менеджеров-посредников.
+            </p>
+          </div>
+          <div class="value-card">
+            <h3>Скорость без потери качества</h3>
+            <p>
+              MVP за 2 недели — не лозунг, а реальная практика. Проверено на
+              десятках проектов.
+            </p>
+          </div>
+          <div class="value-card">
+            <h3>Индивидуальный подход</h3>
+            <p>
+              Мы не используем универсальных решений. Каждый проект получает
+              архитектуру под конкретные задачи.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="team-section">
+        <h2>Команда</h2>
+        <div class="team-card">
+          <div class="team-avatar">АО</div>
+          <div class="team-info">
+            <h3>Андрей ОнлайнПро</h3>
+            <span class="team-role">Основатель и руководитель проектов</span>
+            <p>
+              Эксперт по продуктам с 15+ годами опыта. Создаёт и развивает
+              цифровые решения для бизнеса с 2009 года. Специализация: анализ
+              процессов, запуск MVP, автоматизация и внедрение ИИ-инструментов.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Хотите узнать, как мы можем помочь вашему бизнесу?</h2>
+          <p>Обсудим задачу бесплатно.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary">Обсудить проект</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cases Page -->
+    <section id="cases-page" class="page-section">
+      <div class="page-hero">
+        <div class="page-hero-inner">
+          <h1>Кейсы ОнлайнПро.РФ</h1>
+          <p>
+            Реальные проекты с измеримыми результатами. От стартапов до
+            корпораций — каждый кейс показывает, как цифровые решения меняют
+            бизнес.
+          </p>
+        </div>
+      </div>
+      <div class="cases-grid">
+        <div class="case-card">
+          <div class="case-header">
+            <h3>Сеть медицинских клиник</h3>
+            <span class="case-tags">Медицина · QueueFlow</span>
+          </div>
+          <div class="case-section">
+            <h4>ПРОБЛЕМА</h4>
+            <p>
+              Пациенты уходили, не дождавшись приёма. Бумажные талоны терялись,
+              персонал не справлялся с пиковой нагрузкой.
+            </p>
+          </div>
+          <div class="case-section">
+            <h4>РЕШЕНИЕ</h4>
+            <p>
+              Внедрили QueueFlow — QR-запись, публичное табло и панель
+              оператора. Запуск за 1 день без покупки терминалов.
+            </p>
+          </div>
+          <div class="case-metrics">
+            <span>35% сокращение времени ожидания</span
+            ><span>1 день на запуск</span
+            ><span>0 ₽ затрат на оборудование</span>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <h3>Сеть салонов красоты</h3>
+            <span class="case-tags">CRM · Онлайн-запись</span>
+          </div>
+          <div class="case-section">
+            <h4>ПРОБЛЕМА</h4>
+            <p>
+              Запись велась в бумажных журналах и мессенджерах. Клиенты забывали
+              о визитах, администраторы тратили часы на ручное планирование.
+            </p>
+          </div>
+          <div class="case-section">
+            <h4>РЕШЕНИЕ</h4>
+            <p>
+              Объединили CRM Light и систему электронной записи. Клиенты
+              записываются онлайн, администратор видит загрузку в реальном
+              времени.
+            </p>
+          </div>
+          <div class="case-metrics">
+            <span>40% снижение no-show</span
+            ><span>2× рост повторных визитов</span
+            ><span>12 ч экономия времени в неделю</span>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <h3>Мебельное производство</h3>
+            <span class="case-tags">ERP · Производство</span>
+          </div>
+          <div class="case-section">
+            <h4>ПРОБЛЕМА</h4>
+            <p>
+              Учёт заказов вёлся в Excel, сырьё заканчивалось неожиданно, сроки
+              производства постоянно срывались.
+            </p>
+          </div>
+          <div class="case-section">
+            <h4>РЕШЕНИЕ</h4>
+            <p>
+              Внедрили ERP Light: управление заказами, склад сырья и материалов,
+              интеграция с CRM и календарём производства.
+            </p>
+          </div>
+          <div class="case-metrics">
+            <span>30% сокращение сроков</span
+            ><span>0 неожиданных дефицитов</span><span>100% прозрачность</span>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <h3>Сервисный центр по ремонту техники</h3>
+            <span class="case-tags">Сервис · CRM</span>
+          </div>
+          <div class="case-section">
+            <h4>ПРОБЛЕМА</h4>
+            <p>
+              Клиенты звонили, чтобы узнать статус ремонта. Мастера тратили
+              время на устные отчёты вместо работы.
+            </p>
+          </div>
+          <div class="case-section">
+            <h4>РЕШЕНИЕ</h4>
+            <p>
+              Внедрили единую систему: онлайн-запись на приём, учёт заказов в
+              CRM, статусы ремонта видны клиенту в личном кабинете.
+            </p>
+          </div>
+          <div class="case-metrics">
+            <span>50% меньше звонков</span
+            ><span>20% рост пропускной способности</span
+            ><span>4.9 средняя оценка</span>
+          </div>
+        </div>
+      </div>
+      <div class="stats-section">
+        <h2>Наши результаты в цифрах</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">реализованных проектов</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">14 дней</div>
+            <div class="stat-label">средний срок запуска MVP</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">лет в цифровых продуктах</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">30%</div>
+            <div class="stat-label">средний рост эффективности</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Есть задача, похожая на наши кейсы?</h2>
+          <p>Обсудим, как решить её для вашего бизнеса.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary">Обсудить проект</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QueueFlow Product Page -->
+    <section id="product-queue" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">Готовое решение</span>
+          <h1>Электронная очередь без терминалов и бумажных талонов</h1>
+          <p>
+            QueueFlow — веб-платформа для организации живой очереди. Посетители
+            берут талон через QR-код, а персонал управляет потоком с любого
+            устройства.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">25-35%</div>
+          <div class="pstat-label">сокращение ожидания</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">1 день</div>
+          <div class="pstat-label">на запуск</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">0 ₽</div>
+          <div class="pstat-label">за оборудование</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как это работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Посетитель сканирует QR-код</h3>
+            <p>
+              Разместите QR-код на стойке. Посетитель сканирует его камерой
+              телефона и получает электронный талон.
+            </p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Табло показывает очередь</h3>
+            <p>
+              На экране отображается текущий номер. Посетитель видит свой номер
+              и спокойно ждёт.
+            </p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Оператор вызывает одним кликом</h3>
+            <p>Персонал нажимает «Следующий» — табло мгновенно обновляется.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Возможности QueueFlow</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Самозапись через QR-код</h3>
+            <p>Посетитель сканирует код и записывается без регистрации.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Несколько услуг</h3>
+            <p>Настройте разные услуги с индивидуальными полями.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Публичное табло</h3>
+            <p>Работает в браузере — без дополнительного ПО.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Рекламный модуль</h3>
+            <p>Превратите экран в рекламную площадку между вызовами.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Любое устройство</h3>
+            <p>Управляйте с телефона, планшета или компьютера.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Аналитика</h3>
+            <p>Графики по дням, услугам и нагрузке.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Для кого подходит</h2>
+        <div class="audience-grid">
+          <div class="audience-card">
+            🏥
+            <h3>Клиники и медцентры</h3>
+            <p>Запись на приём и информирование о номере.</p>
+          </div>
+          <div class="audience-card">
+            🏛️
+            <h3>МФЦ и госуслуги</h3>
+            <p>Управление большим потоком посетителей.</p>
+          </div>
+          <div class="audience-card">
+            🏦
+            <h3>Банки и страховые</h3>
+            <p>VIP-очереди и аналитика загрузки.</p>
+          </div>
+          <div class="audience-card">
+            🔧
+            <h3>Сервисные центры</h3>
+            <p>Приём техники и консультации.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Готовы навести порядок в очередях?</h2>
+          <p>Запустите QueueFlow за один день — без оборудования.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary">Оставить заявку</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Product Page -->
+    <section id="product-booking" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">Готовое решение</span>
+          <h1>Электронная запись на приём без журналов и звонков</h1>
+          <p>
+            Веб-платформа для управления записями. Каталог услуг, календарь,
+            табло в зоне ожидания и аналитика.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">до 40%</div>
+          <div class="pstat-label">меньше неявок</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">1 день</div>
+          <div class="pstat-label">на запуск</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">0 ₽</div>
+          <div class="pstat-label">за оборудование</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Клиент выбирает услугу</h3>
+            <p>
+              На сайте клиент выбирает нужную и записывается на удобное время.
+            </p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Табло информирует</h3>
+            <p>В зоне ожидания отображаются ближайшие записи и статус.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Управление расписанием</h3>
+            <p>Подтверждайте, переносите или отменяйте записи одним кликом.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Возможности</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Каталог услуг</h3>
+            <p>Услуги с описанием, длительностью и стоимостью.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Онлайн-запись</h3>
+            <p>Запись за минуту с любого устройства.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Табло в зале</h3>
+            <p>Клиенты видят свой статус в реальном времени.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Экспорт в CSV</h3>
+            <p>Выгрузка для отчётности и бухгалтерии.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Начните принимать записи онлайн</h2>
+          <p>Настройка за один день. Без звонков и мессенджеров.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary">Оставить заявку</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRM Light Product Page -->
+    <section id="product-crm" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">Готовое решение</span>
+          <h1>Учёт клиентов и услуг без Excel</h1>
+          <p>
+            CRM Light — облачная система для малого бизнеса. База клиентов,
+            каталог услуг, учёт сотрудников и история работ.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">14 дней</div>
+          <div class="pstat-label">бесплатный тест</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">1 день</div>
+          <div class="pstat-label">на запуск</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">0 ₽</div>
+          <div class="pstat-label">за оборудование</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Внесите клиентов</h3>
+            <p>Создайте базу клиентов и каталог услуг.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Фиксируйте работы</h3>
+            <p>Оказывайте услуги и привязывайте к клиентам.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Анализируйте</h3>
+            <p>Экспортируйте данные в CSV для отчётности.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Возможности</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>База клиентов</h3>
+            <p>ФИО, телефон, email, история работ.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Каталог услуг</h3>
+            <p>Категории, цены и описания.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Сотрудники</h3>
+            <p>Учёт специалистов и их загрузки.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Интеграция с Записью</h3>
+            <p>Синхронизация клиентов автоматически.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Наведите порядок в учёте клиентов</h2>
+          <p>CRM Light готова к работе за один день.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERP Light Product Page -->
+    <section id="product-erp" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">ERP</span>
+          <h1>Облачная ERP с ИИ-ассистентом</h1>
+          <p>
+            ERP Light — договоры, заказы, производство, отгрузки и финансы.
+            ИИ-помощник знает данные вашей системы.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">1 день</div>
+          <div class="pstat-label">на запуск</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">ИИ</div>
+          <div class="pstat-label">встроен</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">Облако</div>
+          <div class="pstat-label">без серверов</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Создайте договоры</h3>
+            <p>Оформите договор и заказы с номенклатурой.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Контролируйте</h3>
+            <p>Этапы, сроки и готовность в реальном времени.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Отгружайте</h3>
+            <p>Формируйте отгрузку и получайте оплату.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>ИИ-ассистент</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Ответы на вопросы</h3>
+            <p>Спросите: какие заказы на этой неделе?</p>
+          </div>
+          <div class="feature-card">
+            <h3>Ввод из документов</h3>
+            <p>Загрузите договор — данные заполнятся автоматически.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Контроль и рекомендации</h3>
+            <p>ИИ подсказывает о просроченных платежах.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Управляйте бизнесом без хаоса</h2>
+          <p>ERP Light — полный цикл от договора до оплаты.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Store Management Product Page -->
+    <section id="product-store" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">Облачная система</span>
+          <h1>Управляйте магазинами, складами и продажами</h1>
+          <p>
+            «Управление магазином» — остатки, закупки, продажи, прибыль и
+            онлайн-витрина в одном месте.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">1 день</div>
+          <div class="pstat-label">на запуск</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">QR</div>
+          <div class="pstat-label">витрина</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">Облако</div>
+          <div class="pstat-label">без серверов</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Настройте точки</h3>
+            <p>Добавьте магазины, склады и связи между ними.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Ведите остатки</h3>
+            <p>Поставщики, поступления, перемещения, цены.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Продавайте</h3>
+            <p>Кассир оформляет, покупатели заказывают онлайн.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Наведите порядок в магазине</h2>
+          <p>Управление магазинами, складами и витриной.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ozon Labels Product Page -->
+    <section id="product-ozon" class="page-section product-page">
+      <div class="page-hero product-hero">
+        <div class="page-hero-inner">
+          <span class="product-badge">Готовое решение</span>
+          <h1>Этикетки для Ozon за 2 клика</h1>
+          <p>
+            Загрузите лист подбора и PDF с этикетками — получите готовый PDF с
+            артикулом и QR-кодом.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary"
+              >Попробовать бесплатно</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="product-stats">
+        <div class="pstat">
+          <div class="pstat-num">10×</div>
+          <div class="pstat-label">быстрее сборка</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">0</div>
+          <div class="pstat-label">ошибок в заказах</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">1 мин</div>
+          <div class="pstat-label">на партию</div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Как работает</h2>
+        <div class="product-steps">
+          <div class="pstep">
+            <div class="pstep-num">1</div>
+            <h3>Загрузите лист</h3>
+            <p>PDF со списком заказов и артикулами.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">2</div>
+            <h3>Загрузите этикетки</h3>
+            <p>PDF с QR-кодами от Ozon.</p>
+          </div>
+          <div class="pstep">
+            <div class="pstep-num">3</div>
+            <h3>Скачайте результат</h3>
+            <p>Готовый PDF 120×75 мм с артикулом.</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-section">
+        <h2>Возможности</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Автосопоставление</h3>
+            <p>Сервис сам находит соответствия.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Артикул и название</h3>
+            <p>Полный артикул без сокращений.</p>
+          </div>
+          <div class="feature-card">
+            <h3>QR-код сохранён</h3>
+            <p>Оригинальный код Ozon встроен.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>Ускорить сборку заказов Ozon</h2>
+          <p>Готовьте этикетки в 10 раз быстрее.</p>
+          <div class="hero-buttons">
+            <a href="#contacts" class="btn btn-primary">Оставить заявку</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <svg class="footer-logo" viewBox="0 0 100 100" fill="none">
+            <polygon
+              points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5"
+              stroke="url(#footer-grad)"
+              stroke-width="3"
+              fill="none"
+            />
+            <polygon
+              points="50,35 60,42.5 60,57.5 50,65 40,57.5 40,42.5"
+              fill="url(#footer-grad)"
+              opacity="0.8"
+            />
+            <circle cx="50" cy="50" r="8" fill="url(#footer-grad)" />
+            <defs>
+              <linearGradient
+                id="footer-grad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #a855f7" />
+                <stop offset="100%" style="stop-color: #22d3ee" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="footer-text"
+            >© 2024 ОнлайнПро.РФ — Ваш помощник в мире современных
+            технологий</span
+          >
+        </div>
+
+        <div class="footer-contact">
+          <a href="mailto:Andrey.OnlinePro@yandex.ru"
+            >Andrey.OnlinePro@yandex.ru</a
+          ><a href="tel:+79161586826">+7 (916) 158 68 26</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

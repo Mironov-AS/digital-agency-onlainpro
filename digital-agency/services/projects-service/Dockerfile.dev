@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /repo
+COPY shared shared/
+COPY services/projects-service/package*.json services/projects-service/
+RUN cd services/projects-service && npm install --omit=dev --no-audit --no-fund
+COPY services/projects-service/src services/projects-service/src/
+WORKDIR /repo/services/projects-service
+RUN mkdir -p uploads
+EXPOSE 4004
+CMD ["sh","-c","node src/seed.js || true; node src/server.js"]

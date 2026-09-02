@@ -1,0 +1,75 @@
+
+
+The following skills provide specialized instructions for specific tasks.
+Use the read tool to load a skill's file when the task matches its description.
+If a skill's <version> differs from a previous turn, re-read its SKILL.md before using it.
+When a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.
+
+<available_skills>
+  <skill>
+    <name>browser-automation</name>
+    <description>Use when controlling web pages with the OpenClaw browser tool, especially multi-step flows, login checks, tab management, or recovery from stale refs/timeouts.</description>
+    <location>~/.cli-agents/agents/openclaw/plugin-skills/browser-automation/SKILL.md</location>
+    <version>sha256:608bed60aca52631</version>
+  </skill>
+  <skill>
+    <name>canvas</name>
+    <description>Present HTML on connected OpenClaw node canvases, navigate/eval/snapshot, and debug canvas host URLs.</description>
+    <location>~/.cli-agents/agents/openclaw/plugin-skills/canvas/SKILL.md</location>
+    <version>sha256:7419e23f242397b3</version>
+  </skill>
+  <skill>
+    <name>design-agent</name>
+    <description>Use when the user asks to create design artifacts (landing pages, UI mockups, slide decks, interactive prototypes, dashboards, brand explorations, design system pieces) as HTML. Activates an expert-designer workflow: gather context, ask focused questions, produce variations, and hand off a working file. Do NOT use for non-design coding tasks, content writing without visual output, or production application engineering.</description>
+    <location>~/.agents/skills/design-agent/SKILL.md</location>
+    <version>sha256:0b53eb1c0dd7ea2f</version>
+  </skill>
+  <skill>
+    <name>next-best-practices</name>
+    <description>Next.js best practices - file conventions, RSC boundaries, data patterns, async APIs, metadata, error handling, route handlers, image/font optimization, bundling</description>
+    <location>~/.agents/skills/next-best-practices/SKILL.md</location>
+    <version>sha256:c78f952d4e98bf36</version>
+  </skill>
+  <skill>
+    <name>shadcn-ui</name>
+    <description>shadcn/ui component patterns for Next.js 16 applications. This skill should be used when adding UI components, customizing component styles, composing primitives, or integrating forms with react-hook-form. Covers installation, customization, composition patterns, and Atlas-specific conventions using Tailwind CSS v4.</description>
+    <location>~/.agents/skills/shadcn-ui/SKILL.md</location>
+    <version>sha256:aeb18e2a0df70731</version>
+  </skill>
+  <skill>
+    <name>slidev</name>
+    <description>Comprehensive guide for Slidev - a web-based presentation framework for developers. Covers Markdown syntax, layouts, components, animations, theming, and exporting. Use this skill when creating or working with developer presentations using Slidev.</description>
+    <location>~/.agents/skills/slidev/SKILL.md</location>
+    <version>sha256:77731e25e4769b87</version>
+  </skill>
+  <skill>
+    <name>svg-precision</name>
+    <description>Deterministic SVG generation, validation, and rendering. Use for icons, diagrams, charts, UI mockups, or technical drawings requiring structural correctness and cross-viewer compatibility.</description>
+    <location>~/.agents/skills/svg-precision/SKILL.md</location>
+    <version>sha256:4e27cf7db1a0a904</version>
+  </skill>
+  <skill>
+    <name>telegram-bot-builder</name>
+    <description>Expert in building Telegram bots that solve real problems - from simple automation to complex AI-powered bots. Covers bot architecture, the Telegram Bot API, user experience, monetization strategies, and scaling bots to thousands of users. Use when: telegram bot, bot api, telegram automation, chat bot telegram, tg bot.</description>
+    <location>~/.agents/skills/telegram-bot-builder/SKILL.md</location>
+    <version>sha256:b39c77e040f62578</version>
+  </skill>
+  <skill>
+    <name>ui-ux-pro-max</name>
+    <description>UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 8 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, mobile app, .html, .tsx, .vue, .svelte. Elements: button, modal, navbar, sidebar, card, table, form, chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, flat design. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient.</description>
+    <location>~/.agents/skills/ui-ux-pro-max/SKILL.md</location>
+    <version>sha256:2715e8cf9289095b</version>
+  </skill>
+  <skill>
+    <name>vercel-composition-patterns</name>
+    <description>React composition patterns that scale. Use when refactoring components with boolean prop proliferation, building flexible component libraries, or designing reusable APIs. Triggers on tasks involving compound components, render props, context providers, or component architecture. Includes React 19 API changes.</description>
+    <location>~/.agents/skills/vercel-composition-patterns/SKILL.md</location>
+    <version>sha256:e38e0eaa609316b1</version>
+  </skill>
+  <skill>
+    <name>vercel-react-best-practices</name>
+    <description>React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.</description>
+    <location>~/.agents/skills/vercel-react-best-practices/SKILL.md</location>
+    <version>sha256:71ed7794962fa6e8</version>
+  </skill>
+</available_skills>

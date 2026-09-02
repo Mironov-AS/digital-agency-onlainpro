@@ -1,0 +1,9 @@
+FROM node:20-alpine
+WORKDIR /repo
+COPY shared shared/
+COPY services/auth-service/package*.json services/auth-service/
+RUN cd services/auth-service && npm install --omit=dev --no-audit --no-fund
+COPY services/auth-service/src services/auth-service/src/
+WORKDIR /repo/services/auth-service
+EXPOSE 4001
+CMD ["sh","-c","node src/seed.js || true; node src/server.js"]

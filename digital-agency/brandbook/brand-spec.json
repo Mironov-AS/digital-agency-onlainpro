@@ -1,0 +1,180 @@
+{
+  "brand": {
+    "name": "Цифровое агентство ОнлайнПро.РФ",
+    "shortName": "ОнлайнПро.РФ",
+    "tagline": "Ваш помощник в мире современных технологий",
+    "founded": 2009,
+    "experience": "15+ лет"
+  },
+  "colors": {
+    "primary": {
+      "purple": {
+        "name": "Purple Primary",
+        "hex": "#a855f7",
+        "rgb": "rgb(168, 85, 247)",
+        "usage": "Основной акцент, кнопки, ховеры, заголовки"
+      },
+      "purpleLight": {
+        "name": "Purple Light",
+        "hex": "#c084fc",
+        "rgb": "rgb(192, 132, 252)",
+        "usage": "Градиенты, текст на тёмном фоне"
+      },
+      "purpleDark": {
+        "name": "Purple Dark",
+        "hex": "#7c3aed",
+        "rgb": "rgb(124, 58, 237)",
+        "usage": "Градиенты, вторичные элементы"
+      }
+    },
+    "secondary": {
+      "cyan": {
+        "name": "Cyan Primary",
+        "hex": "#22d3ee",
+        "rgb": "rgb(34, 211, 238)",
+        "usage": "Вторичный акцент, иконки, подсветка"
+      },
+      "cyanLight": {
+        "name": "Cyan Light",
+        "hex": "#67e8f9",
+        "rgb": "rgb(103, 232, 249)",
+        "usage": "Градиенты, hover-эффекты"
+      },
+      "cyanDark": {
+        "name": "Cyan Dark",
+        "hex": "#06b6d4",
+        "rgb": "rgb(6, 182, 212)",
+        "usage": "Градиенты, hover-состояния"
+      }
+    },
+    "background": {
+      "dark": {
+        "name": "Background Dark",
+        "hex": "#0a0a0f",
+        "usage": "Основной фон страницы"
+      },
+      "secondary": {
+        "name": "Background Secondary",
+        "hex": "#111118",
+        "usage": "Секции, чередующиеся с основным"
+      },
+      "card": {
+        "name": "Background Card",
+        "hex": "#16161d",
+        "usage": "Карточки, блоки контента"
+      }
+    }
+  },
+  "typography": {
+    "primary": {
+      "family": "Inter",
+      "fallback": "-apple-system, BlinkMacSystemFont, sans-serif",
+      "weights": {
+        "400": "Regular (400)",
+        "500": "Medium (500)",
+        "600": "Semibold (600)",
+        "700": "Bold (700)",
+        "800": "ExtraBold (800)",
+        "900": "Black (900)"
+      }
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "fallback": "Consolas, monospace",
+      "usage": "Код, HEX-коды, технические данные"
+    },
+    "scale": {
+      "h1": { "size": "48-64px", "weight": 800, "lineHeight": 1.1 },
+      "h2": { "size": "36-48px", "weight": 800, "lineHeight": 1.2 },
+      "h3": { "size": "28-32px", "weight": 700, "lineHeight": 1.3 },
+      "h4": { "size": "22-24px", "weight": 700, "lineHeight": 1.4 },
+      "body": { "size": "16px", "weight": 400, "lineHeight": 1.6 },
+      "small": { "size": "14px", "weight": 400, "lineHeight": 1.5 },
+      "caption": { "size": "12px", "weight": 500, "lineHeight": 1.4 }
+    }
+  },
+  "logo": {
+    "primary": {
+      "type": "horizontal",
+      "description": "Основной логотип для header и документов",
+      "width": 280,
+      "height": 60
+    },
+    "icon": {
+      "type": "symbol",
+      "description": "Иконка для favicon, аватаров, приложений",
+      "width": 100,
+      "height": 100
+    },
+    "textOnly": {
+      "type": "text",
+      "description": "Текстовый логотип для компактных мест",
+      "width": 240,
+      "height": 60
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": {
+        "background": "linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)",
+        "color": "#ffffff",
+        "shadow": "0 4px 20px rgba(168, 85, 247, 0.4)",
+        "radius": "12px",
+        "padding": "14px 28px"
+      },
+      "secondary": {
+        "background": "rgba(34, 211, 238, 0.1)",
+        "color": "#22d3ee",
+        "border": "1px solid rgba(34, 211, 238, 0.3)",
+        "radius": "12px",
+        "padding": "14px 28px"
+      },
+      "outline": {
+        "background": "transparent",
+        "color": "#ffffff",
+        "border": "1px solid #3f3f46",
+        "radius": "12px",
+        "padding": "14px 28px"
+      }
+    },
+    "cards": {
+      "background": "#16161d",
+      "border": "1px solid #27272a",
+      "radius": "16px",
+      "padding": "32px"
+    },
+    "inputs": {
+      "background": "#16161d",
+      "border": "1px solid #27272a",
+      "color": "#ffffff",
+      "placeholder": "#71717a",
+      "focusBorder": "#a855f7",
+      "focusShadow": "0 0 0 3px rgba(168, 85, 247, 0.2)",
+      "radius": "10px",
+      "padding": "14px 16px"
+    }
+  },
+  "services": [
+    {
+      "name": "Веб-разработка",
+      "description": "Сайты, лендинги, веб-приложения"
+    },
+    {
+      "name": "Запуск MVP",
+      "description": "Прототипы за 2 недели"
+    },
+    {
+      "name": "Автоматизация",
+      "description": "CRM, ERP, электронные очереди"
+    },
+    {
+      "name": "Внедрение ИИ",
+      "description": "AI-решения для бизнеса"
+    }
+  ],
+  "contacts": {
+    "email": "Andrey.OnlinePro@yandex.ru",
+    "phone": "+7 (916) 158 68 26",
+    "website": "онлайнпро.рф"
+  }
+}

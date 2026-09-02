@@ -1,0 +1,17 @@
+[plugin:vite:import-analysis] Failed to resolve import "lucide-react" from "src/App.jsx". Does the file exist?
+/tmp/digital-agency-app/src/App.jsx:2:24
+1  |  import { useState, useEffect } from "react";
+2  |  import { Loader2 } from "lucide-react";
+   |                           ^
+3  |  import "./App.css";
+4  |  import { apiFetch } from "./api.js";
+    at TransformPluginContext._formatLog (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:30375:39)
+    at TransformPluginContext.error (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:30372:14)
+    at normalizeUrl (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:27654:18)
+    at async file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:27717:30
+    at async Promise.all (index 1)
+    at async TransformPluginContext.transform (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:27685:4)
+    at async EnvironmentPluginContainer.transform (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:30164:14)
+    at async loadAndTransform (file:///tmp/digital-agency-app/node_modules/vite/dist/node/chunks/node.js:24512:26)
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.js.

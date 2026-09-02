@@ -1,0 +1,85 @@
+<svg viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="hex-logo-glow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="hex-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="hex-logo-inner" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    
+    <linearGradient id="hex-logo-cyan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo Icon (hexagon) -->
+  <g filter="url(#hex-logo-glow)" transform="translate(5, 5)">
+    <!-- Background glow -->
+    <circle cx="35" cy="35" r="32" fill="url(#hex-logo-cyan)" opacity="0.15"/>
+    
+    <!-- Outer hexagon -->
+    <polygon points="35,8 60,18 60,52 35,62 10,52 10,18" fill="none" stroke="url(#hex-logo-grad)" stroke-width="2"/>
+    
+    <!-- Inner hexagon (slower rotation) -->
+    <polygon points="35,16 52,23 52,47 35,54 18,47 18,23" fill="url(#hex-logo-inner)" opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" from="0 35 35" to="360 35 35" dur="60s" repeatCount="indefinite"/>
+    </polygon>
+    
+    <!-- Core hexagon -->
+    <polygon points="35,24 44,28 44,42 35,46 26,42 26,28" fill="url(#hex-logo-cyan)" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+    
+    <!-- Highlight -->
+    <polygon points="35,26 42,29.5 42,37.5 35,41 28,37.5 28,29.5" fill="white" opacity="0.25"/>
+    
+    <!-- Central pulse -->
+    <circle cx="35" cy="35" r="5" fill="white" opacity="0.4">
+      <animate attributeName="r" values="4;7;4" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Corner nodes -->
+    <circle cx="35" cy="8" r="2.5" fill="#a855f7">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="18" r="2" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="52" r="2.5" fill="#c084fc">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="35" cy="62" r="2" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="10" cy="52" r="2.5" fill="#a855f7">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="10" cy="18" r="2" fill="#67e8f9">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Text: ОнлайнПро -->
+  <text x="85" y="38" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="800" font-size="22" fill="#ffffff">ОнлайнПро</text>
+  
+  <!-- Text: .рф -->
+  <text x="85" y="58" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="500" font-size="18" fill="#a855f7">.рф</text>
+  
+  <!-- Connecting lines -->
+  <line x1="78" y1="32" x2="85" y2="32" stroke="url(#hex-logo-grad)" stroke-width="1" opacity="0.3"/>
+  <line x1="78" y1="50" x2="85" y2="50" stroke="url(#hex-logo-grad)" stroke-width="1" opacity="0.3"/>
+</svg>

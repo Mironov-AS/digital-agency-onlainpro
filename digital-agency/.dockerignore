@@ -1,0 +1,36 @@
+# Heavy / generated / local
+node_modules
+**/node_modules
+*/dist
+**/dist
+*/build
+**/build
+.git
+.gitignore
+*.log
+logs
+**/logs
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+**/data/*.sqlite*
+# uploads/ excluded by default (runtime-generated), BUT queue-service uploads are git-tracked
+# and included via COPY in Dockerfile — remove this line if you need uploads in Docker image:
+# **/uploads/*
+
+# Local env (provided via compose env_file / env)
+.env
+.env.local
+**/.env
+**/.env.local
+
+# IDE / OS
+.DS_Store
+.vscode
+.idea
+.vite-cache*
+landing-vite-cache*
+vite-landing-cache*
+.cache
+coverage
+test-results

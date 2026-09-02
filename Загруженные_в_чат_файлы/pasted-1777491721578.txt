@@ -1,0 +1,182 @@
+information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+console.<computed> @ client-portal/:3
+warnOnce @ react-router-dom.js?v=20dca0c4:4436
+logDeprecation @ react-router-dom.js?v=20dca0c4:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=20dca0c4:4442
+(anonymous) @ react-router-dom.js?v=20dca0c4:5314
+commitHookEffectListMount @ chunk-PJEEZAML.js?v=20dca0c4:16915
+commitPassiveMountOnFiber @ chunk-PJEEZAML.js?v=20dca0c4:18156
+commitPassiveMountEffects_complete @ chunk-PJEEZAML.js?v=20dca0c4:18129
+commitPassiveMountEffects_begin @ chunk-PJEEZAML.js?v=20dca0c4:18119
+commitPassiveMountEffects @ chunk-PJEEZAML.js?v=20dca0c4:18109
+flushPassiveEffectsImpl @ chunk-PJEEZAML.js?v=20dca0c4:19490
+flushPassiveEffects @ chunk-PJEEZAML.js?v=20dca0c4:19447
+(anonymous) @ chunk-PJEEZAML.js?v=20dca0c4:19328
+workLoop @ chunk-PJEEZAML.js?v=20dca0c4:197
+flushWork @ chunk-PJEEZAML.js?v=20dca0c4:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=20dca0c4:384
+client-portal/:3 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+console.<computed> @ client-portal/:3
+warnOnce @ react-router-dom.js?v=20dca0c4:4436
+logDeprecation @ react-router-dom.js?v=20dca0c4:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=20dca0c4:4445
+(anonymous) @ react-router-dom.js?v=20dca0c4:5314
+commitHookEffectListMount @ chunk-PJEEZAML.js?v=20dca0c4:16915
+commitPassiveMountOnFiber @ chunk-PJEEZAML.js?v=20dca0c4:18156
+commitPassiveMountEffects_complete @ chunk-PJEEZAML.js?v=20dca0c4:18129
+commitPassiveMountEffects_begin @ chunk-PJEEZAML.js?v=20dca0c4:18119
+commitPassiveMountEffects @ chunk-PJEEZAML.js?v=20dca0c4:18109
+flushPassiveEffectsImpl @ chunk-PJEEZAML.js?v=20dca0c4:19490
+flushPassiveEffects @ chunk-PJEEZAML.js?v=20dca0c4:19447
+(anonymous) @ chunk-PJEEZAML.js?v=20dca0c4:19328
+workLoop @ chunk-PJEEZAML.js?v=20dca0c4:197
+flushWork @ chunk-PJEEZAML.js?v=20dca0c4:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=20dca0c4:384
+client-portal/:3 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+console.<computed> @ client-portal/:3
+warnOnce @ react-router-dom.js?v=20dca0c4:4436
+logDeprecation @ react-router-dom.js?v=20dca0c4:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=20dca0c4:4442
+(anonymous) @ react-router-dom.js?v=20dca0c4:5314
+commitHookEffectListMount @ chunk-PJEEZAML.js?v=20dca0c4:16915
+commitPassiveMountOnFiber @ chunk-PJEEZAML.js?v=20dca0c4:18156
+commitPassiveMountEffects_complete @ chunk-PJEEZAML.js?v=20dca0c4:18129
+commitPassiveMountEffects_begin @ chunk-PJEEZAML.js?v=20dca0c4:18119
+commitPassiveMountEffects @ chunk-PJEEZAML.js?v=20dca0c4:18109
+flushPassiveEffectsImpl @ chunk-PJEEZAML.js?v=20dca0c4:19490
+flushPassiveEffects @ chunk-PJEEZAML.js?v=20dca0c4:19447
+(anonymous) @ chunk-PJEEZAML.js?v=20dca0c4:19328
+workLoop @ chunk-PJEEZAML.js?v=20dca0c4:197
+flushWork @ chunk-PJEEZAML.js?v=20dca0c4:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=20dca0c4:384
+client-portal/:3 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+console.<computed> @ client-portal/:3
+warnOnce @ react-router-dom.js?v=20dca0c4:4436
+logDeprecation @ react-router-dom.js?v=20dca0c4:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=20dca0c4:4445
+(anonymous) @ react-router-dom.js?v=20dca0c4:5314
+commitHookEffectListMount @ chunk-PJEEZAML.js?v=20dca0c4:16915
+commitPassiveMountOnFiber @ chunk-PJEEZAML.js?v=20dca0c4:18156
+commitPassiveMountEffects_complete @ chunk-PJEEZAML.js?v=20dca0c4:18129
+commitPassiveMountEffects_begin @ chunk-PJEEZAML.js?v=20dca0c4:18119
+commitPassiveMountEffects @ chunk-PJEEZAML.js?v=20dca0c4:18109
+flushPassiveEffectsImpl @ chunk-PJEEZAML.js?v=20dca0c4:19490
+flushPassiveEffects @ chunk-PJEEZAML.js?v=20dca0c4:19447
+(anonymous) @ chunk-PJEEZAML.js?v=20dca0c4:19328
+workLoop @ chunk-PJEEZAML.js?v=20dca0c4:197
+flushWork @ chunk-PJEEZAML.js?v=20dca0c4:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=20dca0c4:384
+VM293027 api.js:3  GET https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/me 401 (Unauthorized)
+apiFetch @ VM293027 api.js:3
+(anonymous) @ VM293008 App.jsx:134
+react_stack_bottom_frame @ VM292974 react-dom_client.js:12904
+runWithFiberInDEV @ VM292974 react-dom_client.js:851
+commitHookEffectListMount @ VM292974 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM292974 react-dom_client.js:6652
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7618
+recursivelyTraversePassiveMountEffects @ VM292974 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7672
+recursivelyTraversePassiveMountEffects @ VM292974 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7627
+flushPassiveEffects @ VM292974 react-dom_client.js:8808
+(anonymous) @ VM292974 react-dom_client.js:8562
+performWorkUntilDeadline @ VM292974 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM292975 react_jsx-dev-runtime.js:193
+(anonymous) @ VM292972 main.jsx:7
+VM293027 api.js:3  GET https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/me 401 (Unauthorized)
+apiFetch @ VM293027 api.js:3
+(anonymous) @ VM293008 App.jsx:134
+react_stack_bottom_frame @ VM292974 react-dom_client.js:12904
+runWithFiberInDEV @ VM292974 react-dom_client.js:851
+commitHookEffectListMount @ VM292974 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM292974 react-dom_client.js:6652
+reconnectPassiveEffects @ VM292974 react-dom_client.js:7701
+recursivelyTraverseReconnectPassiveEffects @ VM292974 react-dom_client.js:7688
+reconnectPassiveEffects @ VM292974 react-dom_client.js:7713
+doubleInvokeEffectsOnFiber @ VM292974 react-dom_client.js:8924
+runWithFiberInDEV @ VM292974 react-dom_client.js:851
+recursivelyTraverseAndDoubleInvokeEffectsInDEV @ VM292974 react-dom_client.js:8917
+commitDoubleInvokeEffectsInDEV @ VM292974 react-dom_client.js:8932
+flushPassiveEffects @ VM292974 react-dom_client.js:8809
+(anonymous) @ VM292974 react-dom_client.js:8562
+performWorkUntilDeadline @ VM292974 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM292975 react_jsx-dev-runtime.js:193
+(anonymous) @ VM292972 main.jsx:7
+VM293027 api.js:10  POST https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/refresh 401 (Unauthorized)
+apiFetch @ VM293027 api.js:10
+await in apiFetch
+(anonymous) @ VM293008 App.jsx:134
+react_stack_bottom_frame @ VM292974 react-dom_client.js:12904
+runWithFiberInDEV @ VM292974 react-dom_client.js:851
+commitHookEffectListMount @ VM292974 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM292974 react-dom_client.js:6652
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7618
+recursivelyTraversePassiveMountEffects @ VM292974 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7672
+recursivelyTraversePassiveMountEffects @ VM292974 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM292974 react-dom_client.js:7627
+flushPassiveEffects @ VM292974 react-dom_client.js:8808
+(anonymous) @ VM292974 react-dom_client.js:8562
+performWorkUntilDeadline @ VM292974 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM292975 react_jsx-dev-runtime.js:193
+(anonymous) @ VM292972 main.jsx:7
+VM293230 api.js:3  GET https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/me 401 (Unauthorized)
+apiFetch @ VM293230 api.js:3
+(anonymous) @ VM293227 App.jsx:134
+react_stack_bottom_frame @ VM293220 react-dom_client.js:12904
+runWithFiberInDEV @ VM293220 react-dom_client.js:851
+commitHookEffectListMount @ VM293220 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM293220 react-dom_client.js:6652
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7618
+recursivelyTraversePassiveMountEffects @ VM293220 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7672
+recursivelyTraversePassiveMountEffects @ VM293220 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7627
+flushPassiveEffects @ VM293220 react-dom_client.js:8808
+(anonymous) @ VM293220 react-dom_client.js:8562
+performWorkUntilDeadline @ VM293220 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM293221 react_jsx-dev-runtime.js:193
+(anonymous) @ VM293217 main.jsx:7
+VM293230 api.js:10  POST https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/refresh 401 (Unauthorized)
+apiFetch @ VM293230 api.js:10
+await in apiFetch
+(anonymous) @ VM293227 App.jsx:134
+react_stack_bottom_frame @ VM293220 react-dom_client.js:12904
+runWithFiberInDEV @ VM293220 react-dom_client.js:851
+commitHookEffectListMount @ VM293220 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM293220 react-dom_client.js:6652
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7618
+recursivelyTraversePassiveMountEffects @ VM293220 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7672
+recursivelyTraversePassiveMountEffects @ VM293220 react-dom_client.js:7606
+commitPassiveMountOnFiber @ VM293220 react-dom_client.js:7627
+flushPassiveEffects @ VM293220 react-dom_client.js:8808
+(anonymous) @ VM293220 react-dom_client.js:8562
+performWorkUntilDeadline @ VM293220 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM293221 react_jsx-dev-runtime.js:193
+(anonymous) @ VM293217 main.jsx:7
+VM293230 api.js:3  GET https://5176-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/api/auth/me 401 (Unauthorized)
+apiFetch @ VM293230 api.js:3
+(anonymous) @ VM293227 App.jsx:134
+react_stack_bottom_frame @ VM293220 react-dom_client.js:12904
+runWithFiberInDEV @ VM293220 react-dom_client.js:851
+commitHookEffectListMount @ VM293220 react-dom_client.js:6617
+commitHookPassiveMountEffects @ VM293220 react-dom_client.js:6652
+reconnectPassiveEffects @ VM293220 react-dom_client.js:7701
+recursivelyTraverseReconnectPassiveEffects @ VM293220 react-dom_client.js:7688
+reconnectPassiveEffects @ VM293220 react-dom_client.js:7713
+doubleInvokeEffectsOnFiber @ VM293220 react-dom_client.js:8924
+runWithFiberInDEV @ VM293220 react-dom_client.js:851
+recursivelyTraverseAndDoubleInvokeEffectsInDEV @ VM293220 react-dom_client.js:8917
+commitDoubleInvokeEffectsInDEV @ VM293220 react-dom_client.js:8932
+flushPassiveEffects @ VM293220 react-dom_client.js:8809
+(anonymous) @ VM293220 react-dom_client.js:8562
+performWorkUntilDeadline @ VM293220 react-dom_client.js:36
+<App>
+exports.jsxDEV @ VM293221 react_jsx-dev-runtime.js:193
+(anonymous) @ VM293217 main.jsx:7

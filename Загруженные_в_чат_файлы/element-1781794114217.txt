@@ -1,0 +1,28 @@
+Для контекста моей следующей задачи — вот конкретный компонент, который я выделил в дизайне. Используй его как точку приложения правок (если попрошу что-то поменять) или как ориентир (если задам вопрос). Не выполняй с ним действий, пока я не сформулирую само задание.
+
+Файл дизайна: Web Agency
+Полный путь: /home/user/Web Agency_design.html
+CSS-селектор: nav:nth-child(1)
+Тег: <nav>
+Текст: dev.agency
+        
+          Услуги
+          Проекты
+          Процесс
+          Контакты
+        
+        Обсудить проект
+
+HTML элемента:
+<nav>
+      <div class="container">
+        <a href="#" class="logo">dev<span>.</span>agency</a>
+        <ul class="nav-links">
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#work">Проекты</a></li>
+          <li><a href="#process">Процесс</a></li>
+          <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Обсудить проект</a>
+      </div>
+    </nav>

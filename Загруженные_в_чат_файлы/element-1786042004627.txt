@@ -1,0 +1,75 @@
+# Модель: FLUX.2 Max (black-forest-labs/flux.2-max)
+Провайдер: Black Forest Labs · Тип: Картинки
+Цена: от 9 ₽ / Мп
+
+Самая сильная FLUX.2-модель в каталоге для детализированных изображений и финальных генераций.
+
+## Характеристики
+- API: /v1/images/generations
+- Контекст: 47K токенов
+- Цена: от 9 ₽ / Мп
+- Модальности: текст · vision
+- Статус: активна
+- Рабочий стол: f1b125c1-003d-4eec-83d1-1bb7b36e98c8
+
+## Поддерживаемые параметры
+seed
+
+## Endpoint
+https://api.promto.ai/v1/images/generations
+
+## Пример запроса
+```
+# 1. Simple text-to-image request
+POST https://api.promto.ai/v1/images/generations
+Authorization: Bearer sk_promto_C-E_PaJkExFjx5iv7STM_lAWisniKm5bF36dCEsBQ2o
+Content-Type: application/json
+
+{
+  "model": "black-forest-labs/flux.2-max",
+  "prompt": "кот в скафандре",
+  "size": "1024x1024"
+}
+
+# 2. OpenRouter-compatible image-to-image / several input images
+# Put text first, then each image as a separate image_url content item.
+# image_url.url can be either an HTTPS URL or a data URL:
+# "data:image/png;base64,<BASE64_IMAGE>"
+POST https://api.promto.ai/v1/chat/completions
+Authorization: Bearer sk_promto_C-E_PaJkExFjx5iv7STM_lAWisniKm5bF36dCEsBQ2o
+Content-Type: application/json
+
+{
+  "model": "black-forest-labs/flux.2-max",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Объедини стиль первого изображения с объектом со второго и сделай новую product-shot картинку."
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://example.com/style-reference.jpg"
+          }
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+          }
+        }
+      ]
+    }
+  ],
+  "modalities": ["image", "text"],
+  "image_config": {
+    "aspect_ratio": "1:1",
+    "image_size": "1K"
+  }
+}
+```
+
+Используй эту модель через AI-шлюз Promto для задачи пользователя.

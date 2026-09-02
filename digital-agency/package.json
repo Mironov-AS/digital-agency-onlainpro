@@ -1,0 +1,46 @@
+{
+  "name": "digital-agency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Цифровое агентство ОнлайнПро.РФ — монорепозиторий",
+  "workspaces": [
+    "landing",
+    "app",
+    "services/*"
+  ],
+  "scripts": {
+    "dev:landing": "npm run dev --workspace=landing",
+    "dev:auth": "npm run dev --workspace=services/auth-service",
+    "dev:catalog": "npm run dev --workspace=services/catalog-service",
+    "dev:clients": "npm run dev --workspace=services/clients-service",
+    "dev:projects": "npm run dev --workspace=services/projects-service",
+    "dev:admin": "npm run dev --workspace=services/admin-service",
+    "dev:product-shelf": "npm run dev --workspace=services/product-shelf-service",
+    "dev:queue": "npm run dev --workspace=services/queue-service",
+    "dev:queue-client": "npm run dev:client --workspace=services/queue-service",
+    "dev:booking": "npm run dev --workspace=services/booking-service",
+    "dev:booking-client": "npm run dev --workspace=services/booking-service/client",
+    "dev:erp": "npm run dev --workspace=services/erp-service",
+    "dev:erp-client": "npm run dev --workspace=services/erp-service/client",
+    "dev:store": "npm run dev --workspace=services/store-service",
+    "dev:ozon-labels": "npm run dev --workspace=services/label-merger-service",
+    "dev:store-client": "npm run dev --prefix services/store-service/client",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "express-rate-limit": "^8.4.1",
+    "helmet": "^7.2.0",
+    "http-proxy-middleware": "^3.0.5",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0",
+    "zod": "^4.3.6"
+  }
+}

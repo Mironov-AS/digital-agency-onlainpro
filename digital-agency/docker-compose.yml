@@ -1,0 +1,329 @@
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      catalog-service:
+        condition: service_healthy
+      clients-service:
+        condition: service_healthy
+      projects-service:
+        condition: service_healthy
+      admin-service:
+        condition: service_healthy
+      product-shelf-service:
+        condition: service_healthy
+      queue-service:
+        condition: service_healthy
+      booking-service:
+        condition: service_healthy
+      crm-service:
+        condition: service_healthy
+      erp-service:
+        condition: service_healthy
+      store-service:
+        condition: service_healthy
+      furniture-photo-sorter-service:
+        condition: service_healthy
+    restart: unless-stopped
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: services/auth-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4001
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - JWT_ACCESS_EXPIRES=${JWT_ACCESS_EXPIRES:-15m}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=auth
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  catalog-service:
+    build:
+      context: .
+      dockerfile: services/catalog-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4002
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=catalog
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4002/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  clients-service:
+    build:
+      context: .
+      dockerfile: services/clients-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4003
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=clients
+      - PRODUCT_SHELF_URL=${PRODUCT_SHELF_URL:-http://product-shelf-service:4006}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4003/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  projects-service:
+    build:
+      context: .
+      dockerfile: services/projects-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4004
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=projects
+      - UPLOAD_DIR=/repo/services/projects-service/uploads
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4004/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  admin-service:
+    build:
+      context: .
+      dockerfile: services/admin-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4005
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=admin
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_FROM=${SMTP_FROM}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4005/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  product-shelf-service:
+    build:
+      context: .
+      dockerfile: services/product-shelf-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4006
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=shelf
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4006/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  booking-service:
+    build:
+      context: .
+      dockerfile: services/booking-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4008
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=booking
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - AUTH_SERVICE_URL=http://auth-service:4001
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  crm-service:
+    build:
+      context: .
+      dockerfile: services/crm-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4009
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=crm
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - BOOKING_SERVICE_URL=http://booking-service:4008
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4009/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  erp-service:
+    build:
+      context: .
+      dockerfile: services/erp-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4010
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=erp
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - AUTH_SERVICE_URL=http://auth-service:4001
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4010/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  store-service:
+    build:
+      context: .
+      dockerfile: services/store-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4011
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=store
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - AUTH_SERVICE_URL=http://auth-service:4001
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://localhost:4011/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  furniture-photo-sorter-service:
+    build:
+      context: .
+      dockerfile: services/furniture-photo-sorter-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4012
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=furniture_sorter,shelf
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:4012/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+    volumes:
+      - furniture-uploads:/app/server/uploads
+      - furniture-results:/app/server/results
+
+  label-merger-service:
+    build:
+      context: .
+      dockerfile: services/label-merger-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=4013
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=label_merger,shelf
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    healthcheck:
+      test:
+        ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:4013/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+    volumes:
+      - label-merger-uploads:/app/uploads
+      - label-merger-results:/app/results
+
+  queue-service:
+    build:
+      context: .
+      dockerfile: services/queue-service/Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}?options=-c search_path=queue
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - JWT_SECRET=${JWT_ACCESS_SECRET}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  client-portal:
+    build:
+      context: ./client-portal
+      dockerfile: Dockerfile
+    ports:
+      - "5202:80"
+    depends_on:
+      - auth-service
+      - product-shelf-service
+    restart: unless-stopped
+
+volumes:
+  furniture-uploads:
+  furniture-results:
+  label-merger-uploads:
+  label-merger-results:

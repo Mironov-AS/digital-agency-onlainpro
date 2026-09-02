@@ -1,0 +1,59 @@
+# Инфраструктура: PostgreSQL Database
+Primary database for all microservices
+## Метаданные
+- Тип: PostgreSQL
+- Ключ promto.yaml: db
+- Service type: database
+- Статус: live
+- Render service ID: 4160368
+- URL: postgresql://gen_user:n%40%21fOXG%7CP%2AlQ9@192.168.0.4:5432/default_db
+- Project ID: f1b125c1-003d-4eec-83d1-1bb7b36e98c8
+- Sandbox ID: ed416451-6709-4777-907f-1fed67152d0f
+- Framework / engine: postgresql
+- Timeweb type: postgres
+- Preset ID: 357
+- Environment variables: DATABASE_URL
+- Specs: preset 357, postgresql
+## promto.yaml
+```json
+{
+  "friendly_name": "PostgreSQL Database",
+  "description": "Primary database for all microservices",
+  "purpose": "Persistent data storage for users, clients, projects, catalog",
+  "order": 1,
+  "type": "database",
+  "framework": "postgresql",
+  "preset_id": 357,
+  "env_vars": [
+    "DATABASE_URL"
+  ],
+  "deploy_id": "4160368",
+  "deploy_url": "postgresql://gen_user:n%40%21fOXG%7CP%2AlQ9@109.68.212.195:5432/default_db",
+  "project_root": "/home/user/digital-agency",
+  "live_status": "live",
+  "live_url": "postgresql://gen_user:n%40%21fOXG%7CP%2AlQ9@192.168.0.4:5432/default_db",
+  "tw_status": "started",
+  "tw_type": "postgres"
+}
+```
+## Deployment
+```json
+{
+  "id": 0,
+  "render_service_id": "4160368",
+  "service_name": "db",
+  "service_type": "database",
+  "service_url": "postgresql://gen_user:n%40%21fOXG%7CP%2AlQ9@192.168.0.4:5432/default_db",
+  "status": "live",
+  "config": {
+    "tw_type": "postgres",
+    "framework": "postgresql",
+    "friendly_name": "PostgreSQL Database",
+    "description": "Primary database for all microservices"
+  },
+  "created_at": null,
+  "last_commit_sha": null,
+  "last_commit_msg": null
+}
+```
+Используй этот контекст, когда пользователь попросит изменить, подключить, проверить или отладить этот инфраструктурный ресурс.

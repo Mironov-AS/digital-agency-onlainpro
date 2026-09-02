@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.settings.SettingsActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Настройки" />
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            
+            <!-- Секция: Карта -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Карта"
+                android:textSize="14sp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="8dp" />
+            
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchOfflineMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Офлайн-режим"
+                android:paddingVertical="12dp" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDownloadMaps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Скачать карты для России"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_marginTop="8dp" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:layout_marginVertical="16dp" />
+            
+            <!-- Секция: Навигация -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Навигация"
+                android:textSize="14sp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="8dp" />
+            
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAvoidTolls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Избегать платных дорог"
+                android:paddingVertical="12dp" />
+            
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAvoidHighways"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Избегать автострад"
+                android:paddingVertical="12dp" />
+            
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAvoidFerries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Избегать паромов"
+                android:paddingVertical="12dp" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:layout_marginVertical="16dp" />
+            
+            <!-- Секция: Голос -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Голосовые подсказки"
+                android:textSize="14sp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="8dp" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp">
+                
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Громкость"
+                    android:textSize="16sp" />
+                
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderVoiceVolume"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    android:value="80" />
+                
+            </LinearLayout>
+            
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Тип голоса"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownVoiceType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="Русский (Алёна)" />
+                
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:layout_marginVertical="16dp" />
+            
+            <!-- Секция: О приложении -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="О приложении"
+                android:textSize="14sp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="8dp" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OSM Навигатор Pro"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Версия 1.0"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="4dp" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Карты © OpenStreetMap contributors\nМаршрутизация © OSRM"
+                android:textSize="12sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="8dp" />
+            
+        </LinearLayout>
+        
+    </ScrollView>
+    
+</LinearLayout>

@@ -1,0 +1,90 @@
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+App.jsx:10 Uncaught ReferenceError: useNavigate is not defined
+    at SyncAuthFromUrl (App.jsx:10:20)
+    at renderWithHooks (chunk-PJEEZAML.js?v=e0dfa452:11548:26)
+    at mountIndeterminateComponent (chunk-PJEEZAML.js?v=e0dfa452:14926:21)
+    at beginWork (chunk-PJEEZAML.js?v=e0dfa452:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-PJEEZAML.js?v=e0dfa452:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-PJEEZAML.js?v=e0dfa452:3699:24)
+    at invokeGuardedCallback (chunk-PJEEZAML.js?v=e0dfa452:3733:39)
+    at beginWork$1 (chunk-PJEEZAML.js?v=e0dfa452:19765:15)
+    at performUnitOfWork (chunk-PJEEZAML.js?v=e0dfa452:19198:20)
+    at workLoopSync (chunk-PJEEZAML.js?v=e0dfa452:19137:13)
+SyncAuthFromUrl @ App.jsx:10
+renderWithHooks @ chunk-PJEEZAML.js?v=e0dfa452:11548
+mountIndeterminateComponent @ chunk-PJEEZAML.js?v=e0dfa452:14926
+beginWork @ chunk-PJEEZAML.js?v=e0dfa452:15914
+callCallback2 @ chunk-PJEEZAML.js?v=e0dfa452:3674
+invokeGuardedCallbackDev @ chunk-PJEEZAML.js?v=e0dfa452:3699
+invokeGuardedCallback @ chunk-PJEEZAML.js?v=e0dfa452:3733
+beginWork$1 @ chunk-PJEEZAML.js?v=e0dfa452:19765
+performUnitOfWork @ chunk-PJEEZAML.js?v=e0dfa452:19198
+workLoopSync @ chunk-PJEEZAML.js?v=e0dfa452:19137
+renderRootSync @ chunk-PJEEZAML.js?v=e0dfa452:19116
+performConcurrentWorkOnRoot @ chunk-PJEEZAML.js?v=e0dfa452:18678
+workLoop @ chunk-PJEEZAML.js?v=e0dfa452:197
+flushWork @ chunk-PJEEZAML.js?v=e0dfa452:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=e0dfa452:384
+App.jsx:10 Uncaught ReferenceError: useNavigate is not defined
+    at SyncAuthFromUrl (App.jsx:10:20)
+    at renderWithHooks (chunk-PJEEZAML.js?v=e0dfa452:11548:26)
+    at mountIndeterminateComponent (chunk-PJEEZAML.js?v=e0dfa452:14926:21)
+    at beginWork (chunk-PJEEZAML.js?v=e0dfa452:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-PJEEZAML.js?v=e0dfa452:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-PJEEZAML.js?v=e0dfa452:3699:24)
+    at invokeGuardedCallback (chunk-PJEEZAML.js?v=e0dfa452:3733:39)
+    at beginWork$1 (chunk-PJEEZAML.js?v=e0dfa452:19765:15)
+    at performUnitOfWork (chunk-PJEEZAML.js?v=e0dfa452:19198:20)
+    at workLoopSync (chunk-PJEEZAML.js?v=e0dfa452:19137:13)
+SyncAuthFromUrl @ App.jsx:10
+renderWithHooks @ chunk-PJEEZAML.js?v=e0dfa452:11548
+mountIndeterminateComponent @ chunk-PJEEZAML.js?v=e0dfa452:14926
+beginWork @ chunk-PJEEZAML.js?v=e0dfa452:15914
+callCallback2 @ chunk-PJEEZAML.js?v=e0dfa452:3674
+invokeGuardedCallbackDev @ chunk-PJEEZAML.js?v=e0dfa452:3699
+invokeGuardedCallback @ chunk-PJEEZAML.js?v=e0dfa452:3733
+beginWork$1 @ chunk-PJEEZAML.js?v=e0dfa452:19765
+performUnitOfWork @ chunk-PJEEZAML.js?v=e0dfa452:19198
+workLoopSync @ chunk-PJEEZAML.js?v=e0dfa452:19137
+renderRootSync @ chunk-PJEEZAML.js?v=e0dfa452:19116
+recoverFromConcurrentError @ chunk-PJEEZAML.js?v=e0dfa452:18736
+performConcurrentWorkOnRoot @ chunk-PJEEZAML.js?v=e0dfa452:18684
+workLoop @ chunk-PJEEZAML.js?v=e0dfa452:197
+flushWork @ chunk-PJEEZAML.js?v=e0dfa452:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=e0dfa452:384
+admin?auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjQ0YmVkMS0zOGJlLTRiODMtODZjZC02YTlmYWEwNjcxMzUiLCJlbWFpbCI6InRlc3RjbGllbnRAdGVzdC5ydSIsInJvbGUiOiJjbGllbnQiLCJhcHBzIjpbInByb2R1Y3Qtc2hlbGYiXSwiY2xpZW50SWQiOiIwZDQ0MDRjMS01NmExLTRlYTktOTg5MC02ZWEyNjdmOGY2MzkiLCJpYXQiOjE3Nzc0NjYzMTMsImV4cCI6MTc3NzQ2NzIxM30.mh-tMUNB3D4Wn-7s0_nA9mYdFFsjvXtqhuj1tfrhr6M&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjQ0YmVkMS0zOGJlLTRiODMtODZjZC02YTlmYWEwNjcxMzUiLCJlbWFpbCI6InRlc3RjbGllbnRAdGVzdC5ydSIsInJvbGUiOiJjbGllbnQiLCJhcHBzIjpbInByb2R1Y3Qtc2hlbGYiXSwiY2xpZW50SWQiOiIwZDQ0MDRjMS01NmExLTRlYTktOTg5MC02ZWEyNjdmOGY2MzkiLCJpYXQiOjE3Nzc0NjYzMTMsImV4cCI6MTc3NzQ2NzIxM30.mh-tMUNB3D4Wn-7s0_nA9mYdFFsjvXtqhuj1tfrhr6M&client_id=:3 The above error occurred in the <SyncAuthFromUrl> component:
+
+    at SyncAuthFromUrl (https://3002-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/src/App.jsx:26:26)
+    at Router (https://3002-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/node_modules/.vite/deps/react-router-dom.js?v=e0dfa452:4544:15)
+    at BrowserRouter (https://3002-ed416451-6709-4777-907f-1fed67152d0f.preview.promto.ai/node_modules/.vite/deps/react-router-dom.js?v=e0dfa452:5290:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+console.<computed> @ admin?auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjQ0YmVkMS0zOGJlLTRiODMtODZjZC02YTlmYWEwNjcxMzUiLCJlbWFpbCI6InRlc3RjbGllbnRAdGVzdC5ydSIsInJvbGUiOiJjbGllbnQiLCJhcHBzIjpbInByb2R1Y3Qtc2hlbGYiXSwiY2xpZW50SWQiOiIwZDQ0MDRjMS01NmExLTRlYTktOTg5MC02ZWEyNjdmOGY2MzkiLCJpYXQiOjE3Nzc0NjYzMTMsImV4cCI6MTc3NzQ2NzIxM30.mh-tMUNB3D4Wn-7s0_nA9mYdFFsjvXtqhuj1tfrhr6M&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjQ0YmVkMS0zOGJlLTRiODMtODZjZC02YTlmYWEwNjcxMzUiLCJlbWFpbCI6InRlc3RjbGllbnRAdGVzdC5ydSIsInJvbGUiOiJjbGllbnQiLCJhcHBzIjpbInByb2R1Y3Qtc2hlbGYiXSwiY2xpZW50SWQiOiIwZDQ0MDRjMS01NmExLTRlYTktOTg5MC02ZWEyNjdmOGY2MzkiLCJpYXQiOjE3Nzc0NjYzMTMsImV4cCI6MTc3NzQ2NzIxM30.mh-tMUNB3D4Wn-7s0_nA9mYdFFsjvXtqhuj1tfrhr6M&client_id=:3
+logCapturedError @ chunk-PJEEZAML.js?v=e0dfa452:14032
+update.callback @ chunk-PJEEZAML.js?v=e0dfa452:14052
+callCallback @ chunk-PJEEZAML.js?v=e0dfa452:11248
+commitUpdateQueue @ chunk-PJEEZAML.js?v=e0dfa452:11265
+commitLayoutEffectOnFiber @ chunk-PJEEZAML.js?v=e0dfa452:17093
+commitLayoutMountEffects_complete @ chunk-PJEEZAML.js?v=e0dfa452:17980
+commitLayoutEffects_begin @ chunk-PJEEZAML.js?v=e0dfa452:17969
+commitLayoutEffects @ chunk-PJEEZAML.js?v=e0dfa452:17920
+commitRootImpl @ chunk-PJEEZAML.js?v=e0dfa452:19353
+commitRoot @ chunk-PJEEZAML.js?v=e0dfa452:19277
+finishConcurrentRender @ chunk-PJEEZAML.js?v=e0dfa452:18760
+performConcurrentWorkOnRoot @ chunk-PJEEZAML.js?v=e0dfa452:18718
+workLoop @ chunk-PJEEZAML.js?v=e0dfa452:197
+flushWork @ chunk-PJEEZAML.js?v=e0dfa452:176
+performWorkUntilDeadline @ chunk-PJEEZAML.js?v=e0dfa452:384
+chunk-PJEEZAML.js?v=e0dfa452:19413 Uncaught ReferenceError: useNavigate is not defined
+    at SyncAuthFromUrl (App.jsx:10:20)
+    at renderWithHooks (chunk-PJEEZAML.js?v=e0dfa452:11548:26)
+    at mountIndeterminateComponent (chunk-PJEEZAML.js?v=e0dfa452:14926:21)
+    at beginWork (chunk-PJEEZAML.js?v=e0dfa452:15914:22)
+    at beginWork$1 (chunk-PJEEZAML.js?v=e0dfa452:19753:22)
+    at performUnitOfWork (chunk-PJEEZAML.js?v=e0dfa452:19198:20)
+    at workLoopSync (chunk-PJEEZAML.js?v=e0dfa452:19137:13)
+    at renderRootSync (chunk-PJEEZAML.js?v=e0dfa452:19116:15)
+    at recoverFromConcurrentError (chunk-PJEEZAML.js?v=e0dfa452:18736:28)
+    at performConcurrentWorkOnRoot (chunk-PJEEZAML.js?v=e0dfa452:18684:30)

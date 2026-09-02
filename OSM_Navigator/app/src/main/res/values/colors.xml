@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary colors -->
+    <color name="primary">#1976D2</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="primary_light">#42A5F5</color>
+    <color name="primary_variant">#1565C0</color>
+    <color name="on_primary">#FFFFFF</color>
+    
+    <!-- Secondary colors -->
+    <color name="secondary">#FF5722</color>
+    <color name="secondary_variant">#E64A19</color>
+    <color name="on_secondary">#FFFFFF</color>
+    
+    <!-- Background colors -->
+    <color name="background">#FAFAFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_background">#212121</color>
+    <color name="on_surface">#212121</color>
+    <color name="on_surface_variant">#757575</color>
+    
+    <!-- Accent -->
+    <color name="accent">#FF5722</color>
+    
+    <!-- Navigation route -->
+    <color name="nav_route">#1976D2</color>
+    <color name="nav_route_outline">#0D47A1</color>
+    
+    <!-- Status colors -->
+    <color name="error">#F44336</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="warning">#FF9800</color>
+    <color name="success">#4CAF50</color>
+    
+    <!-- Basic colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

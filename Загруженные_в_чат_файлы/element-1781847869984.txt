@@ -1,0 +1,57 @@
+# Инфраструктура: Простой проект
+VM for digital-agency deployment
+## Метаданные
+- Тип: Облачный сервер
+- Ключ promto.yaml: cloud
+- Service type: vm
+- Статус: live
+- Render service ID: 8404551
+- URL: ssh://root@5.129.252.107
+- Project ID: f1b125c1-003d-4eec-83d1-1bb7b36e98c8
+- Sandbox ID: ed416451-6709-4777-907f-1fed67152d0f
+- Framework / engine: server
+- Timeweb type: server
+- Preset ID: 4799
+- Availability zone: ru-3
+- Specs: preset 4799, ru-3, server
+## promto.yaml
+```json
+{
+  "friendly_name": "Простой проект",
+  "description": "VM for digital-agency deployment",
+  "purpose": "Cloud server for Цифровое агентство",
+  "order": 2,
+  "type": "vm",
+  "preset_id": 4799,
+  "availability_zone": "ru-3",
+  "deploy_id": "8404551",
+  "deploy_url": "ssh://root@5.129.252.107",
+  "public_ip": "5.129.252.107",
+  "app_url": "http://5.129.252.107:3000",
+  "project_root": "/home/user/digital-agency",
+  "live_status": "live",
+  "live_url": "ssh://root@5.129.252.107",
+  "tw_status": "on",
+  "tw_type": "server"
+}
+```
+## Deployment
+```json
+{
+  "id": 0,
+  "render_service_id": "8404551",
+  "service_name": "cloud",
+  "service_type": "vm",
+  "service_url": "ssh://root@5.129.252.107",
+  "status": "live",
+  "config": {
+    "tw_type": "server",
+    "friendly_name": "Простой проект",
+    "description": "VM for digital-agency deployment"
+  },
+  "created_at": null,
+  "last_commit_sha": null,
+  "last_commit_msg": null
+}
+```
+Используй этот контекст, когда пользователь попросит изменить, подключить, проверить или отладить этот инфраструктурный ресурс.

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OSM Навигатор</string>
+    
+    <!-- Main screen -->
+    <string name="search_hint">Куда едем?</string>
+    <string name="my_location">Моё местоположение</string>
+    
+    <!-- Navigation -->
+    <string name="start_navigation">Начать навигацию</string>
+    <string name="stop_navigation">Остановить</string>
+    <string name="calculating_route">Прокладываем маршрут…</string>
+    <string name="route_not_found">Маршрут не найден</string>
+    <string name="check_internet">Проверьте интернет-соединение</string>
+    
+    <!-- Maneuvers -->
+    <string name="turn_left">Поверните налево</string>
+    <string name="turn_right">Поверните направо</string>
+    <string name="slight_left">Чуть налево</string>
+    <string name="slight_right">Чуть направо</string>
+    <string name="sharp_left">Резко налево</string>
+    <string name="sharp_right">Резко направо</string>
+    <string name="continue_straight">Продолжайте прямо</string>
+    <string name="u_turn">Разворот</string>
+    <string name="roundabout">На кольце</string>
+    <string name="destination">Вы прибыли</string>
+    
+    <!-- Dashboard projection -->
+    <string name="dashboard_projection">Приборная панель</string>
+    <string name="dashboard_available">Доступна</string>
+    <string name="dashboard_unavailable">Недоступна</string>
+    
+    <!-- Settings -->
+    <string name="settings">Настройки</string>
+    <string name="voice_enabled">Голосовые подсказки</string>
+    <string name="speed_cameras">Камеры ГИБДД</string>
+    <string name="avoid_tolls">Избегать платных дорог</string>
+    <string name="avoid_highways">Избегать автострад</string>
+    
+    <!-- Track recording -->
+    <string name="tracks_history">История треков</string>
+    <string name="recording">Запись</string>
+    <string name="no_tracks">Нет записанных треков</string>
+</resources>

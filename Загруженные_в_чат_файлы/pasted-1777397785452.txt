@@ -1,0 +1,17 @@
+[plugin:vite:oxc] Transform failed with 1 error:
+
+[PARSE_ERROR] Error: Unexpected token
+     ╭─[ src/pages/ClientDetailPage.jsx:425:19 ]
+     │
+ 425 │                   )}
+     │                   ┬  
+     │                   ╰── 
+─────╯
+/home/user/digital-agency/app/src/pages/ClientDetailPage.jsx
+    at transformWithOxc (file:///home/user/digital-agency/node_modules/vite/dist/node/chunks/node.js:3343:19)
+    at TransformPluginContext.transform (file:///home/user/digital-agency/node_modules/vite/dist/node/chunks/node.js:3411:26)
+    at EnvironmentPluginContainer.transform (file:///home/user/digital-agency/node_modules/vite/dist/node/chunks/node.js:30164:51)
+    at async loadAndTransform (file:///home/user/digital-agency/node_modules/vite/dist/node/chunks/node.js:24512:26)
+    at async viteTransformMiddleware (file:///home/user/digital-agency/node_modules/vite/dist/node/chunks/node.js:24306:20)
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.js.

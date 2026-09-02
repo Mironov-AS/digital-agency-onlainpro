@@ -1,0 +1,56 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="gda1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="gda2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="gda3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="20" fill="url(#gda2)"/>
+  <ellipse cx="60" cy="60" rx="45" ry="45" fill="#a855f7" fill-opacity="0.06"/>
+  <!-- Chart bars -->
+  <rect x="28" y="70" width="12" height="25" rx="3" fill="#a855f7" fill-opacity="0.4"/>
+  <rect x="44" y="55" width="12" height="40" rx="3" fill="#a855f7" fill-opacity="0.6">
+    <animate attributeName="height" values="40;35;40" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="55;60;55" dur="2s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="60" y="45" width="12" height="50" rx="3" fill="url(#gda3)"/>
+  <rect x="76" y="35" width="12" height="60" rx="3" fill="#22d3ee" fill-opacity="0.8">
+    <animate attributeName="height" values="60;55;60" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="35;40;35" dur="1.5s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Chart line -->
+  <path d="M34 68 L50 53 L66 43 L82 33" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" fill="none" filter="url(#gda1)">
+    <animate attributeName="d" values="M34 68 L50 53 L66 43 L82 33;M34 65 L50 55 L66 48 L82 38;M34 68 L50 53 L66 43 L82 33" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <!-- Data points -->
+  <circle cx="34" cy="68" r="4" fill="#22d3ee" filter="url(#gda1)">
+    <animate attributeName="cy" values="68;65;68" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="50" cy="53" r="4" fill="#a855f7" filter="url(#gda1)">
+    <animate attributeName="cy" values="53;55;53" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="66" cy="43" r="4" fill="#22d3ee" filter="url(#gda1)">
+    <animate attributeName="cy" values="43;48;43" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="82" cy="33" r="5" fill="#a855f7" filter="url(#gda1)">
+    <animate attributeName="r" values="5;6;5" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Grid lines -->
+  <line x1="24" y1="95" x2="96" y2="95" stroke="#a855f7" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="24" y1="80" x2="96" y2="80" stroke="#a855f7" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+  <line x1="24" y1="65" x2="96" y2="65" stroke="#a855f7" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+  <line x1="24" y1="50" x2="96" y2="50" stroke="#a855f7" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="4 4"/>
+  <!-- Brain spark -->
+  <circle cx="95" cy="18" r="3" fill="#22d3ee">
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

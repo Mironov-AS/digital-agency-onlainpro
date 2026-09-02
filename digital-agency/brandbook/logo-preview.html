@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Варианты логотипов — ОнлайнПро.РФ</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        min-height: 100vh;
+        color: #fff;
+        padding: 40px;
+      }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        font-size: 48px;
+        font-weight: 900;
+        margin-bottom: 16px;
+        background: linear-gradient(
+          135deg,
+          #a855f7 0%,
+          #22d3ee 50%,
+          #a855f7 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .subtitle {
+        text-align: center;
+        color: #a1a1aa;
+        font-size: 18px;
+        margin-bottom: 48px;
+      }
+      .logos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 32px;
+      }
+      .logo-card {
+        background: #16161d;
+        border: 1px solid #27272a;
+        border-radius: 20px;
+        padding: 32px;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .logo-card:hover {
+        border-color: #a855f7;
+        box-shadow: 0 0 40px rgba(168, 85, 247, 0.15);
+        transform: translateY(-4px);
+      }
+      .logo-preview {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 24px;
+        background: radial-gradient(
+          circle at center,
+          rgba(168, 85, 247, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo-preview img {
+        width: 100%;
+        height: 100%;
+      }
+      .logo-name {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .logo-desc {
+        font-size: 14px;
+        color: #71717a;
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .logo-file {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: #22d3ee;
+        background: rgba(34, 211, 238, 0.1);
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: 1px solid rgba(34, 211, 238, 0.3);
+      }
+
+      /* Horizontal logos section */
+      .horizontal-section {
+        margin-top: 64px;
+        padding-top: 64px;
+        border-top: 1px solid #27272a;
+      }
+      .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 32px;
+        text-align: center;
+      }
+      .horizontal-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+      }
+      .horizontal-card {
+        background: #16161d;
+        border: 1px solid #27272a;
+        border-radius: 16px;
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 400px;
+      }
+      .horizontal-preview {
+        width: 100%;
+        max-width: 300px;
+        height: 80px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .horizontal-preview img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 32px;
+        }
+        .logos-grid {
+          grid-template-columns: 1fr;
+        }
+        .horizontal-card {
+          min-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Варианты логотипов</h1>
+      <p class="subtitle">
+        Цифровое агентство ОнлайнПро.РФ — выберите свой вариант
+      </p>
+
+      <div class="logos-grid">
+        <div class="logo-card">
+          <div class="logo-preview">
+            <img src="logo-modern-1-crystal.svg" alt="Кристалл" />
+          </div>
+          <div class="logo-name">Кристалл</div>
+          <div class="logo-desc">
+            Бриллиант с "ОП" внутри, пульсирующим ядром и орбитальными частицами
+          </div>
+          <div class="logo-file">logo-modern-1-crystal.svg</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-preview">
+            <img src="logo-modern-2-circuit.svg" alt="Схема" />
+          </div>
+          <div class="logo-name">Схема "ОП"</div>
+          <div class="logo-desc">
+            Электронная схема с буквами О и П, пульсирующими узлами
+          </div>
+          <div class="logo-file">logo-modern-2-circuit.svg</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-preview">
+            <img src="logo-modern-3-signal.svg" alt="Сигнал" />
+          </div>
+          <div class="logo-name">Сигнал</div>
+          <div class="logo-desc">
+            WiFi-волны с эффектом онлайн-соединения, энергетическое ядро
+          </div>
+          <div class="logo-file">logo-modern-3-signal.svg</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-preview">
+            <img src="logo-modern-4-hexagon.svg" alt="Гексагон" />
+          </div>
+          <div class="logo-name">Гексагон</div>
+          <div class="logo-desc">
+            Вложенные шестиугольники с вращающимся элементом, связывающие линии
+          </div>
+          <div class="logo-file">logo-modern-4-hexagon.svg</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-preview">
+            <img src="logo-modern-5-infinity.svg" alt="Бесконечность" />
+          </div>
+          <div class="logo-name">Бесконечность</div>
+          <div class="logo-desc">
+            Символ бесконечности с анимированными частицами, энергетический
+            поток
+          </div>
+          <div class="logo-file">logo-modern-5-infinity.svg</div>
+        </div>
+      </div>
+
+      <div class="horizontal-section">
+        <h2 class="section-title">Горизонтальные версии</h2>
+        <div class="horizontal-grid">
+          <div class="horizontal-card">
+            <div class="horizontal-preview">
+              <img src="logo-horizontal.svg" alt="Основной горизонтальный" />
+            </div>
+            <div class="logo-name">Основной</div>
+            <div class="logo-file">logo-horizontal.svg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

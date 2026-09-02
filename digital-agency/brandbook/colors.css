@@ -1,0 +1,200 @@
+/* ============================================
+   Брендбук ОнлайнПро.РФ — CSS Variables
+   Версия: 1.0
+   Дата: 2024
+   ============================================ */
+
+:root {
+	/* ============ PRIMARY COLORS ============ */
+
+	/* Purple — основной акцент */
+	--purple-primary: #a855f7; /* Основной фиолетовый */
+	--purple-light: #c084fc; /* Светлый фиолетовый */
+	--purple-dark: #7c3aed; /* Тёмный фиолетовый */
+	--purple-50: rgba(168, 85, 247, 0.05);
+	--purple-100: rgba(168, 85, 247, 0.1);
+	--purple-200: rgba(168, 85, 247, 0.2);
+	--purple-300: rgba(168, 85, 247, 0.3);
+	--purple-400: rgba(168, 85, 247, 0.4);
+	--purple-500: rgba(168, 85, 247, 0.5);
+	--purple-600: rgba(168, 85, 247, 0.6);
+	--purple-700: rgba(168, 85, 247, 0.7);
+	--purple-800: rgba(168, 85, 247, 0.8);
+	--purple-900: rgba(168, 85, 247, 0.9);
+
+	/* Cyan — вторичный акцент */
+	--cyan-primary: #22d3ee; /* Основной циан */
+	--cyan-light: #67e8f9; /* Светлый циан */
+	--cyan-dark: #06b6d4; /* Тёмный циан */
+	--cyan-50: rgba(34, 211, 238, 0.05);
+	--cyan-100: rgba(34, 211, 238, 0.1);
+	--cyan-200: rgba(34, 211, 238, 0.2);
+	--cyan-300: rgba(34, 211, 238, 0.3);
+	--cyan-400: rgba(34, 211, 238, 0.4);
+	--cyan-500: rgba(34, 211, 238, 0.5);
+	--cyan-600: rgba(34, 211, 238, 0.6);
+	--cyan-700: rgba(34, 211, 238, 0.7);
+	--cyan-800: rgba(34, 211, 238, 0.8);
+	--cyan-900: rgba(34, 211, 238, 0.9);
+
+	/* ============ BACKGROUNDS ============ */
+
+	--bg-primary: #0a0a0f; /* Основной фон */
+	--bg-secondary: #111118; /* Вторичный фон */
+	--bg-card: #16161d; /* Фон карточек */
+	--bg-card-hover: #1e1e28; /* Фон карточек (hover) */
+	--bg-elevated: #1f1f28; /* Приподнятые элементы */
+
+	/* ============ TEXT ============ */
+
+	--text-primary: #ffffff; /* Основной текст */
+	--text-secondary: #a1a1aa; /* Вторичный текст */
+	--text-muted: #71717a; /* Приглушённый текст */
+	--text-disabled: #52525b; /* Отключённый текст */
+
+	/* ============ BORDERS ============ */
+
+	--border-color: #27272a; /* Основная граница */
+	--border-light: #3f3f46; /* Светлая граница */
+	--border-focus: var(--purple-primary); /* Фокус */
+
+	/* ============ GRADIENTS ============ */
+
+	/* Фирменный градиент — фиолетовый */
+	--gradient-purple: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+
+	/* Фирменный градиент — циан */
+	--gradient-cyan: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+
+	/* Hero-градиент — основной */
+	--gradient-hero: linear-gradient(
+		135deg,
+		#a855f7 0%,
+		#22d3ee 50%,
+		#a855f7 100%
+	);
+
+	/* Glow-эффекты */
+	--glow-purple: 0 0 40px rgba(168, 85, 247, 0.4);
+	--glow-cyan: 0 0 40px rgba(34, 211, 238, 0.4);
+	--glow-purple-sm: 0 0 20px rgba(168, 85, 247, 0.3);
+	--glow-cyan-sm: 0 0 20px rgba(34, 211, 238, 0.3);
+
+	/* ============ SHADOWS ============ */
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+	--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+	--shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+	--shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+	/* ============ RADII ============ */
+
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 16px;
+	--radius-xl: 24px;
+	--radius-full: 9999px;
+
+	/* ============ SPACING ============ */
+
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-10: 40px;
+	--space-12: 48px;
+	--space-16: 64px;
+	--space-20: 80px;
+
+	/* ============ TRANSITIONS ============ */
+
+	--transition-fast: 0.15s ease;
+	--transition-base: 0.2s ease;
+	--transition-slow: 0.3s ease;
+}
+
+/* ============ UTILITY CLASSES ============ */
+
+/* Фоновые классы */
+.bg-primary {
+	background-color: var(--bg-primary);
+}
+.bg-secondary {
+	background-color: var(--bg-secondary);
+}
+.bg-card {
+	background-color: var(--bg-card);
+}
+
+/* Текстовые классы */
+.text-primary {
+	color: var(--text-primary);
+}
+.text-secondary {
+	color: var(--text-secondary);
+}
+.text-muted {
+	color: var(--text-muted);
+}
+.text-purple {
+	color: var(--purple-primary);
+}
+.text-cyan {
+	color: var(--cyan-primary);
+}
+
+/* Градиентный текст */
+.text-gradient {
+	background: var(--gradient-hero);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.text-gradient-purple {
+	background: var(--gradient-purple);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* Glow-эффекты */
+.glow-purple {
+	box-shadow: var(--glow-purple);
+}
+.glow-cyan {
+	box-shadow: var(--glow-cyan);
+}
+.glow-text-purple {
+	text-shadow: 0 0 20px var(--purple-500);
+}
+.glow-text-cyan {
+	text-shadow: 0 0 20px var(--cyan-500);
+}
+
+/* Border-классы */
+.border-purple {
+	border-color: var(--purple-primary);
+}
+.border-cyan {
+	border-color: var(--cyan-primary);
+}
+.border-subtle {
+	border-color: var(--border-color);
+}
+
+/* Hover-эффекты */
+.hover-glow-purple:hover {
+	box-shadow: var(--glow-purple);
+	border-color: var(--purple-primary);
+}
+
+.hover-lift:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--shadow-card-hover);
+}

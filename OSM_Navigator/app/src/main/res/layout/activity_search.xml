@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.search.SearchActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Поиск" />
+    
+    <!-- Поле поиска -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+        
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите адрес..."
+            android:inputType="text"
+            android:imeOptions="actionSearch" />
+        
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <!-- Категории быстрого поиска -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingHorizontal="16dp">
+        
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true">
+            
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGasStation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="АЗС"
+                style="@style/Widget.Material3.Chip.Filter" />
+            
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipParking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Парковка"
+                style="@style/Widget.Material3.Chip.Filter" />
+            
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ресторан"
+                style="@style/Widget.Material3.Chip.Filter" />
+            
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAtm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Банкомат"
+                style="@style/Widget.Material3.Chip.Filter" />
+            
+        </com.google.android.material.chip.ChipGroup>
+        
+    </HorizontalScrollView>
+    
+    <!-- Список результатов -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResults"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        tools:listitem="@layout/item_search_result" />
+    
+    <!-- Нет результатов -->
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="32dp"
+        android:text="Ничего не найдено"
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:visibility="gone"
+        tools:visibility="visible" />
+    
+</LinearLayout>

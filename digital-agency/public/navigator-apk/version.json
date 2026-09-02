@@ -1,0 +1,14 @@
+{
+  "version": "2a152ba",
+  "buildDate": "2026-09-01T18:56:58+00:00",
+  "fileName": "osm-navigator.apk",
+  "fileSize": 8059247,
+  "downloadUrl": "/navigator-apk/osm-navigator.apk",
+  "changelog": [
+    "Голосовые подсказки на русском",
+    "Проекция на приборную панель",
+    "Запись треков",
+    "OSRM роутинг",
+    "Камеры ГИБДД"
+  ]
+}

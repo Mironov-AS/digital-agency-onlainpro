@@ -1,0 +1,5 @@
+uploads/
+results/
+test-data/
+test-*.js
+inspect-*.js

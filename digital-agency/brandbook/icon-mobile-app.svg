@@ -1,0 +1,101 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow-mobile" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="bg-mobile" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    
+    <linearGradient id="phone-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#27272a"/>
+      <stop offset="100%" stop-color="#16161d"/>
+    </linearGradient>
+    
+    <linearGradient id="screen-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    
+    <radialGradient id="screen-shine" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="120" height="120" rx="28" fill="url(#bg-mobile)"/>
+  
+  <!-- Floating app cards -->
+  <g transform="translate(75, 25) rotate(15)">
+    <rect width="35" height="45" rx="6" fill="#16161d" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.8">
+      <animate attributeName="y" values="0;-3;0" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="5" y="8" width="25" height="15" rx="3" fill="url(#accent-gradient)" opacity="0.3"/>
+    <rect x="5" y="28" width="15" height="3" rx="1.5" fill="#a855f7" opacity="0.6"/>
+    <rect x="5" y="35" width="20" height="2" rx="1" fill="#52525b" opacity="0.5"/>
+  </g>
+  
+  <g transform="translate(15, 35) rotate(-10)">
+    <rect width="30" height="40" rx="5" fill="#16161d" stroke="#22d3ee" stroke-width="1" opacity="0.6">
+      <animate attributeName="y" values="0;3;0" dur="2.5s" repeatCount="indefinite"/>
+    </rect>
+    <circle cx="15" cy="15" r="8" fill="#22d3ee" opacity="0.3"/>
+    <rect x="5" y="28" width="20" height="2" rx="1" fill="#52525b" opacity="0.5"/>
+    <rect x="5" y="33" width="12" height="2" rx="1" fill="#52525b" opacity="0.3"/>
+  </g>
+  
+  <!-- Main phone -->
+  <g filter="url(#glow-mobile)">
+    <!-- Phone body -->
+    <rect x="38" y="15" width="44" height="85" rx="10" fill="url(#phone-body)" stroke="#3f3f46" stroke-width="1.5"/>
+    
+    <!-- Screen -->
+    <rect x="41" y="22" width="38" height="68" rx="4" fill="#0a0a0f"/>
+    <rect x="41" y="22" width="38" height="68" rx="4" fill="url(#screen-shine)"/>
+    
+    <!-- Screen content - gradient bar -->
+    <rect x="45" y="28" width="30" height="8" rx="2" fill="url(#screen-glow)" opacity="0.8"/>
+    
+    <!-- Screen content - cards -->
+    <rect x="45" y="42" width="30" height="18" rx="3" fill="#16161d" stroke="#27272a" stroke-width="0.5"/>
+    <rect x="48" y="46" width="12" height="6" rx="2" fill="url(#accent-gradient)" opacity="0.5"/>
+    <rect x="48" y="54" width="24" height="2" rx="1" fill="#52525b" opacity="0.5"/>
+    
+    <rect x="45" y="64" width="30" height="18" rx="3" fill="#16161d" stroke="#27272a" stroke-width="0.5"/>
+    <rect x="48" y="68" width="12" height="6" rx="2" fill="#22d3ee" opacity="0.4"/>
+    <rect x="48" y="76" width="24" height="2" rx="1" fill="#52525b" opacity="0.5"/>
+    
+    <!-- Home indicator -->
+    <rect x="50" y="92" width="20" height="4" rx="2" fill="#3f3f46"/>
+    
+    <!-- Notch -->
+    <rect x="52" y="17" width="16" height="5" rx="2.5" fill="#16161d"/>
+  </g>
+  
+  <!-- Glow particles -->
+  <circle cx="30" cy="25" r="2" fill="#a855f7" filter="url(#glow-mobile)">
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="92" cy="45" r="2.5" fill="#22d3ee" filter="url(#glow-mobile)">
+    <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="88" cy="95" r="2" fill="#67e8f9" filter="url(#glow-mobile)">
+    <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="25" cy="100" r="1.5" fill="#c084fc" filter="url(#glow-mobile)">
+    <animate attributeName="opacity" values="0;1;0" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

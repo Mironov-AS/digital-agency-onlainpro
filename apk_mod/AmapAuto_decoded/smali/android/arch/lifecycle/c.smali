@@ -1,0 +1,10 @@
+.class public final Landroid/arch/lifecycle/c;
+.super Ljava/lang/Object;
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroid/arch/lifecycle/c$a;
+    }
+.end annotation

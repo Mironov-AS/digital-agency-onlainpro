@@ -1,0 +1,113 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="hex-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="hex-glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="hex-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="hex-inner" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    
+    <radialGradient id="hex-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background glow -->
+  <circle cx="100" cy="100" r="85" fill="url(#hex-core)" filter="url(#hex-glow-strong)">
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Outer hexagon -->
+  <g filter="url(#hex-glow)">
+    <polygon points="100,20 165,50 165,120 100,150 35,120 35,50" fill="none" stroke="url(#hex-grad)" stroke-width="3">
+      <animate attributeName="stroke-opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <!-- Inner hexagon (rotating) -->
+  <g filter="url(#hex-glow)">
+    <polygon points="100,45 140,62.5 140,107.5 100,125 60,107.5 60,62.5" fill="url(#hex-inner)" opacity="0.6" transform-origin="100 85">
+      <animateTransform attributeName="transform" type="rotate" from="0 100 85" to="360 100 85" dur="30s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <!-- Core hexagon -->
+  <g filter="url(#hex-glow)">
+    <polygon points="100,65 120,77.5 120,102.5 100,115 80,102.5 80,77.5" fill="#22d3ee" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="100,70 115,78.75 115,96.25 100,105 85,96.25 85,78.75" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- Connecting lines from center -->
+  <g stroke="url(#hex-grad)" stroke-width="2" filter="url(#hex-glow)" opacity="0.6">
+    <line x1="100" y1="85" x2="100" y2="45">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="85" x2="140" y2="62.5">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="85" x2="140" y2="107.5">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="85" x2="100" y2="125">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="85" x2="60" y2="107.5">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.6s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="85" x2="60" y2="62.5">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.2s" repeatCount="indefinite"/>
+    </line>
+  </g>
+  
+  <!-- Orbiting particles -->
+  <g filter="url(#hex-glow)">
+    <circle cx="100" cy="20" r="4" fill="#a855f7">
+      <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="165" cy="50" r="3" fill="#22d3ee">
+      <animate attributeName="r" values="2;4;2" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="165" cy="120" r="4" fill="#c084fc">
+      <animate attributeName="r" values="3;5;3" dur="1.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="150" r="3" fill="#22d3ee">
+      <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="35" cy="120" r="4" fill="#a855f7">
+      <animate attributeName="r" values="3;5;3" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="35" cy="50" r="3" fill="#67e8f9">
+      <animate attributeName="r" values="2;4;2" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Central pulse -->
+  <circle cx="100" cy="85" r="15" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="15;35" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
