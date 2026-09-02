@@ -97,8 +97,8 @@ class VoiceSearchHelper(
                 "Скажите адрес или название места",
             )
 
-            // Минимальная длина результата
-            putExtra(RecognizerIntent.EXTRA_MIN_MESSAGES_LENGTH, 1)
+            // Минимальная длина в миллисекундах
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLISECONDS, 1000)
 
             // Максимальное количество результатов
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
