@@ -354,33 +354,62 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun enableMyLocation() {
+        val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
+
         myLocationOverlay =
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
 
-                // Включаем автоследование за местоположением
-                myLocation?.let { loc ->
-                    binding.mapView.controller.animateTo(loc)
-                    binding.mapView.controller.setZoom(15.0)
+                // Ждём первого GPS-фикса
+                runOnFirstFix {
+                    this@apply.myLocation?.let { loc ->
+                        runOnUiThread {
+                            binding.mapView.controller.animateTo(loc)
+                            binding.mapView.controller.setZoom(15.0)
+
+                            viewModel.setCurrentLocation(
+                                Location(
+                                    latitude = loc.latitude,
+                                    longitude = loc.longitude,
+                                ),
+                            )
+                        }
+                    }
                 }
             }
         binding.mapView.overlays.add(myLocationOverlay)
 
-        // Также получаем данные через LocationManager для ViewModel
-        val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
+        // Также слушаем обновления через LocationManager
         try {
+            val locationListener =
+                object : android.location.LocationListener {
+                    override fun onLocationChanged(location: android.location.Location) {
+                        viewModel.setCurrentLocation(
+                            Location(
+                                latitude = location.latitude,
+                                longitude = location.longitude,
+                            ),
+                        )
+                    }
+
+                    override fun onProviderEnabled(provider: String) {}
+
+                    override fun onProviderDisabled(provider: String) {}
+
+                    @Deprecated("Deprecated in API")
+                    override fun onStatusChanged(
+                        provider: String?,
+                        status: Int,
+                        extras: android.os.Bundle?,
+                    ) {}
+                }
+
             locationManager.requestLocationUpdates(
                 android.location.LocationManager.GPS_PROVIDER,
                 1000L,
                 5f,
-            ) { location ->
-                viewModel.setCurrentLocation(
-                    Location(
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                    ),
-                )
-            }
+                locationListener,
+            )
         } catch (e: SecurityException) {
             // Разрешение уже проверено
         }
