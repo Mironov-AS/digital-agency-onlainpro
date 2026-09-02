@@ -355,9 +355,9 @@ class MainActivity : AppCompatActivity() {
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
 
-                // Слушаем обновления местоположения
+                // Слушаем первое получение местоположения
                 runOnFirstFix {
-                    location?.let { loc ->
+                    this@apply.myLocation?.let { loc ->
                         viewModel.setCurrentLocation(
                             Location(
                                 latitude = loc.latitude,
