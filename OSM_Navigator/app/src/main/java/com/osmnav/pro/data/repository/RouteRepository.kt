@@ -3,6 +3,7 @@ package com.osmnav.pro.data.repository
 import android.util.Log
 import com.osmnav.pro.data.remote.OSRMRouteService
 import com.osmnav.pro.data.remote.YandexRoutingService
+import com.osmnav.pro.data.remote.YandexRoutingService.YandexRouteResult
 import com.osmnav.pro.domain.model.Location
 import com.osmnav.pro.domain.model.Maneuver
 import com.osmnav.pro.domain.model.Route
