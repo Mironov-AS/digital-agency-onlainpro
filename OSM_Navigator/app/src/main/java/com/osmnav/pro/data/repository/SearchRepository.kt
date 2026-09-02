@@ -23,9 +23,9 @@ class SearchRepository {
         withContext(Dispatchers.IO) {
             try {
                 val encodedQuery = URLEncoder.encode(query, "UTF-8")
-                // Используем format=jsonv2 для лучшей точности адресов
-                // layer=address для приоритета адресов над POI
-                val url = "$NOMINATIM_BASE_URL/search?q=$encodedQuery&format=jsonv2&addressdetails=1&limit=10&accept-language=ru&layer=address"
+                // format=jsonv2 для лучшей точности адресов
+                // БЕЗ layer=address - он даёт низкий приоритет домам
+                val url = "$NOMINATIM_BASE_URL/search?q=$encodedQuery&format=jsonv2&addressdetails=1&limit=15&accept-language=ru"
 
                 val request =
                     Request
@@ -37,10 +37,30 @@ class SearchRepository {
                 val response = client.newCall(request).execute()
                 val body = response.body?.string() ?: return@withContext emptyList()
 
-                val results = gson.fromJson(body, Array<NominatimResult>::class.java)
+                val results =
+                    gson.fromJson(body, Array<NominatimResult>::class.java)
+                        ?: return@withContext emptyList()
 
-                results.map { result ->
-                    // Приоритет отображения: display_name (полный адрес) > house_number + road
+                // КРИТИЧНО: сортируем результаты - сначала те, у которых есть номер дома
+                val sortedResults =
+                    results.sortedWith(
+                        compareByDescending<NominatimResult> { result ->
+                            // Приоритет 1: есть номер дома (AND building - точное здание)
+                            !result.address?.houseNumber.isNullOrBlank() &&
+                                !result.address?.building.isNullOrBlank()
+                        }.thenByDescending { result ->
+                            // Приоритет 2: есть только номер дома
+                            !result.address?.houseNumber.isNullOrBlank()
+                        }.thenByDescending { result ->
+                            // Приоритет 3: есть название улицы
+                            !result.address?.road.isNullOrBlank()
+                        }.thenByDescending { result ->
+                            // Приоритет 4: по importance от Nominatim
+                            result.importance
+                        },
+                    )
+
+                sortedResults.map { result ->
                     val displayName = buildDisplayName(result)
 
                     Location(
@@ -151,6 +171,7 @@ data class NominatimResult(
     val lon: String,
     val displayName: String,
     val address: NominatimAddress?,
+    val importance: Double = 0.0,
 )
 
 data class NominatimAddress(
