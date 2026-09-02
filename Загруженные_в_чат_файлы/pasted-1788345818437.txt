@@ -1,0 +1,23 @@
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:212:21 'when' expression must be exhaustive. Add the 'is Error', 'is Success' branches or an 'else' branch.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:213:44 Unresolved reference 'RouteResult'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:214:51 Unresolved reference 'route'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:219:61 Unresolved reference 'route'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:224:63 Unresolved reference 'route'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:227:44 Unresolved reference 'RouteResult'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:228:63 Unresolved reference 'message'.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/presentation/dashboard/NaviAIDLService.kt:229:61 Unresolved reference 'message'.
+Fix with AI
