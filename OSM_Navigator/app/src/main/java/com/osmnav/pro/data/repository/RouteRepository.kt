@@ -2,8 +2,6 @@ package com.osmnav.pro.data.repository
 
 import android.util.Log
 import com.osmnav.pro.data.remote.OSRMRouteService
-import com.osmnav.pro.data.remote.YandexRoutingService
-import com.osmnav.pro.data.remote.YandexRoutingService.YandexRouteResult
 import com.osmnav.pro.domain.model.Location
 import com.osmnav.pro.domain.model.Maneuver
 import com.osmnav.pro.domain.model.Route
@@ -31,17 +29,13 @@ sealed class RouteResult {
 class RouteRepository {
     private val service = OSRMRouteService.create()
 
-    // Список OSRM серверов для fallback
-    // Включаем ВСЕ серверы из OSRMRouteService
-    private val fallbackServers =
+    // OSRM серверы для маршрутизации
+    private val osrmServers =
         listOf(
-            OSRMRouteService.RUSSIAN_URL, // российский сервер (попробуем первым)
-            OSRMRouteService.BACKUP_URL, // openstreetmap.de
+            OSRMRouteService.BASE_URL,
+            "https://routing.openstreetmap.de/routed-car/",
+            "https://osrm.routing.smirnovint.ru/",
         )
-
-    // Яндекс API сервис (для работы без VPN)
-    // Получить API ключ: https://developer.tech.yandex.ru/
-    private val yandexService = YandexRoutingService.createDemo()
 
     /**
      * Построить маршрут между двумя точками
@@ -60,6 +54,8 @@ class RouteRepository {
                 val baseUrl = OSRMRouteService.BASE_URL.trimEnd('/')
                 val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
 
+                Log.d("RouteRepository", "Building route: $fullUrl")
+
                 val response = service.getRoute(fullUrl)
 
                 if (response.code != "Ok") {
@@ -72,7 +68,6 @@ class RouteRepository {
                     response.routes?.firstOrNull()
                         ?: return@withContext RouteResult.Error("Маршрут не найден")
 
-                // Преобразуем в нашу модель
                 val route = parseRoute(osrmRoute, start, end)
 
                 RouteResult.Success(route)
@@ -83,11 +78,7 @@ class RouteRepository {
         }
 
     /**
-     * Построить маршрут с fallback на резервные серверы (включая российские)
-     */
-
-    /**
-     * Построить маршрут с fallback на все доступные серверы (OSRM и Яндекс)
+     * Построить маршрут с fallback на все OSRM серверы
      */
     suspend fun buildRouteWithFallback(
         start: Location,
@@ -99,101 +90,36 @@ class RouteRepository {
             val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
             Log.d("RouteRepository", "Building route with coordinates: $coordinates")
 
-            // Пробуем все серверы по очереди
-            val allServers = listOf(OSRMRouteService.BASE_URL) + fallbackServers
-            Log.d("RouteRepository", "Total servers to try: ${allServers.size}")
-
-            for ((index, serverUrl) in allServers.withIndex()) {
+            for ((index, serverUrl) in osrmServers.withIndex()) {
                 try {
-                    Log.d("RouteRepository", "[$index/${allServers.size}] Trying server: $serverUrl")
-
-                    // Строим полный URL с координатами
-                    // Формат: https://server/route/v1/driving/lon1,lat1;lon2,lat2
                     val baseUrl = serverUrl.trimEnd('/')
                     val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
-                    Log.d("RouteRepository", "[$index] Full URL: $fullUrl")
+
+                    Log.d("RouteRepository", "[$index] Trying: $serverUrl")
 
                     val currentService = OSRMRouteService.create()
                     val response = currentService.getRoute(fullUrl)
 
-                    Log.d("RouteRepository", "[$index] Response code: ${response.code}")
+                    Log.d("RouteRepository", "[$index] Response: ${response.code}")
 
                     if (response.code == "Ok") {
                         val osrmRoute = response.routes?.firstOrNull()
                         if (osrmRoute != null) {
-                            Log.d("RouteRepository", "[$index] Route found, distance: ${osrmRoute.distance}m")
+                            Log.d("RouteRepository", "[$index] Success! Distance: ${osrmRoute.distance}m")
                             val route = parseRoute(osrmRoute, start, end)
-                            Log.d("RouteRepository", "[$index] Success with server: $serverUrl")
                             return@withContext RouteResult.Success(route)
-                        } else {
-                            Log.w("RouteRepository", "[$index] No routes in response")
                         }
                     } else {
-                        Log.w("RouteRepository", "[$index] Server returned error: ${response.code} - ${response.message}")
+                        Log.w("RouteRepository", "[$index] Error: ${response.code}")
                     }
                 } catch (e: Exception) {
-                    Log.e("RouteRepository", "[$index] Server $serverUrl failed with exception", e)
-                    // Продолжаем со следующим сервером
+                    Log.e("RouteRepository", "[$index] Exception: ${e.message}")
                 }
-            }
-
-            // Все OSRM серверы недоступны - пробуем Яндекс.Маршрутизацию
-            Log.d("RouteRepository", "OSRM servers failed, trying Yandex...")
-
-            try {
-                val yandexResult =
-                    yandexService.buildRoute(
-                        origin = Pair(start.latitude, start.longitude),
-                        destination = Pair(end.latitude, end.longitude),
-                    )
-
-                when (yandexResult) {
-                    is YandexRouteResult.Success -> {
-                        Log.d("RouteRepository", "Yandex route success")
-                        val instructions =
-                            yandexResult.instructions.map { instruction ->
-                                RouteInstruction(
-                                    text = instruction.text,
-                                    distanceMeters = instruction.distance.toLong(),
-                                    maneuver = parseManeuver(instruction.maneuver),
-                                    point =
-                                        instruction.location?.let {
-                                            Location(it.first, it.second)
-                                        } ?: start,
-                                )
-                            }
-
-                        val points =
-                            yandexResult.points.map {
-                                Location(it.first, it.second)
-                            }
-
-                        val route =
-                            Route(
-                                points = points,
-                                instructions = instructions,
-                                distanceMeters = yandexResult.distance.toLong(),
-                                durationSeconds = yandexResult.duration.toLong(),
-                            )
-
-                        return@withContext RouteResult.Success(route)
-                    }
-
-                    is YandexRouteResult.Error -> {
-                        Log.w("RouteRepository", "Yandex also failed: ${yandexResult.message}")
-                    }
-
-                    else -> {
-                        Log.w("RouteRepository", "Yandex returned unknown result type")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("RouteRepository", "Yandex service error", e)
             }
 
             // Все серверы недоступны
             RouteResult.Error(
-                "Все серверы маршрутов недоступны. Проверьте интернет-соединение или попробуйте позже.",
+                "Все серверы маршрутов недоступны. Проверьте интернет-соединение.",
             )
         }
 
@@ -318,30 +244,6 @@ class RouteRepository {
             else -> {
                 Maneuver.CONTINUE
             }
-        }
-
-    /**
-     * Преобразовать тип манёвра Яндекса в наш enum
-     */
-    private fun parseManeuver(type: String): Maneuver =
-        when (type.lowercase()) {
-            "depart", "heading" -> Maneuver.DEPART
-            "arrive", "destination" -> Maneuver.DESTINATION
-            "turn-left", "turn left", "left" -> Maneuver.TURN_LEFT
-            "turn-right", "turn right", "right" -> Maneuver.TURN_RIGHT
-            "turn-slight-left", "slight left" -> Maneuver.SLIGHT_LEFT
-            "turn-slight-right", "slight right" -> Maneuver.SLIGHT_RIGHT
-            "turn-sharp-left", "sharp left" -> Maneuver.SHARP_LEFT
-            "turn-sharp-right", "sharp right" -> Maneuver.SHARP_RIGHT
-            "turn-via", "u-turn", "uturn", "roundabout" -> Maneuver.U_TURN
-            "continue", "straight" -> Maneuver.CONTINUE
-            "merge", "merge-to-left", "merge-to-right" -> Maneuver.MERGE
-            "fork-left" -> Maneuver.FORK_LEFT
-            "fork-right" -> Maneuver.FORK_RIGHT
-            "roundabout-enter", "roundabout-exit" -> Maneuver.ROUNDABOUT
-            "on-ramp", "ramp" -> Maneuver.ON_RAMP
-            "off-ramp" -> Maneuver.OFF_RAMP
-            else -> Maneuver.CONTINUE
         }
 
     /**
