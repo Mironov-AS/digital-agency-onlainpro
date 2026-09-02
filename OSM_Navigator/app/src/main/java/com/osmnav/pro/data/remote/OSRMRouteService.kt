@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -15,10 +16,9 @@ import java.util.concurrent.TimeUnit
  * Используется для построения маршрутов
  */
 interface OSRMRouteService {
-    @GET("route/v1/driving/")
+    @GET("route/v1/driving/{coordinates}")
     suspend fun getRoute(
-        @Query("origin") origin: String,
-        @Query("destination") destination: String,
+        @Path("coordinates") coordinates: String, // format: "lon1,lat1;lon2,lat2"
         @Query("overview") overview: String = "full",
         @Query("steps") steps: Boolean = true,
         @Query("geometries") geometries: String = "geojson",

@@ -50,10 +50,10 @@ class RouteRepository {
     ): RouteResult =
         withContext(Dispatchers.IO) {
             try {
-                val origin = "${start.longitude},${start.latitude}"
-                val destination = "${end.longitude},${end.latitude}"
+                // OSRM формат: lon1,lat1;lon2,lat2
+                val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
 
-                val response = service.getRoute(origin, destination)
+                val response = service.getRoute(coordinates)
 
                 if (response.code != "Ok") {
                     return@withContext RouteResult.Error(
@@ -88,8 +88,8 @@ class RouteRepository {
         strategy: String = "fastest",
     ): RouteResult =
         withContext(Dispatchers.IO) {
-            val origin = "${start.longitude},${start.latitude}"
-            val destination = "${end.longitude},${end.latitude}"
+            // OSRM формат: lon1,lat1;lon2,lat2
+            val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
 
             // Пробуем все серверы по очереди
             val allServers = listOf(OSRMRouteService.BASE_URL) + fallbackServers
@@ -98,7 +98,7 @@ class RouteRepository {
                 try {
                     Log.d("RouteRepository", "Trying server: $serverUrl")
                     val currentService = OSRMRouteService.createWithUrl(serverUrl)
-                    val response = currentService.getRoute(origin, destination)
+                    val response = currentService.getRoute(coordinates)
 
                     if (response.code == "Ok") {
                         val osrmRoute = response.routes?.firstOrNull()
