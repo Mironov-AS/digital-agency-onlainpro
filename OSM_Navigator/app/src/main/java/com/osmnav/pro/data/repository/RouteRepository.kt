@@ -56,7 +56,11 @@ class RouteRepository {
                 // OSRM формат: lon1,lat1;lon2,lat2
                 val coordinates = "${start.longitude},${start.latitude};${end.longitude},${end.latitude}"
 
-                val response = service.getRoute(coordinates)
+                // Полный URL
+                val baseUrl = OSRMRouteService.BASE_URL.trimEnd('/')
+                val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
+
+                val response = service.getRoute(fullUrl)
 
                 if (response.code != "Ok") {
                     return@withContext RouteResult.Error(
@@ -102,8 +106,15 @@ class RouteRepository {
             for ((index, serverUrl) in allServers.withIndex()) {
                 try {
                     Log.d("RouteRepository", "[$index/${allServers.size}] Trying server: $serverUrl")
-                    val currentService = OSRMRouteService.createWithUrl(serverUrl)
-                    val response = currentService.getRoute(coordinates)
+
+                    // Строим полный URL с координатами
+                    // Формат: https://server/route/v1/driving/lon1,lat1;lon2,lat2
+                    val baseUrl = serverUrl.trimEnd('/')
+                    val fullUrl = "$baseUrl/route/v1/driving/$coordinates"
+                    Log.d("RouteRepository", "[$index] Full URL: $fullUrl")
+
+                    val currentService = OSRMRouteService.create()
+                    val response = currentService.getRoute(fullUrl)
 
                     Log.d("RouteRepository", "[$index] Response code: ${response.code}")
 
