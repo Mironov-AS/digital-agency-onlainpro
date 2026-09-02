@@ -35,6 +35,7 @@
     <!-- Basic colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="tonal_button_bg">#E3F2FD</color>
     
     <!-- Charging station -->
     <color name="charging_green">#4CAF50</color>
