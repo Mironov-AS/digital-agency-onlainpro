@@ -490,7 +490,16 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val currentLocation = viewModel.currentLocation.value ?: return
+        val currentLocation = viewModel.currentLocation.value
+        if (currentLocation == null) {
+            // Пробуем получить местоположение из myLocationOverlay
+            val myLoc = myLocationOverlay?.myLocation
+            if (myLoc != null) {
+                viewModel.setCurrentLocation(Location(myLoc.latitude, myLoc.longitude))
+            }
+            return
+        }
+
         val selectedConnectors = SettingsActivity.getSelectedConnectors(prefs)
 
         // Отменяем предыдущий поиск
@@ -499,8 +508,8 @@ class MainActivity : AppCompatActivity() {
         searchChargingJob =
             lifecycleScope.launch {
                 try {
-                    // Расширяем область поиска
-                    val radius = 10.0 // градусы примерно 10км
+                    // Расширяем область поиска (0.5 градуса ≈ 50км)
+                    val radius = 0.5
                     val bbox =
                         BoundingBox(
                             currentLocation.latitude + radius,
@@ -510,7 +519,14 @@ class MainActivity : AppCompatActivity() {
                         )
 
                     val stations = chargingStationRepository.getStationsInArea(bbox, 14)
-                    nearestChargingStations = stations
+
+                    if (stations.isEmpty()) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Станции не найдены в радиусе 50км", Toast.LENGTH_SHORT).show()
+                        }
+                        hideNearestChargingCard()
+                        return@launch
+                    }
 
                     // Фильтруем по типу разъёмов
                     val filtered =
@@ -537,10 +553,20 @@ class MainActivity : AppCompatActivity() {
                         nearestChargingStation = nearest
                         showNearestChargingCard(nearest, currentLocation)
                     } else {
+                        runOnUiThread {
+                            Toast
+                                .makeText(
+                                    this@MainActivity,
+                                    "Нет станций с разъёмами: ${selectedConnectors.joinToString()}",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                        }
                         hideNearestChargingCard()
                     }
                 } catch (e: Exception) {
-                    // Игнорируем ошибки
+                    runOnUiThread {
+                        Toast.makeText(this@MainActivity, "Ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
     }

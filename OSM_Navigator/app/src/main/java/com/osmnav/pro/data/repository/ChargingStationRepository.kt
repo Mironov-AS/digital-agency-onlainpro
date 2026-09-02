@@ -1,5 +1,6 @@
 package com.osmnav.pro.data.repository
 
+import android.util.Log
 import com.google.gson.Gson
 import com.osmnav.pro.domain.model.ChargingStation
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ class ChargingStationRepository {
     private val gson = Gson()
 
     companion object {
+        private const val TAG = "ChargingRepo"
         private const val OVERPASS_API_URL = "https://overpass-api.de/api/interpreter"
     }
 
@@ -40,6 +42,8 @@ class ChargingStationRepository {
                 val query = buildOverpassQuery(boundingBox)
                 val encodedQuery = java.net.URLEncoder.encode(query, "UTF-8")
                 val url = "$OVERPASS_API_URL?data=$encodedQuery"
+
+                Log.d(TAG, "Searching stations with URL: $url")
 
                 val request =
                     Request
