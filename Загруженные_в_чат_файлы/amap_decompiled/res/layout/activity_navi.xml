@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/id_map_container" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.astrob.navi.astrobnavilib.InputTextView android:id="@id/id_inputview" android:visibility="gone" android:layout_width="1.0dip" android:layout_height="1.0dip" android:alpha="0.0" />
+    <ImageView android:id="@id/id_launch_img_view" android:background="@drawable/launcher_background" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="fitXY" />
+    <LinearLayout android:gravity="center" android:layout_gravity="bottom|center" android:orientation="horizontal" android:id="@id/id_error_tip_view_container" android:background="@android:color/holo_red_light" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/navi_startup_error_tip" android:textColor="@android:color/white" android:id="@id/id_error_tip_view" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginTop="20.0dip" android:layout_marginBottom="20.0dip" android:text="The navigation map data is not found on the USB flash drive!" android:singleLine="false" android:layout_weight="1.0" android:layout_marginStart="160.0dip" />
+        <Button android:textSize="@dimen/navi_startup_error_tip" android:textColor="@android:color/black" android:id="@id/id_exit_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exit(10s)" android:textAllCaps="false" android:layout_marginStart="10.0dip" android:layout_marginEnd="10.0dip" />
+    </LinearLayout>
+</FrameLayout>

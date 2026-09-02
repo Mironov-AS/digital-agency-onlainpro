@@ -15,6 +15,7 @@ import com.osmnav.pro.domain.model.NavigationState
 import com.osmnav.pro.domain.model.Route
 import com.osmnav.pro.domain.model.RouteInstruction
 import com.osmnav.pro.presentation.dashboard.DashboardProjectionManager
+import com.osmnav.pro.presentation.dashboard.NaviAIDLService
 import kotlinx.coroutines.launch
 import java.util.Locale
 import android.location.Location as AndroidLocation
@@ -38,6 +39,9 @@ class NavigationViewModel(
 
     // Менеджер проекции на приборную панель
     private var dashboardManager: DashboardProjectionManager? = null
+
+    // AIDL Service для трансляции на HU
+    private var naviAIDLService: NaviAIDLService? = null
 
     // Текущее состояние навигации
     private val _route = MutableLiveData<Route?>()
@@ -106,6 +110,17 @@ class NavigationViewModel(
         } catch (e: Exception) {
             Log.e(TAG, "Failed to init dashboard manager", e)
         }
+
+        // Инициализируем AIDL Service
+        naviAIDLService = NaviAIDLService.getInstance()
+    }
+
+    /**
+     * Установить ссылку на AIDL Service (вызывается из Activity)
+     */
+    fun setNaviAIDLService(service: NaviAIDLService?) {
+        naviAIDLService = service
+        Log.d(TAG, "NaviAIDLService set: ${service != null}")
     }
 
     /**
@@ -154,6 +169,13 @@ class NavigationViewModel(
                         destination.longitude,
                     )
 
+                    // Отправляем в AIDL Service для HU
+                    naviAIDLService?.startRouteTo(
+                        destination.latitude,
+                        destination.longitude,
+                        0, // fastest strategy
+                    )
+
                     _isNavigating.value = true
                     currentInstructionIndex = 0
                     lastSpokenDistance = 0
@@ -177,6 +199,14 @@ class NavigationViewModel(
 
         // Обновляем проекцию на приборной панели
         updateDashboardProjection(location)
+
+        // Отправляем обновление в AIDL Service для HU
+        naviAIDLService?.updateLocation(
+            latitude = location.latitude,
+            longitude = location.longitude,
+            speed = location.speed,
+            bearing = location.bearing,
+        )
 
         // Проверяем, нужно ли обновить инструкцию
         checkInstructionProximity(location.latitude, location.longitude)
@@ -338,6 +368,7 @@ class NavigationViewModel(
     fun stopNavigation() {
         textToSpeech?.stop()
         dashboardManager?.stopProjection()
+        naviAIDLService?.stopNavigation()
         _isNavigating.value = false
         _currentInstruction.value = null
         _nextInstruction.value = null

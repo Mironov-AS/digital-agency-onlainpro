@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dialog_message_size">16.0sp</dimen>
+    <dimen name="down_list_height">78.0dip</dimen>
+    <dimen name="down_margin">10.0dip</dimen>
+    <dimen name="down_margin_2">15.0dip</dimen>
+    <dimen name="down_margin_3">65.0dip</dimen>
+    <dimen name="down_margin_4">85.0dip</dimen>
+    <dimen name="down_margin_5">4.0dip</dimen>
+    <dimen name="down_margin_6">4.0dip</dimen>
+    <dimen name="down_margin_7">25.0dip</dimen>
+    <dimen name="down_margin_right_30">30.0dip</dimen>
+    <dimen name="down_province_name">22.0sp</dimen>
+    <dimen name="down_province_size">16.0sp</dimen>
+    <dimen name="progress_bar_height">3.0dip</dimen>
+</resources>

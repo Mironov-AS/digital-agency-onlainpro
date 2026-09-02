@@ -67,6 +67,17 @@
             android:exported="false"
             android:parentActivityName=".presentation.main.MainActivity" />
 
+        <!-- AIDL Navigation Service для трансляции на приборную панель (AutoNavi protocol) -->
+        <service
+            android:name=".presentation.dashboard.NaviAIDLService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.astrob.turbodog.NAVI_AIDL_SERVICE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
