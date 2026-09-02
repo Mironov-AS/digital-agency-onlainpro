@@ -143,10 +143,8 @@ class MainActivity : AppCompatActivity() {
             location?.let {
                 val geoPoint = GeoPoint(it.latitude, it.longitude)
                 binding.mapView.controller.animateTo(geoPoint)
-                // При первом получении местоположения - зум 15
-                if (binding.mapView.zoomLevelDouble < 10) {
-                    binding.mapView.controller.setZoom(15.0)
-                }
+                // При первом получении местоположения ставим зум 15
+                binding.mapView.controller.setZoom(15.0)
             }
         }
 
@@ -356,6 +354,18 @@ class MainActivity : AppCompatActivity() {
         myLocationOverlay =
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
+
+                // Слушаем обновления местоположения
+                runOnFirstFix {
+                    location?.let { loc ->
+                        viewModel.setCurrentLocation(
+                            Location(
+                                latitude = loc.latitude,
+                                longitude = loc.longitude,
+                            ),
+                        )
+                    }
+                }
             }
         binding.mapView.overlays.add(myLocationOverlay)
     }
