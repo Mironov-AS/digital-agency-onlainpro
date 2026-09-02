@@ -170,6 +170,10 @@ class RouteRepository {
                     is YandexRouteResult.Error -> {
                         Log.w("RouteRepository", "Yandex also failed: ${yandexResult.message}")
                     }
+
+                    else -> {
+                        Log.w("RouteRepository", "Yandex returned unknown result type")
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("RouteRepository", "Yandex service error", e)
