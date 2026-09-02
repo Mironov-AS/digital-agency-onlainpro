@@ -319,13 +319,28 @@ class NavigationViewModel(
             }
 
             distance <= 1000 -> {
+                // "Через 500 метров поверните направо" или "Через 1 километр..."
                 val km = distance / 1000.0
-                "Через ${String.format(Locale.US, "%.1f", km)} километров $maneuverText$streetSuffix"
+                if (distance >= 900) {
+                    // Ближе к километру - говорим "километр"
+                    "Через 1 километр $maneuverText$streetSuffix"
+                } else {
+                    "Через $distance метров $maneuverText$streetSuffix"
+                }
             }
 
             else -> {
+                // Для больших расстояний: "Через 4 километра поверните направо на улицу Ленина"
                 val km = distance / 1000.0
-                "Через ${String.format(Locale.US, "%.0f", km)} километров$streetSuffix"
+                val kmInt = km.toInt()
+                // Склонение: 1 километр, 2-4 километра, 5+ километров
+                val kmWord =
+                    when {
+                        kmInt % 10 == 1 && kmInt % 100 != 11 -> "километр"
+                        kmInt % 10 in 2..4 && kmInt % 100 !in 12..14 -> "километра"
+                        else -> "километров"
+                    }
+                "Через $kmInt $kmWord $maneuverText$streetSuffix"
             }
         }
     }
