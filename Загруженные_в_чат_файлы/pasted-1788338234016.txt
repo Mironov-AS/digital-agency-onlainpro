@@ -1,0 +1,38 @@
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:6:56 Unresolved reference: YandexRouteResult
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:140:24 Unresolved reference: YandexRouteResult
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:143:42 Unresolved reference: instructions
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:143:61 Cannot infer a type for this parameter. Please specify it explicitly.
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:150:54 Unresolved reference: it
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:150:64 Unresolved reference: it
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:156:42 Unresolved reference: points
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:157:42 Unresolved reference: it
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:157:52 Unresolved reference: it
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:164:63 Unresolved reference: distance
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:165:64 Unresolved reference: duration
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:171:24 Unresolved reference: YandexRouteResult
+Fix with AI
+
+e: file:///E:/Users/sonic/StudioProjects/OSM_Navigator_Kotlin/app/src/main/java/com/osmnav/pro/data/repository/RouteRepository.kt:172:86 Unresolved reference: message
+Fix with AI
