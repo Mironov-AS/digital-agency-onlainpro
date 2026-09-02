@@ -165,6 +165,9 @@ class MainActivity : AppCompatActivity() {
         if (showNearest) {
             // Запускаем поиск при изменении местоположения
             searchNearestChargingStation()
+        } else {
+            // Скрываем карточку если настройка выключена
+            hideNearestChargingCard()
         }
     }
 
@@ -646,5 +649,29 @@ class MainActivity : AppCompatActivity() {
                 Math.sin(dLon / 2) * Math.sin(dLon / 2)
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
         return r * c
+    }
+
+    /**
+     * Построить маршрут до зарядной станции
+     */
+    private fun navigateToChargingStation(station: ChargingStation) {
+        val currentLocation = viewModel.currentLocation.value
+        if (currentLocation == null) {
+            Toast.makeText(this, "Ожидание GPS...", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Устанавливаем точку назначения
+        val destLocation =
+            Location(
+                latitude = station.latitude,
+                longitude = station.longitude,
+                name = station.name ?: station.address ?: "Зарядная станция",
+            )
+
+        viewModel.setDestination(destLocation)
+
+        // Переходим на экран навигации
+        startNavigation()
     }
 }
