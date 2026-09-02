@@ -15,22 +15,45 @@
         app:navigationIcon="@drawable/ic_back"
         app:title="Поиск" />
     
-    <!-- Поле поиска -->
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- Поле поиска с кнопкой голосового ввода -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Введите адрес..."
-            android:inputType="text"
-            android:imeOptions="actionSearch" />
+            android:layout_weight="1"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            app:endIconMode="clear_text">
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите адрес или скажите..."
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:maxLines="1" />
+            
+        </com.google.android.material.textfield.TextInputLayout>
         
-    </com.google.android.material.textfield.TextInputLayout>
+        <!-- Кнопка голосового ввода -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabVoiceSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:contentDescription="Голосовой поиск"
+            app:srcCompat="@drawable/ic_mic"
+            app:fabSize="normal"
+            app:backgroundTint="?attr/colorPrimaryContainer"
+            app:tint="?attr/colorOnPrimaryContainer" />
+        
+    </LinearLayout>
     
     <!-- Категории быстрого поиска -->
     <HorizontalScrollView

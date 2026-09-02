@@ -2,8 +2,10 @@ package com.osmnav.pro.presentation.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +16,13 @@ import com.osmnav.pro.presentation.navigation.NavigationActivity
 /**
  * Экран поиска адресов и POI
  */
-class SearchActivity : AppCompatActivity() {
+class SearchActivity :
+    AppCompatActivity(),
+    VoiceSearchHelper.VoiceSearchListener {
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: SearchViewModel
     private lateinit var adapter: SearchResultsAdapter
+    private var voiceSearchHelper: VoiceSearchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,35 @@ class SearchActivity : AppCompatActivity() {
         setupUI()
         setupRecyclerView()
         setupObservers()
+        setupVoiceSearch()
+    }
+
+    private fun setupVoiceSearch() {
+        voiceSearchHelper = VoiceSearchHelper(this, this)
+
+        // Кнопка голосового ввода
+        binding.fabVoiceSearch.setOnClickListener {
+            checkVoicePermissionAndStart()
+        }
+    }
+
+    private fun checkVoicePermissionAndStart() {
+        // Для Android 9 не требуется разрешение RECORD_AUDIO для RecognizerIntent
+        // Но проверим доступность Google Voice Search
+        if (voiceSearchHelper?.isVoiceSearchAvailable() == true) {
+            startVoiceSearch()
+        } else {
+            Toast
+                .makeText(
+                    this,
+                    "Голосовой поиск недоступен. Установите Google Voice Search",
+                    Toast.LENGTH_LONG,
+                ).show()
+        }
+    }
+
+    private fun startVoiceSearch() {
+        voiceSearchHelper?.startVoiceSearch()
     }
 
     private fun setupUI() {
@@ -96,6 +130,49 @@ class SearchActivity : AppCompatActivity() {
         binding.chipAtm.setOnClickListener {
             viewModel.searchNearby("atm")
         }
+    }
+
+    // ==================== VOICE SEARCH CALLBACKS ====================
+
+    override fun onVoiceResult(query: String) {
+        // Подставляем распознанный текст в поле поиска
+        binding.etSearch.setText(query)
+        binding.etSearch.setSelection(query.length)
+
+        // Автоматически выполняем поиск
+        viewModel.search(query)
+
+        Toast.makeText(this, "Распознано: $query", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onVoiceError(errorMessage: String) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onListeningStarted() {
+        // Можно показать анимацию
+    }
+
+    override fun onListeningEnded() {
+        // Скрыть анимацию
+    }
+
+    // Обработка результата голосового ввода
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1001) { // REQUEST_CODE_SPEECH
+            voiceSearchHelper?.handleActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        voiceSearchHelper?.destroy()
     }
 
     private fun navigateToLocation(location: Location) {
