@@ -6,7 +6,7 @@ import {
 	Check,
 	AlertCircle,
 } from "lucide-react";
-import { apiFetch } from "../api.js";
+import { apiFetch } from "../../api.js";
 
 export default function NavigatorTab() {
 	const [info, setInfo] = useState(null);
