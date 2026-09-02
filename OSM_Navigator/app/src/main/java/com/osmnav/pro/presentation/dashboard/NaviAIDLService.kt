@@ -6,6 +6,7 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import com.osmnav.pro.data.repository.RouteRepository
+import com.osmnav.pro.data.repository.RouteRepository.RouteResult
 import com.osmnav.pro.domain.model.Location
 import kotlinx.coroutines.*
 
