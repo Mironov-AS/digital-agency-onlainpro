@@ -1,0 +1,30 @@
+Execution failed for task ':app:processDebugResources'.
+> A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
+   > Android resource linking failed
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6841: error: resource color/primary_variant (aka com.osmnav.pro:color/primary_variant) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6842: error: resource color/on_primary (aka com.osmnav.pro:color/on_primary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6845: error: resource color/secondary (aka com.osmnav.pro:color/secondary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6846: error: resource color/secondary_variant (aka com.osmnav.pro:color/secondary_variant) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6847: error: resource color/on_secondary (aka com.osmnav.pro:color/on_secondary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6855: error: resource color/on_background (aka com.osmnav.pro:color/on_background) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6863: error: resource color/on_error (aka com.osmnav.pro:color/on_error) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6841: error: resource color/primary_variant (aka com.osmnav.pro:color/primary_variant) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6842: error: resource color/on_primary (aka com.osmnav.pro:color/on_primary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6845: error: resource color/secondary (aka com.osmnav.pro:color/secondary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6846: error: resource color/secondary_variant (aka com.osmnav.pro:color/secondary_variant) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6847: error: resource color/on_secondary (aka com.osmnav.pro:color/on_secondary) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6855: error: resource color/on_background (aka com.osmnav.pro:color/on_background) not found.
+     com.osmnav.pro.app-mergeDebugResources-51:/values/values.xml:6863: error: resource color/on_error (aka com.osmnav.pro:color/on_error) not found.
+     error: failed linking references.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
