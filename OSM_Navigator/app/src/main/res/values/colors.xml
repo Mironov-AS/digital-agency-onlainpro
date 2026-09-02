@@ -38,4 +38,5 @@
     
     <!-- Charging station -->
     <color name="charging_green">#4CAF50</color>
+    <color name="charging_active_bg">#388E3C</color>
 </resources>

@@ -194,10 +194,30 @@ class MainActivity : AppCompatActivity() {
         showChargingStations = !showChargingStations
 
         if (showChargingStations) {
+            // Подсвечиваем кнопку - активно
+            binding.btnCharging.setBackgroundColor(ContextCompat.getColor(this, R.color.charging_active_bg))
+            binding.btnCharging.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.btnCharging.iconTint = ContextCompat.getColorStateList(this, R.color.white)
+
+            // Показываем текст загрузки
+            binding.btnCharging.text = "Загрузка..."
+
             loadChargingStations()
         } else {
+            // Возвращаем обычное состояние
+            resetChargingButton()
             clearChargingStations()
         }
+    }
+
+    /**
+     * Сбросить стиль кнопки зарядки
+     */
+    private fun resetChargingButton() {
+        binding.btnCharging.setBackgroundColor(ContextCompat.getColor(this, R.color.tonal_button_bg))
+        binding.btnCharging.setTextColor(ContextCompat.getColor(this, R.color.on_surface))
+        binding.btnCharging.iconTint = ContextCompat.getColorStateList(this, R.color.charging_green)
+        binding.btnCharging.text = "Зарядка"
     }
 
     /**
@@ -213,6 +233,9 @@ class MainActivity : AppCompatActivity() {
                         boundingBox,
                         binding.mapView.zoomLevelDouble.toInt(),
                     )
+
+                // Восстанавливаем текст кнопки
+                binding.btnCharging.text = "Зарядка (${stations.size})"
 
                 if (stations.isEmpty()) {
                     Toast.makeText(this@MainActivity, "Зарядные станции не найдены", Toast.LENGTH_SHORT).show()
