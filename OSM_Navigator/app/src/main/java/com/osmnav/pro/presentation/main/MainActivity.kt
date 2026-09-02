@@ -359,7 +359,10 @@ class MainActivity : AppCompatActivity() {
                 enableMyLocation()
 
                 // Включаем автоследование за местоположением
-                followLocation(true)
+                myLocation?.let { loc ->
+                    binding.mapView.controller.animateTo(loc)
+                    binding.mapView.controller.setZoom(15.0)
+                }
             }
         binding.mapView.overlays.add(myLocationOverlay)
 
