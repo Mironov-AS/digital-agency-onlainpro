@@ -1,11 +1,16 @@
 package com.osmnav.pro.presentation.settings
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.osmnav.pro.R
+import com.osmnav.pro.data.remote.LogUploader
+import com.osmnav.pro.data.remote.SatelliteInfoService
 import com.osmnav.pro.data.util.DownloadProgress
 import com.osmnav.pro.data.util.OfflineMapDownloader
 import com.osmnav.pro.databinding.ActivitySettingsBinding
@@ -21,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var mapDownloader: OfflineMapDownloader
     private var downloadJob: Job? = null
     private var downloadDialog: AlertDialog? = null
+    private var satelliteService: SatelliteInfoService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,66 @@ class SettingsActivity : AppCompatActivity() {
 
         setupUI()
         updateCacheInfo()
+        setupSatelliteMonitor()
+    }
+
+    private fun setupSatelliteMonitor() {
+        // Проверяем разрешение
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            binding.tvSatellitesTotal.text = "--"
+            binding.tvSatellitesUsed.text = "--"
+            binding.tvLastSatelliteUpdate.text = "Нет разрешения на геолокацию"
+            return
+        }
+
+        satelliteService = SatelliteInfoService(this)
+        satelliteService?.start()
+
+        // Наблюдаем за изменениями
+        lifecycleScope.launch {
+            satelliteService?.satelliteState?.collect { state ->
+                updateSatelliteUI(state)
+            }
+        }
+    }
+
+    private fun updateSatelliteUI(state: SatelliteInfoService.SatelliteState) {
+        binding.tvSatellitesTotal.text = state.totalSatellites.toString()
+        binding.tvSatellitesUsed.text = state.usedInFix.toString()
+
+        // Обновляем прогресс-бары
+        val byConst = state.getByConstellation()
+
+        val gpsSats = byConst["GPS"] ?: emptyList()
+        val glonassSats = byConst["ГЛОНАСС"] ?: emptyList()
+        val beidouSats = byConst["BeiDou"] ?: emptyList()
+        val galileoSats = byConst["Galileo"] ?: emptyList()
+
+        binding.tvGpsCount.text = gpsSats.size.toString()
+        binding.progressGps.progress = gpsSats.size
+
+        binding.tvGlonassCount.text = glonassSats.size.toString()
+        binding.progressGlonass.progress = glonassSats.size
+
+        binding.tvBeidouCount.text = beidouSats.size.toString()
+        binding.progressBeidou.progress = beidouSats.size
+
+        binding.tvGalileoCount.text = galileoSats.size.toString()
+        binding.progressGalileo.progress = galileoSats.size
+
+        // Время обновления
+        val updateTime =
+            java.text
+                .SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault())
+                .format(java.util.Date(state.lastUpdate))
+        binding.tvLastSatelliteUpdate.text = "Обновление: $updateTime"
+
+        // Логируем каждые 10 секунд
+        if (System.currentTimeMillis() - state.lastUpdate < 11000) {
+            LogUploader.i("SettingsActivity", "Satellite state: ${state.getSummary()}")
+        }
     }
 
     private fun setupUI() {
@@ -234,5 +300,6 @@ class SettingsActivity : AppCompatActivity() {
         super.onDestroy()
         downloadJob?.cancel()
         downloadDialog?.dismiss()
+        satelliteService?.stop()
     }
 }

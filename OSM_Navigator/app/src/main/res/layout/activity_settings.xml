@@ -248,6 +248,298 @@
                 android:background="?attr/colorOutline"
                 android:layout_marginVertical="16dp" />
             
+            <!-- Секция: Спутники GPS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Спутники GPS"
+                android:textSize="14sp"
+                android:textColor="@color/charging_green"
+                android:layout_marginBottom="8dp" />
+            
+            <!-- Карточка со статистикой спутников -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    
+                    <!-- Заголовок -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Статус GNSS"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        
+                        <ImageView
+                            android:id="@+id/ivGnssStatus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_compass"
+                            android:contentDescription="Status" />
+                    </LinearLayout>
+                    
+                    <!-- Общая статистика -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            
+                            <TextView
+                                android:id="@+id/tvSatellitesTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/charging_green" />
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Всего"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            
+                            <TextView
+                                android:id="@+id/tvSatellitesUsed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary" />
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="В фиксе"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    
+                    <!-- Детали по созвездиям -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="По созвездиям:"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp" />
+                    
+                    <LinearLayout
+                        android:id="@+id/layoutSatelliteDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
+                        
+                        <!-- GPS -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="4dp">
+                            
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="🛰️"
+                                android:textSize="16sp" />
+                            
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:text="GPS"
+                                android:textSize="14sp" />
+                            
+                            <ProgressBar
+                                android:id="@+id/progressGps"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="8dp"
+                                android:layout_weight="1"
+                                android:layout_marginHorizontal="8dp"
+                                android:max="30"
+                                android:progress="0" />
+                            
+                            <TextView
+                                android:id="@+id/tvGpsCount"
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="14sp"
+                                android:gravity="end" />
+                        </LinearLayout>
+                        
+                        <!-- ГЛОНАСС -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="4dp">
+                            
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="🛰️"
+                                android:textSize="16sp" />
+                            
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:text="ГЛОНАСС"
+                                android:textSize="14sp" />
+                            
+                            <ProgressBar
+                                android:id="@+id/progressGlonass"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="8dp"
+                                android:layout_weight="1"
+                                android:layout_marginHorizontal="8dp"
+                                android:max="30"
+                                android:progress="0" />
+                            
+                            <TextView
+                                android:id="@+id/tvGlonassCount"
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="14sp"
+                                android:gravity="end" />
+                        </LinearLayout>
+                        
+                        <!-- BeiDou -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="4dp">
+                            
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="🛰️"
+                                android:textSize="16sp" />
+                            
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:text="BeiDou"
+                                android:textSize="14sp" />
+                            
+                            <ProgressBar
+                                android:id="@+id/progressBeidou"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="8dp"
+                                android:layout_weight="1"
+                                android:layout_marginHorizontal="8dp"
+                                android:max="30"
+                                android:progress="0" />
+                            
+                            <TextView
+                                android:id="@+id/tvBeidouCount"
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="14sp"
+                                android:gravity="end" />
+                        </LinearLayout>
+                        
+                        <!-- Galileo -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="4dp">
+                            
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="🛰️"
+                                android:textSize="16sp" />
+                            
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:text="Galileo"
+                                android:textSize="14sp" />
+                            
+                            <ProgressBar
+                                android:id="@+id/progressGalileo"
+                                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="8dp"
+                                android:layout_weight="1"
+                                android:layout_marginHorizontal="8dp"
+                                android:max="30"
+                                android:progress="0" />
+                            
+                            <TextView
+                                android:id="@+id/tvGalileoCount"
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="14sp"
+                                android:gravity="end" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    
+                    <!-- Последнее обновление -->
+                    <TextView
+                        android:id="@+id/tvLastSatelliteUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Обновление: --"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:layout_marginTop="12dp" />
+                    
+                </LinearLayout>
+                
+            </com.google.android.material.card.MaterialCardView>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:layout_marginVertical="16dp" />
+            
             <!-- Секция: О приложении -->
             <TextView
                 android:layout_width="wrap_content"
