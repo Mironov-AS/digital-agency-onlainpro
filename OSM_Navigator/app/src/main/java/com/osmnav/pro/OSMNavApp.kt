@@ -55,6 +55,12 @@ class OSMNavApp : Application() {
 
         LogUploader.i("OSMNavApp", "App initialized")
 
+        // Диагностика - выводим в обычный Log для отладки
+        android.util.Log.i("OSMNavApp", "=== CAR API DIAGNOSTIC START ===")
+        android.util.Log.i("OSMNavApp", "Android: ${android.os.Build.VERSION.RELEASE} (API ${android.os.Build.VERSION.SDK_INT})")
+        android.util.Log.i("OSMNavApp", "Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
+        android.util.Log.i("OSMNavApp", "Is Automotive: ${packageManager.hasSystemFeature("android.hardware.type.automotive")}")
+
         // Инициализация SatelliteInfoService
         initSatelliteService()
 
