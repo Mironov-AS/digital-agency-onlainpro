@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.repository.RouteRepository
 import com.osmnav.pro.data.repository.RouteResult
 import com.osmnav.pro.domain.model.Location
@@ -360,6 +361,7 @@ class NaviAIDLService : Service() {
             }
         sendBroadcast(intent)
         Log.d(TAG, "Broadcast navigation start")
+        LogUploader.i(TAG, "Dashboard: NAVIGATION_START sent - distance: ${route.distanceMeters}m, time: ${route.durationSeconds}s")
     }
 
     /**
@@ -402,6 +404,10 @@ class NaviAIDLService : Service() {
                 }
             }
         sendBroadcast(intent)
+        LogUploader.d(
+            TAG,
+            "Dashboard: NAVIGATION_UPDATE sent - lat: $lat, lon: $lon, speed: $speed, road: ${instruction?.streetName ?: "unknown"}",
+        )
     }
 
     /**
