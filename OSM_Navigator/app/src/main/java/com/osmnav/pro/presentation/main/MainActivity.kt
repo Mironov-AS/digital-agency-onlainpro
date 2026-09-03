@@ -89,7 +89,8 @@ class MainActivity : AppCompatActivity() {
             setMultiTouchControls(true)
 
             // Скрываем встроенные кнопки зума - используем сенсорный ввод
-            setZoomControlsEnabled(false)
+            @Suppress("DEPRECATION")
+            setBuiltInZoomControls(false)
 
             // Начальная позиция - будет обновлена при получении GPS
             controller.setZoom(15.0)
