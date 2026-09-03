@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.osmnav.pro.R
+import com.osmnav.pro.data.remote.FusedLocationProvider
 import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.repository.ChargingStationRepository
 import com.osmnav.pro.databinding.ActivityMainBinding
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private val chargingStationRepository = ChargingStationRepository()
 
     private var myLocationOverlay: MyLocationNewOverlay? = null
+    private var fusedLocationProvider: FusedLocationProvider? = null
     private var destinationMarker: Marker? = null
     private val chargingStationMarkers = mutableListOf<Marker>()
     private var showChargingStations = false
@@ -372,9 +374,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun enableMyLocation() {
-        LogUploader.i(TAG, "enableMyLocation: Setting up GPS")
-        val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
+        LogUploader.i(TAG, "enableMyLocation: Setting up GPS with FusedLocationProvider")
 
+        // 1. Запускаем объединённый провайдер геолокации (Android GPS + T-Box GPS)
+        fusedLocationProvider =
+            FusedLocationProvider(this) { location ->
+                val appLocation =
+                    Location(
+                        latitude = location.latitude,
+                        longitude = location.longitude,
+                    )
+
+                // Логируем источник
+                LogUploader.d(
+                    TAG,
+                    "Location update from ${fusedLocationProvider?.getBestSource() ?: "unknown"}: ${location.latitude}, ${location.longitude}",
+                )
+
+                // Обновляем ViewModel
+                viewModel.setCurrentLocation(appLocation)
+
+                // Обновляем маркер на карте
+                runOnUiThread {
+                    myLocationOverlay?.myLocation = GeoPoint(location.latitude, location.longitude)
+                    binding.mapView.invalidate()
+                }
+
+                // Обновляем ближайшую зарядную станцию
+                checkShowNearestCharging()
+            }
+        fusedLocationProvider?.start()
+
+        // 2. OSMDroid overlay для визуализации
         myLocationOverlay =
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
@@ -401,44 +432,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         binding.mapView.overlays.add(myLocationOverlay)
-
-        // Также слушаем обновления через LocationManager
-        try {
-            val locationListener =
-                object : android.location.LocationListener {
-                    override fun onLocationChanged(location: android.location.Location) {
-                        viewModel.setCurrentLocation(
-                            Location(
-                                latitude = location.latitude,
-                                longitude = location.longitude,
-                            ),
-                        )
-
-                        // Обновляем ближайшую зарядную станцию
-                        checkShowNearestCharging()
-                    }
-
-                    override fun onProviderEnabled(provider: String) {}
-
-                    override fun onProviderDisabled(provider: String) {}
-
-                    @Deprecated("Deprecated in API")
-                    override fun onStatusChanged(
-                        provider: String?,
-                        status: Int,
-                        extras: android.os.Bundle?,
-                    ) {}
-                }
-
-            locationManager.requestLocationUpdates(
-                android.location.LocationManager.GPS_PROVIDER,
-                1000L,
-                5f,
-                locationListener,
-            )
-        } catch (e: SecurityException) {
-            // Разрешение уже проверено
-        }
     }
 
     private fun requestLocationPermission() {
@@ -472,6 +465,11 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         binding.mapView.onPause()
         searchChargingJob?.cancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        fusedLocationProvider?.stop()
     }
 
     /**
