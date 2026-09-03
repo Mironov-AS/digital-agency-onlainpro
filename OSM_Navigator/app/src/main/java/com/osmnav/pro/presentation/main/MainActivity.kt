@@ -37,6 +37,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
  * Главный экран с картой
  */
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private val chargingStationRepository = ChargingStationRepository()
@@ -338,22 +339,6 @@ class MainActivity : AppCompatActivity() {
         parts.add("Статус: ${station.status}")
 
         return parts.joinToString("\n")
-    }
-
-    /**
-     * Проложить маршрут к зарядной станции
-     */
-    private fun navigateToChargingStation(station: ChargingStation) {
-        val location =
-            Location(
-                latitude = station.latitude,
-                longitude = station.longitude,
-                name = station.name ?: "Зарядная станция",
-                address = station.address,
-            )
-        viewModel.setDestination(location)
-
-        Toast.makeText(this, "Маршрут к: ${station.name ?: "зарядной станции"}", Toast.LENGTH_SHORT).show()
     }
 
     /**
