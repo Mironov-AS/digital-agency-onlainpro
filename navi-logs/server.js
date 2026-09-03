@@ -1,8 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
+
+// Generate UUID v4 using crypto
+function uuidv4() {
+    return crypto.randomUUID();
+}
 
 const app = express();
 const PORT = 3005;
@@ -16,14 +21,14 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 // HTML интерфейс
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
 	res.send(getHtml());
 });
 
 // === API ===
 
 // Получить список устройств
-app.get("/api/devices", (req, res) => {
+app.get("/api/devices", (_req, res) => {
 	const deviceList = Array.from(devices.values()).map((d) => ({
 		id: d.id,
 		name: d.name || d.id,
