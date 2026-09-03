@@ -1,8 +1,8 @@
-const express = require('express');
-const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const cors = require("cors");
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const PORT = 3005;
@@ -13,117 +13,126 @@ const devices = new Map(); // deviceId -> { id, name, lastSeen, logCount }
 
 // Middleware
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
 
 // HTML интерфейс
-app.get('/', (req, res) => {
-    res.send(getHtml());
+app.get("/", (req, res) => {
+	res.send(getHtml());
 });
 
 // === API ===
 
 // Получить список устройств
-app.get('/api/devices', (req, res) => {
-    const deviceList = Array.from(devices.values()).map(d => ({
-        id: d.id,
-        name: d.name || d.id,
-        lastSeen: d.lastSeen,
-        logCount: d.logCount,
-        appVersion: d.appVersion,
-        androidVersion: d.androidVersion,
-    }));
-    res.json(deviceList);
+app.get("/api/devices", (req, res) => {
+	const deviceList = Array.from(devices.values()).map((d) => ({
+		id: d.id,
+		name: d.name || d.id,
+		lastSeen: d.lastSeen,
+		logCount: d.logCount,
+		appVersion: d.appVersion,
+		androidVersion: d.androidVersion,
+	}));
+	res.json(deviceList);
 });
 
 // Получить логи устройства
-app.get('/api/logs/:deviceId', (req, res) => {
-    const { deviceId } = req.params;
-    const data = logs.get(deviceId);
-    
-    if (!data) {
-        return res.json({ info: {}, logs: [] });
-    }
-    
-    res.json(data);
+app.get("/api/logs/:deviceId", (req, res) => {
+	const { deviceId } = req.params;
+	const data = logs.get(deviceId);
+
+	if (!data) {
+		return res.json({ info: {}, logs: [] });
+	}
+
+	res.json(data);
 });
 
 // Отправить логи (вызывается из Android приложения)
-app.post('/api/logs', (req, res) => {
-    const { deviceId, deviceName, appVersion, androidVersion, level, tag, message, timestamp } = req.body;
-    
-    if (!deviceId) {
-        return res.status(400).json({ error: 'deviceId required' });
-    }
-    
-    // Инициализируем устройство
-    if (!logs.has(deviceId)) {
-        logs.set(deviceId, { info: {}, logs: [] });
-        devices.set(deviceId, {
-            id: deviceId,
-            name: deviceName || deviceId,
-            lastSeen: new Date().toISOString(),
-            logCount: 0,
-            appVersion,
-            androidVersion,
-        });
-    }
-    
-    // Обновляем информацию об устройстве
-    const device = devices.get(deviceId);
-    device.lastSeen = new Date().toISOString();
-    if (deviceName) device.name = deviceName;
-    if (appVersion) device.appVersion = appVersion;
-    if (androidVersion) device.androidVersion = androidVersion;
-    
-    // Сохраняем лог
-    const logEntry = {
-        id: uuidv4(),
-        level: level || 'INFO',
-        tag: tag || 'App',
-        message: message || '',
-        timestamp: timestamp || new Date().toISOString(),
-    };
-    
-    logs.get(deviceId).logs.push(logEntry);
-    device.logCount++;
-    
-    // Ограничиваем количество логов (последние 1000)
-    if (logs.get(deviceId).logs.length > 1000) {
-        logs.get(deviceId).logs = logs.get(deviceId).logs.slice(-1000);
-    }
-    
-    // Сохраняем в файл
-    saveToFile(deviceId, logEntry);
-    
-    res.json({ success: true, logId: logEntry.id });
+app.post("/api/logs", (req, res) => {
+	const {
+		deviceId,
+		deviceName,
+		appVersion,
+		androidVersion,
+		level,
+		tag,
+		message,
+		timestamp,
+	} = req.body;
+
+	if (!deviceId) {
+		return res.status(400).json({ error: "deviceId required" });
+	}
+
+	// Инициализируем устройство
+	if (!logs.has(deviceId)) {
+		logs.set(deviceId, { info: {}, logs: [] });
+		devices.set(deviceId, {
+			id: deviceId,
+			name: deviceName || deviceId,
+			lastSeen: new Date().toISOString(),
+			logCount: 0,
+			appVersion,
+			androidVersion,
+		});
+	}
+
+	// Обновляем информацию об устройстве
+	const device = devices.get(deviceId);
+	device.lastSeen = new Date().toISOString();
+	if (deviceName) device.name = deviceName;
+	if (appVersion) device.appVersion = appVersion;
+	if (androidVersion) device.androidVersion = androidVersion;
+
+	// Сохраняем лог
+	const logEntry = {
+		id: uuidv4(),
+		level: level || "INFO",
+		tag: tag || "App",
+		message: message || "",
+		timestamp: timestamp || new Date().toISOString(),
+	};
+
+	logs.get(deviceId).logs.push(logEntry);
+	device.logCount++;
+
+	// Ограничиваем количество логов (последние 1000)
+	if (logs.get(deviceId).logs.length > 1000) {
+		logs.get(deviceId).logs = logs.get(deviceId).logs.slice(-1000);
+	}
+
+	// Сохраняем в файл
+	saveToFile(deviceId, logEntry);
+
+	res.json({ success: true, logId: logEntry.id });
 });
 
 // Очистить логи устройства
-app.delete('/api/logs/:deviceId', (req, res) => {
-    const { deviceId } = req.params;
-    logs.delete(deviceId);
-    if (devices.has(deviceId)) {
-        devices.get(deviceId).logCount = 0;
-    }
-    res.json({ success: true });
+app.delete("/api/logs/:deviceId", (req, res) => {
+	const { deviceId } = req.params;
+	logs.delete(deviceId);
+	if (devices.has(deviceId)) {
+		devices.get(deviceId).logCount = 0;
+	}
+	res.json({ success: true });
 });
 
 // Сохранить лог в файл
 function saveToFile(deviceId, logEntry) {
-    const logDir = path.join(__dirname, 'logs');
-    if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir, { recursive: true });
-    }
-    
-    const fileName = path.join(logDir, `${deviceId}.log`);
-    const line = `[${logEntry.timestamp}] [${logEntry.level}] [${logEntry.tag}] ${logEntry.message}\n`;
-    
-    fs.appendFileSync(fileName, line);
+	const logDir = path.join(__dirname, "logs");
+	if (!fs.existsSync(logDir)) {
+		fs.mkdirSync(logDir, { recursive: true });
+	}
+
+	const fileName = path.join(logDir, `${deviceId}.log`);
+	const line = `[${logEntry.timestamp}] [${logEntry.level}] [${logEntry.tag}] ${logEntry.message}\n`;
+
+	fs.appendFileSync(fileName, line);
 }
 
 // HTML интерфейс
 function getHtml() {
-    return `
+	return `
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -345,8 +354,8 @@ function getHtml() {
 }
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Navi Logs Server running on port ${PORT}`);
-    console.log(`📱 Web interface: http://localhost:${PORT}`);
-    console.log(`📡 API endpoint: http://localhost:${PORT}/api/logs`);
+app.listen(PORT, "0.0.0.0", () => {
+	console.log(`🚀 Navi Logs Server running on port ${PORT}`);
+	console.log(`📱 Web interface: http://localhost:${PORT}`);
+	console.log(`📡 API endpoint: http://localhost:${PORT}/api/logs`);
 });
