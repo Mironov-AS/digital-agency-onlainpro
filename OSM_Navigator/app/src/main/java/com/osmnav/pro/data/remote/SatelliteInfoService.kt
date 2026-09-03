@@ -2,11 +2,10 @@ package com.osmnav.pro.data.remote
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.location.GnssStatus
+import android.location.GpsStatus
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,16 +15,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Сервис для получения информации о спутниках GNSS
+ * Сервис для получения информации о спутниках GPS/GNSS
  * Поддерживает: GPS, ГЛОНАСС, BeiDou, Galileo, SBAS, QZSS
  */
+@Suppress("DEPRECATION")
 class SatelliteInfoService(
     context: Context,
 ) {
     companion object {
         private const val TAG = "SatelliteInfo"
 
-        // Константы типов спутников из GnssStatus
+        // Константы типов созвездий
         const val CONSTELLATION_GPS = "GPS"
         const val CONSTELLATION_GLONASS = "ГЛОНАСС"
         const val CONSTELLATION_BEIDOU = "BeiDou"
@@ -41,7 +41,8 @@ class SatelliteInfoService(
     private val _satelliteState = MutableStateFlow<SatelliteState>(SatelliteState())
     val satelliteState: StateFlow<SatelliteState> = _satelliteState.asStateFlow()
 
-    private var gnssCallback: GnssStatus.Callback? = null
+    private var gpsStatusListener: GpsStatus.Listener? = null
+    private var locationListener: LocationListener? = null
 
     /**
      * Состояние спутников
@@ -52,6 +53,8 @@ class SatelliteInfoService(
         val satellites: List<SatelliteInfo> = emptyList(),
         val lastUpdate: Long = 0L,
         val provider: String = "Unknown",
+        val accuracy: Float = 0f,
+        val hdop: Float = 0f,
     ) {
         fun getByConstellation(): Map<String, List<SatelliteInfo>> = satellites.groupBy { it.constellation }
 
@@ -60,9 +63,10 @@ class SatelliteInfoService(
             val parts =
                 byConst.map { (name, list) ->
                     val used = list.count { it.usedInFix }
-                    "$name: ${list.size}($used)"
+                    val avgCno = if (list.isNotEmpty()) list.map { it.cn0DbHz }.average() else 0.0
+                    "$name: ${list.size}($used) avg=${String.format("%.1f", avgCno)}dB"
                 }
-            return "Всего: $totalSatellites, в фиксе: $usedInFix | ${parts.joinToString(", ")}"
+            return "Всего: $totalSatellites, в фиксе: $usedInFix, acc=${String.format("%.1f", accuracy)}m | ${parts.joinToString(" | ")}"
         }
     }
 
@@ -70,30 +74,29 @@ class SatelliteInfoService(
      * Информация о спутнике
      */
     data class SatelliteInfo(
-        val svid: Int, // Space Vehicle ID
+        val prn: Int, // PRN номер спутника
         val constellation: String, // Тип созвездия
         val constellationName: String, // Читаемое имя
         val usedInFix: Boolean, // Используется в определении позиции
-        val elevation: Float, // Угол возвышения (градусы)
-        val azimuth: Float, // Азимут (градусы)
-        val cn0DbHz: Float, // Отношение сигнал/шум (дБГц)
-        val carrierFrequencyHz: Float = 0f,
+        val snr: Float, // Signal-to-Noise Ratio (дБ)
+        val elevation: Float = 0f, // Угол возвышения (градусы)
+        val azimuth: Float = 0f, // Азимут (градусы)
     ) {
         fun getSignalQuality(): String =
             when {
-                cn0DbHz >= 45 -> "Отличный"
-                cn0DbHz >= 35 -> "Хороший"
-                cn0DbHz >= 25 -> "Средний"
-                cn0DbHz >= 15 -> "Слабый"
+                snr >= 45 -> "Отличный"
+                snr >= 35 -> "Хороший"
+                snr >= 25 -> "Средний"
+                snr >= 15 -> "Слабый"
                 else -> "Очень слабый"
             }
 
         fun getSignalBars(): Int =
             when {
-                cn0DbHz >= 45 -> 4
-                cn0DbHz >= 35 -> 3
-                cn0DbHz >= 25 -> 2
-                cn0DbHz >= 15 -> 1
+                snr >= 45 -> 4
+                snr >= 35 -> 3
+                snr >= 25 -> 2
+                snr >= 15 -> 1
                 else -> 0
             }
     }
@@ -104,131 +107,167 @@ class SatelliteInfoService(
     @SuppressLint("MissingPermission")
     fun start() {
         try {
-            gnssCallback =
-                object : GnssStatus.Callback() {
-                    override fun onSatelliteStatusChanged(status: GnssStatus) {
-                        processGnssStatus(status)
-                    }
+            // Слушатель GPS статуса
+            gpsStatusListener =
+                GpsStatus.Listener { event ->
+                    when (event) {
+                        GpsStatus.GPS_EVENT_SATELLITE_STATUS -> {
+                            val status = locationManager.getGpsStatus(null)
+                            status?.let { processGpsStatus(it) }
+                        }
 
-                    override fun onStarted() {
-                        Log.i(TAG, "GNSS monitoring started")
-                        LogUploader.i(TAG, "GNSS satellite monitoring started")
-                    }
+                        GpsStatus.GPS_EVENT_STARTED -> {
+                            Log.i(TAG, "GPS started")
+                            LogUploader.i(TAG, "GPS satellite monitoring started")
+                        }
 
-                    override fun onStopped() {
-                        Log.i(TAG, "GNSS monitoring stopped")
+                        GpsStatus.GPS_EVENT_STOPPED -> {
+                            Log.i(TAG, "GPS stopped")
+                        }
                     }
                 }
 
-            locationManager.registerGnssCallback(gnssCallback!!, Handler(Looper.getMainLooper()))
-            Log.i(TAG, "Registered GNSS callback")
+            locationManager.addGpsStatusListener(gpsStatusListener)
+
+            // Запрашиваем обновления местоположения для получения точности
+            locationListener =
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        updateLocationAccuracy(location)
+                    }
+
+                    override fun onStatusChanged(
+                        provider: String?,
+                        status: Int,
+                        extras: Bundle?,
+                    ) {}
+
+                    override fun onProviderEnabled(provider: String) {}
+
+                    override fun onProviderDisabled(provider: String) {}
+                }
+
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                1000L,
+                5f,
+                locationListener!!,
+                Looper.getMainLooper(),
+            )
+
+            Log.i(TAG, "GPS status listener added")
+            LogUploader.i(TAG, "SatelliteInfoService started")
         } catch (e: Exception) {
-            Log.e(TAG, "Error registering GNSS callback: ${e.message}")
-            LogUploader.e(TAG, "GNSS callback error: ${e.message}")
+            Log.e(TAG, "Error starting GPS monitoring: ${e.message}")
+            LogUploader.e(TAG, "SatelliteInfo start error: ${e.message}")
         }
     }
 
     /**
-     * Обработать статус GNSS
+     * Обработать статус GPS
      */
-    private fun processGnssStatus(status: GnssStatus) {
+    private fun processGpsStatus(status: GpsStatus) {
         val satellites = mutableListOf<SatelliteInfo>()
         var usedInFix = 0
 
-        val satelliteCount = status.satelliteCount
-        for (i in 0 until satelliteCount) {
-            val svId = status.getSvid(i)
-            val constellationType = status.getConstellationType(i)
-            val constellation = getConstellationName(constellationType)
-            val used = status.usedInFix(i)
-            val elevation = status.getElevation(i)
-            val azimuth = status.getAzimuth(i)
-            val cn0 = status.getCn0DbHz(i)
-            val freq =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    status.getCarrierFrequencyHz(i)
-                } else {
-                    0f
-                }
+        val iterator = status.getSatellites().iterator()
+        while (iterator.hasNext()) {
+            val satellite = iterator.next()
 
+            val used = satellite.usedInFix()
             if (used) usedInFix++
+
+            // Определяем созвездие по PRN
+            val prn = satellite.prn
+            val constellation = getConstellationByPrn(prn)
 
             satellites.add(
                 SatelliteInfo(
-                    svid = svId,
-                    constellation = constellation,
-                    constellationName = getConstellationReadName(constellationType),
+                    prn = prn,
+                    constellation = constellation.first,
+                    constellationName = constellation.second,
                     usedInFix = used,
-                    elevation = elevation,
-                    azimuth = azimuth,
-                    cn0DbHz = cn0,
-                    carrierFrequencyHz = freq,
+                    snr = satellite.signalStrength.toFloat(),
+                    elevation = satellite.elevation,
+                    azimuth = satellite.azimuth,
                 ),
             )
         }
 
-        val state =
-            SatelliteState(
-                totalSatellites = satelliteCount,
+        val state = _satelliteState.value
+        val newState =
+            state.copy(
+                totalSatellites = satellites.size,
                 usedInFix = usedInFix,
                 satellites = satellites,
                 lastUpdate = System.currentTimeMillis(),
-                provider = "GNSS",
+                provider = "GPS",
             )
 
-        _satelliteState.value = state
+        _satelliteState.value = newState
 
-        // Логируем каждые 10 секунд (не чаще)
-        if (System.currentTimeMillis() - state.lastUpdate < 100) {
-            return
-        }
-
-        logSatelliteInfo(state)
+        // Логируем каждые 10 секунд
+        logSatelliteInfo(newState)
     }
 
     /**
-     * Получить название созвездия по типу
+     * Обновить точность из локации
      */
-    private fun getConstellationName(type: Int): String =
-        when (type) {
-            GnssStatus.CONSTELLATION_GPS -> CONSTELLATION_GPS
-            GnssStatus.CONSTELLATION_GLONASS -> CONSTELLATION_GLONASS
-            GnssStatus.CONSTELLATION_BEIDOU -> CONSTELLATION_BEIDOU
-            GnssStatus.CONSTELLATION_GALILEO -> CONSTELLATION_GALILEO
-            GnssStatus.CONSTELLATION_SBAS -> CONSTELLATION_SBAS
-            GnssStatus.CONSTELLATION_QZSS -> CONSTELLATION_QZSS
-            else -> CONSTELLATION_UNKNOWN
-        }
+    private fun updateLocationAccuracy(location: Location) {
+        val currentState = _satelliteState.value
+        if (currentState.accuracy != location.accuracy) {
+            _satelliteState.value =
+                currentState.copy(
+                    accuracy = location.accuracy,
+                    lastUpdate = System.currentTimeMillis(),
+                )
 
-    private fun getConstellationReadName(type: Int): String =
-        when (type) {
-            GnssStatus.CONSTELLATION_GPS -> "GPS 🇺🇸"
-            GnssStatus.CONSTELLATION_GLONASS -> "ГЛОНАСС 🇷🇺"
-            GnssStatus.CONSTELLATION_BEIDOU -> "BeiDou 🇨🇳"
-            GnssStatus.CONSTELLATION_GALILEO -> "Galileo 🇪🇺"
-            GnssStatus.CONSTELLATION_SBAS -> "SBAS"
-            GnssStatus.CONSTELLATION_QZSS -> "QZSS 🇯🇵"
-            else -> "Неизвестно"
+            LogUploader.d(TAG, "GPS accuracy: ${location.accuracy}m, provider=${location.provider}")
+        }
+    }
+
+    /**
+     * Определить созвездие по PRN номеру
+     * PRN 1-32: GPS
+     * PRN 33-64: ГЛОНАСС
+     * PRN 65-96: Galileo
+     * PRN 121-160: BeiDou
+     * PRN 183-192: QZSS
+     * PRN 193-197: SBAS
+     */
+    private fun getConstellationByPrn(prn: Int): Pair<String, String> =
+        when (prn) {
+            in 1..32 -> CONSTELLATION_GPS to "GPS 🇺🇸"
+            in 33..64 -> CONSTELLATION_GLONASS to "ГЛОНАСС 🇷🇺"
+            in 65..96 -> CONSTELLATION_GALILEO to "Galileo 🇪🇺"
+            in 121..160 -> CONSTELLATION_BEIDOU to "BeiDou 🇨🇳"
+            in 183..192 -> CONSTELLATION_QZSS to "QZSS 🇯🇵"
+            in 193..197 -> CONSTELLATION_SBAS to "SBAS"
+            in 200..300 -> CONSTELLATION_GLONASS to "ГЛОНАСС 🇷🇺"
+            else -> CONSTELLATION_UNKNOWN to "Неизвестно"
         }
 
     /**
      * Логировать информацию о спутниках
      */
     private fun logSatelliteInfo(state: SatelliteState) {
-        if (state.totalSatellites == 0) {
-            LogUploader.w(TAG, "No satellites visible")
-            return
-        }
+        if (state.totalSatellites == 0) return
 
         val byConst = state.getByConstellation()
         val details =
             byConst.map { (name, sats) ->
                 val used = sats.count { it.usedInFix }
-                val avgCno = if (sats.isNotEmpty()) sats.map { it.cn0DbHz }.average() else 0.0
-                "$name: ${sats.size}($used) avgCN0=${String.format("%.1f", avgCno)}dBHz"
+                val avgSnr = if (sats.isNotEmpty()) sats.map { it.snr }.average() else 0.0
+                "$name: ${sats.size}($used) avg=${String.format("%.1f", avgSnr)}dB"
             }
 
-        LogUploader.i(TAG, "Satellites: total=${state.totalSatellites} used=${state.usedInFix} | ${details.joinToString(" | ")}")
+        LogUploader.i(
+            TAG,
+            "Satellites: total=${state.totalSatellites} used=${state.usedInFix} acc=${String.format(
+                "%.1f",
+                state.accuracy,
+            )}m | ${details.joinToString(" | ")}",
+        )
     }
 
     /**
@@ -247,19 +286,30 @@ class SatelliteInfoService(
             parts.add("$name: ${sats.size}/$used")
         }
 
-        return "Всего: ${state.totalSatellites} | В фиксе: ${state.usedInFix}\n${parts.joinToString("\n")}"
+        return "Всего: ${state.totalSatellites} | В фиксе: ${state.usedInFix} | Точность: ${String.format(
+            "%.1f",
+            state.accuracy,
+        )}м\n${parts.joinToString("\n")}"
     }
 
     /**
      * Остановить мониторинг
      */
     fun stop() {
-        gnssCallback?.let {
+        gpsStatusListener?.let {
             try {
-                locationManager.unregisterGnssCallback(it)
+                locationManager.removeGpsStatusListener(it)
             } catch (e: Exception) {
             }
         }
-        gnssCallback = null
+        locationListener?.let {
+            try {
+                locationManager.removeUpdates(it)
+            } catch (e: Exception) {
+            }
+        }
+        gpsStatusListener = null
+        locationListener = null
+        Log.i(TAG, "SatelliteInfoService stopped")
     }
 }
