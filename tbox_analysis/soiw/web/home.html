@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="js/net_jq_ajax.js"></script>
+    <title>四海万联 One IOT World</title>
+   
+    <script type="text/javascript">
+	var list_ch=new Array ("Log 上传：","软件升级：","升级","导出","提交","提交");
+    var list_id_name=new Array ("list_name2","list_name1","button1","button2","button3","button4");
+	function ch_english()
+	{		
+		$( "#"+ list_id_name[ 0 ] ).text( list_ch[0]);
+		$( "#"+ list_id_name[ 1 ] ).text( list_ch[1]);
+		$( "#"+ list_id_name[ 2 ] ).attr( "value",list_ch[2]);
+		$( "#"+ list_id_name[ 3 ] ).attr( "value",list_ch[3]);	
+		$( "#"+ list_id_name[ 4 ] ).attr( "value",list_ch[4]);
+		$( "#"+ list_id_name[ 5 ] ).attr( "value",list_ch[5]);
+	}
+
+	var equit_data_id=new Array ("version","tsve","iccid","tboxid","tboxImei","vinCode", "tboxPartNumber", "soft_version", "soft_date");
+	 function get_equit_data(ch)
+	 {
+		var url_array="/goform/form_systemref_get?ch="+ch;
+		http.request_text_sync( url_array, function( data ){
+		array = new Array();
+		array = data.split( "," );
+		//alert("array="+array);
+		for( var i = 0; i < 9; i++ ){
+				$( "#"+ equit_data_id[ i ] ).text( array[ i ]);
+			}			
+		});
+	 }
+	 
+	 function isNumber(strdata)
+	 {
+		for(var i=0;i<strdata.length;i++)	
+		{
+			var oneChar=strdata.substring(i,i+1)
+			if((oneChar < "0") || (oneChar > "9"))
+			{
+			   if(LanguageCode==1)
+				 alert("请输入数字！"); 
+			   else
+				 alert("please input number！");
+				 
+			   return false;
+			}
+		}
+		return true;
+	 }
+	
+	 function ARMLogSwitch_submit()
+	 {
+		$("#button3").click(function(){
+		var armSport=document.form2.armport.value;
+		if(isNumber(armSport))
+		{
+			if((armSport < 3000) | (armSport > 8000))
+			 {
+				 alert("范围: 3000~8000 ！"); 
+				 return false;
+			 }
+		}
+		var ids = "";
+	  	ids=ids + "armport=" + armSport + "&";
+		
+		//alert("ids = " + ids);
+		   
+		var url_arm="/goform/formProcessARMSwitch";
+		http.request_text_sync(url_arm, function( data ,textstatus){
+			arm_array = new Array();
+			arm_array = data.split( "," );
+			
+			 $( "#armstatus").text( arm_array[ 0 ]);
+			
+			alert("设置成功！");		
+	  			
+		},ids);
+		 
+		 });
+	 }
+	 
+	 function MCULogSwitch_submit()
+	 {
+		 $("#button4").click(function(){
+		var mcuSport=document.form3.mcuport.value;
+		if(isNumber(mcuSport))
+		{
+			if((mcuSport < 3000) | (mcuSport > 8000))
+			 {
+				 alert("范围: 3000~8000 ！"); 
+				 return false;
+			 }
+		}
+		var ids = "";
+	  	ids=ids + "mcuport=" + mcuSport + "&";
+		
+		//alert("ids = " + ids);
+		   
+		var url_mcu="/goform/formProcessMCUSwitch";
+		http.request_text_sync(url_mcu, function( data ,textstatus){
+			mcu_array = new Array();
+			mcu_array = data.split( "," );
+		
+		   $( "#mcustatus").text( mcu_array[ 0 ]);		
+			
+			alert("设置成功！");		
+	  			
+		},ids);
+		 
+		});
+		 
+	 }
+
+   	 $(document).ready(function(){
+ 	 
+		ch_english();
+		get_equit_data(0);
+		//ARMLogSwitch_submit();
+		//MCULogSwitch_submit();
+		
+	 });
+            
+    </script>
+</head>
+
+<body >
+    <h1>四海万联 One IOT World</h1>
+
+    <hr>
+   <div style="width:690px; height:40px; margin:0;background-color:#F5F9FE">
+     <div style="width:100px; height:40px; padding-top:0px; float:left;">
+        <span id="list_name1"></span>
+     </div>	
+     
+     <div style="width:440px; height:40px; padding-top:0px;  float:left;">
+	 <form  method="post" enctype="multipart/form-data" action="cgi-bin/fileupload.cgi" ID="Form1" name="form1"  >
+	 <input name="file" type="file" ID="File" > 
+	 <input type="submit" name="UPGRADE" id="button1" >
+     </form>
+	 </div>
+   </div>
+                  
+  <div style="width:690px; height:20px; margin:0;">
+     <div style="width:130px; height:20px; padding-top:0px; float:left;">
+        
+     </div>		 
+  </div>
+
+   <div style="width:690px; height:40px; margin:0;background-color:#F5F9FE">
+     <div style="width:100px; height:40px; padding-top:0px; float:left;">
+        <span id="list_name2"></span>
+     </div>		 
+     <div style="width:440px; height:40px; padding-top:0px;  float:left;">
+        <form action="/goform/formParameterExport" method="get">
+        <label >
+          <input type="submit" name="LOGUPLOAD" id="button2" >
+        </label>
+        </form>
+     </div>
+   </div>
+   
+   <div style="width:690px; height:20px; margin:0;">
+     <div style="width:130px; height:20px; padding-top:0px; float:left;">
+        
+     </div>		 
+  </div>   
+   
+   <div style="width:690px; height:20px; margin:0;">
+     <div style="width:130px; height:20px; padding-top:0px; float:left;">
+        
+     </div>
+  </div>
+
+   <div style="width:690px; height:200px; margin:0;background-color:#F5F9FE">
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list1">LIBOX_VERSION：</span><span id="version">LIBOX.0.X.XX</span>
+	</div>
+	<div style="width:100%; height:5px; padding-top:0px;  float:left;">
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list1">MCU_VERSION：</span><span id="tsve">XX</span>
+	</div>
+	<div style="width:100%; height:5px; padding-top:0px;  float:left;">
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">ICCID：</span><span id="iccid">XXXXXXXXXXXXXXXXXXXX</span>
+	</div>
+	<div style="width:100%; height:5px; padding-top:0px;  float:left;">
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">TBOXID：</span><span id="tboxid">XXXXXXXX</span>
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">IMEI：</span><span id="tboxImei">XXXXXXXX</span>
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">VIN：</span><span id="vinCode">XXXXXXXX</span>
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">PartNmber：</span><span id="tboxPartNumber">XXXXXXXX</span>
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">SoftWare：</span><span id="soft_version">X.X</span>
+	</div>
+	<div style="width:100%; height:20px; padding-top:0px;  float:left;">
+		<span id="list3">SoftWareDate：</span><span id="soft_date">XX-XX-XX</span>
+	</div>
+   </div>
+    <br/>
+
+</body>
+
+</html>

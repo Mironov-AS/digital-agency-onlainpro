@@ -1,0 +1,36 @@
+<?xml version="1.0"?> 
+<ISOFT>
+    <ECUTOTAL>1</ECUTOTAL>
+	<SERVERLIST>
+		<ECU>
+		    <!--;ECU 通道 -->
+         	<ECUCH>0</ECUCH>
+		    <!--;ECU 类型
+            ;0: AFS 1: BCM 2: APU 3: BMS 4: EDCM 5: EPB 6: ICM 7: MCS 8: SCM 9: VMS 10:MCU-->
+			<ECUTYPE>10</ECUTYPE>
+			<FILETOTAL>2</FILETOTAL>
+			<PERFRAMELEN>256</PERFRAMELEN>
+			<!--;ECU 地址必须写全4字节，即00000000 -->
+			<REQPHYADDR>00000755</REQPHYADDR>
+			<RESPHYADDR>0000075D</RESPHYADDR>
+			<FUNADDR>000007DF</FUNADDR>
+			<STEPPATH>/data/tboxgb/ecu/ecuupgradestep.xml</STEPPATH>
+			<FILELIST>
+				<FILE>
+                    <!--;文件 格式 ;0: S19 1: HEX 2: BIN  第一个文件为驱动文件-->				
+                    <FORMAT>0</FORMAT>				
+					<PATH>/data/tboxgb/ecu/UserApp.s19</PATH>
+				</FILE>					
+				<FILE>
+                    <!--;文件 格式 ;0: S19 1: HEX 2: BIN  第一个文件为驱动文件-->				
+                    <FORMAT>0</FORMAT>				
+					<PATH>/data/tboxgb/ecu/UserApp.s19</PATH>
+				</FILE>					
+			</FILELIST>
+		</ECU>		
+	</SERVERLIST>
+</ISOFT>
+
+
+
+

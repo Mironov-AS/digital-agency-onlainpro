@@ -1,0 +1,188 @@
+<?xml version="1.0"?> 
+<ISOFT>
+	<TIMER>
+		<SERVICE ID = "3E">
+		    <INDEX>1</INDEX>
+			<STAGE>1</STAGE>
+			<TYPE>1</TYPE>
+			<TX>02,3E,80</TX>
+			<RX>7E,00</RX>
+			<ERR>0</ERR>
+			<TIMER>3000</TIMER>
+		</SERVICE>
+		<SERVICE ID = "3E">
+		    <INDEX>2</INDEX>
+			<STAGE>2</STAGE>
+			<TYPE>1</TYPE>
+			<TX>02,3E,80</TX>
+			<RX>7E,00</RX>
+			<ERR>0</ERR>
+			<TIMER>3000</TIMER>
+		</SERVICE>
+		<SERVICE ID = "3E">
+		    <INDEX>3</INDEX>
+			<STAGE>3</STAGE>
+			<TYPE>1</TYPE>
+			<TX>02,3E,80</TX>
+			<RX>7E,00</RX>
+			<ERR>0</ERR>
+			<TIMER>3000</TIMER>
+		</SERVICE>
+	</TIMER>
+	<PRELIST>
+		<SERVICE ID = "10">
+		    <INDEX>1</INDEX>
+			<TYPE>1</TYPE>
+			<TX>10,83</TX>
+			<RX>50,03</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "31">
+		    <INDEX>2</INDEX>
+			<TYPE>0</TYPE>
+			<TX>31,01,02,03</TX>
+			<RX>71,01,02,03</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "85">
+		    <INDEX>3</INDEX>
+			<TYPE>1</TYPE>
+			<TX>85,82</TX>
+			<RX>C5,02</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "28">
+		    <INDEX>4</INDEX>
+			<TYPE>1</TYPE>
+			<TX>28,83,01</TX>
+			<RX>68,03</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+	</PRELIST>
+	<INGLIST>
+		<SERVICE ID = "10">
+		    <INDEX>1</INDEX>
+			<TYPE>0</TYPE>
+			<TX>10,02</TX>
+			<RX>50,02</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "27">
+		    <INDEX>2</INDEX>
+			<TYPE>0</TYPE>
+			<TX>27,03</TX>
+			<RX>67,03</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>300</DELAY>
+		</SERVICE>
+		<SERVICE ID = "27">
+		    <INDEX>3</INDEX>
+			<TYPE>0</TYPE>
+			<TX>27,04</TX>
+			<RX>67,04</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "2E">
+		    <INDEX>4</INDEX>
+			<TYPE>0</TYPE>
+			<TX>2E,F1,84</TX>
+			<RX>6E,F1,84</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "FF">
+		    <INDEX>7</INDEX>
+			<TICK>10000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "31">
+		    <INDEX>9</INDEX>
+			<TYPE>0</TYPE>
+			<TX>31,01,FF,01</TX>
+			<RX>71,01,FF,01</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "11">
+		    <INDEX>10</INDEX>
+			<TYPE>0</TYPE>
+			<TX>11,01</TX>
+			<RX>51,01</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+	</INGLIST>
+	<POSTLIST>
+		<SERVICE ID = "10">
+		    <INDEX>1</INDEX>
+			<TYPE>1</TYPE>
+			<TX>10,83</TX>
+			<RX>50,03</RX>
+			<ERR>0</ERR>
+			<TICK>5000</TICK>
+			<COUNT>2</COUNT>
+			<DELAY>1000</DELAY>
+		</SERVICE>
+		<SERVICE ID = "28">
+		    <INDEX>2</INDEX>
+			<TYPE>1</TYPE>
+			<TX>28,80,01</TX>
+			<RX>68,00</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "85">
+		    <INDEX>3</INDEX>
+			<TYPE>1</TYPE>
+			<TX>85,81</TX>
+			<RX>C5,01</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+		<SERVICE ID = "10">
+		    <INDEX>4</INDEX>
+			<TYPE>1</TYPE>
+			<TX>10,81</TX>
+			<RX>50,01</RX>
+			<ERR>0</ERR>
+			<TICK>1000</TICK>
+			<COUNT>1</COUNT>
+			<DELAY>0</DELAY>
+		</SERVICE>
+	</POSTLIST>
+</ISOFT>
+
+
+
+

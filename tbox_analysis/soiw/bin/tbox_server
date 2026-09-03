@@ -1,0 +1,8 @@
+#!/bin/sh
+
+while [ 1 ];
+do
+	/soiw/bin/tbox_serverd
+
+	sleep 3
+done

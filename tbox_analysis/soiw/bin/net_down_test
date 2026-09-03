@@ -1,0 +1,32 @@
+#!/bin/sh
+#20220409,zxl, Just For Mocking GB32960 Disconnection and Reissue GB32960 Data.
+echo "rmnet_data0 down 300s"
+
+
+for i in $(seq 1 320)
+do
+	ifconfig rmnet_data0 down;
+	ifconfig rmnet_data1 down;
+	echo "rmnet_data0 down";
+	sleep 1;
+done
+
+
+
+
+for i in $(seq 1 10)
+do
+	ifconfig rmnet_data0 up;
+	ifconfig rmnet_data1 up;
+	echo "rmnet_data0 up";
+	sleep 1;
+done
+
+
+echo "rmnet_data0 up"
+ifconfig rmnet_data0 up
+ifconfig rmnet_data1 up
+
+ifconfig rmnet_data0 up
+
+

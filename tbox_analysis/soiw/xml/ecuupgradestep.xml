@@ -1,0 +1,303 @@
+<?xml version="1.0"?> 
+<ISOFT>
+	<TIMER>
+		<SERVICE ID = "3E">
+		    <!--;索引号 -->
+		    <INDEX>1</INDEX>
+			<!--;定时任务运行阶段 -->
+			<STAGE>1</STAGE>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>3E,80</TX>
+			<RX>7E,00</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--;周期 3000ms -->
+			<TIMER>3000</TIMER>
+		</SERVICE>
+		<SERVICE ID = "3E">
+		    <!--;索引号 -->
+		    <INDEX>2</INDEX>
+			<!--;定时任务运行阶段 -->
+			<STAGE>2</STAGE>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>3E,80</TX>
+			<RX>7E,00</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--;周期 3000ms -->
+			<TIMER>3000</TIMER>
+		</SERVICE>
+		<SERVICE ID = "3E">
+		    <!--;索引号 -->
+		    <INDEX>3</INDEX>
+			<!--;定时任务运行阶段 -->
+			<STAGE>3</STAGE>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>3E,80</TX>
+			<RX>7E,00</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--;周期 3000ms -->
+			<TIMER>3000</TIMER>
+		</SERVICE>
+	</TIMER>
+	<PRELIST>
+		<SERVICE ID = "10">
+		    <!--;索引号 -->
+		    <INDEX>1</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>10,03</TX>
+			<RX>50,03</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "31">
+		    <!--;索引号 -->
+		    <INDEX>2</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>31,01,02,03</TX>
+			<RX>71,01,02,03</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "85">
+		    <!--;索引号 -->
+		    <INDEX>3</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>85,02</TX>
+			<RX>C5,02</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "28">
+		    <!--;索引号 -->
+		    <INDEX>4</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>28,03,01</TX>
+			<RX>68,03</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+	</PRELIST>
+	<INGLIST>
+		<SERVICE ID = "10">
+		    <!--;索引号 -->
+		    <INDEX>1</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>10,02</TX>
+			<RX>50,02</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "27">
+		    <!--;索引号 -->
+		    <INDEX>2</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>27,03</TX>
+			<RX>67,03</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "27">
+		    <!--;索引号 -->
+		    <INDEX>3</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>27,04</TX>
+			<RX>67,04</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "2E">
+		    <!--;索引号 -->
+		    <INDEX>4</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>2E,F1,84</TX>
+			<RX>6E,F1,84</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "FE">
+		    <!--;索引号 -->
+		    <INDEX>5</INDEX>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "FF">
+		    <!--;索引号 -->
+		    <INDEX>7</INDEX>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "31">
+		    <!--;索引号 -->
+		    <INDEX>9</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>31,01,FF,01</TX>
+			<RX>71,01,FF,01</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "11">
+		    <!--;索引号 -->
+		    <INDEX>10</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>0</TYPE>
+			<TX>11,01</TX>
+			<RX>51,01</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+	</INGLIST>
+	<POSTLIST>
+		<SERVICE ID = "10">
+		    <!--;索引号 -->
+		    <INDEX>1</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>10,03</TX>
+			<RX>50,03</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "28">
+		    <!--;索引号 -->
+		    <INDEX>2</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>28,00,01</TX>
+			<RX>68,00</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "85">
+		    <!--;索引号 -->
+		    <INDEX>3</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>85,01</TX>
+			<RX>C5,01</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+		<SERVICE ID = "10">
+		    <!--;索引号 -->
+		    <INDEX>4</INDEX>
+		    <!--;TYPE 传输 格式 
+			;0: 物理地址 1: 功能地址 -->
+			<TYPE>1</TYPE>
+			<TX>10,01</TX>
+			<RX>50,01</RX>
+			<!--;ERR 错误or异常 
+			;0: 放弃; N: 重新从索引 N 步开始 -->
+			<ERR>0</ERR>
+			<!--; 超时时间30 ms-->
+			<TICK>800</TICK>
+			<!--; 超时重传次数-->
+			<COUNT>3</COUNT>
+		</SERVICE>
+	</POSTLIST>
+</ISOFT>
+
+
+
+
