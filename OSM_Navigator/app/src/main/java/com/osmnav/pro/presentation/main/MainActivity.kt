@@ -394,11 +394,8 @@ class MainActivity : AppCompatActivity() {
                 // Обновляем ViewModel
                 viewModel.setCurrentLocation(appLocation)
 
-                // Обновляем маркер на карте
-                runOnUiThread {
-                    myLocationOverlay?.setMyLocation(GeoPoint(location.latitude, location.longitude))
-                    binding.mapView.invalidate()
-                }
+                // Обновляем маркер на карте через enableMyLocation
+                // MyLocationNewOverlay сам обновляется при enableMyLocation()
 
                 // Обновляем ближайшую зарядную станцию
                 checkShowNearestCharging()
