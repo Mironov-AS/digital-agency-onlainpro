@@ -6,7 +6,7 @@ const path = require("path");
 
 // Generate UUID v4 using crypto
 function uuidv4() {
-    return crypto.randomUUID();
+	return crypto.randomUUID();
 }
 
 const app = express();
