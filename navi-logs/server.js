@@ -230,6 +230,10 @@ function getHtml() {
         .btn-danger { background: #ff4757; color: #fff; }
         .btn-danger:hover { background: #ff3344; }
         .btn-refresh { background: #2ed573; color: #fff; }
+        .btn-secondary { background: #666; color: #fff; }
+        .btn-secondary:hover { background: #555; }
+        .btn-secondary.active { background: #2ed573; }
+        .btn-secondary.inactive { background: #ff6b6b; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
@@ -302,10 +306,11 @@ function getHtml() {
                     <span class="badge" id="deviceAndroidVersion"></span>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center;">
-                    <span class="refresh-info">Автообновление <span id="nextRefresh"></span></span>
-                    <button class="btn btn-refresh" onclick="loadDevices()">🔄</button>
-                    <button class="btn btn-danger" onclick="clearAll()">🗑️ Сброс</button>
-                </div>
+                     <span class="refresh-info">Автообновление <span id="nextRefresh"></span></span>
+                     <button class="btn btn-refresh" onclick="loadDevices()">🔄</button>
+                     <button class="btn btn-secondary" id="autoScrollBtn" onclick="toggleAutoScroll()">⬇️ Авто</button>
+                     <button class="btn btn-danger" onclick="clearAll()">🗑️ Сброс</button>
+                 </div>
             </div>
             
             <div class="tabs">
@@ -354,6 +359,7 @@ function getHtml() {
         let selectedDevice = null;
         let refreshTimer = null;
         let countdown = 5;
+        let autoScroll = true;
         
         async function loadDevices() {
             try {
@@ -759,7 +765,22 @@ function getHtml() {
                 </div>
             \`).join('');
             
-            container.scrollTop = container.scrollHeight;
+            // Автоскролл только если включен
+            if (autoScroll) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+        
+        function toggleAutoScroll() {
+            autoScroll = !autoScroll;
+            const btn = document.getElementById('autoScrollBtn');
+            if (autoScroll) {
+                btn.textContent = '⬇️ Авто';
+                btn.className = 'btn btn-secondary active';
+            } else {
+                btn.textContent = '⏸️ Фикс';
+                btn.className = 'btn btn-secondary inactive';
+            }
         }
         
         function showTab(tabName) {
