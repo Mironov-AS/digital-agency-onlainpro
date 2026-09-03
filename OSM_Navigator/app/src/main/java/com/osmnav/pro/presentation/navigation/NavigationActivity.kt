@@ -85,10 +85,7 @@ class NavigationActivity : AppCompatActivity() {
         setupObservers()
         requestLocationPermission()
 
-        // Получаем пункт назначения (запомним, начнём навигацию после получения GPS)
-        val destLat = intent.getDoubleExtra(EXTRA_DEST_LAT, 0.0)
-        val destLon = intent.getDoubleExtra(EXTRA_DEST_LON, 0.0)
-
+        // Проверяем и устанавливаем маршрут
         if (destLat != 0.0 && destLon != 0.0) {
             pendingDestination = NavLocation(destLat, destLon)
             Log.d(TAG, "Destination set: $destLat, $destLon, waiting for GPS...")
