@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.osmnav.pro.R
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.repository.ChargingStationRepository
 import com.osmnav.pro.databinding.ActivityMainBinding
 import com.osmnav.pro.domain.model.ChargingStation
@@ -384,15 +386,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun enableMyLocation() {
+        LogUploader.i(TAG, "enableMyLocation: Setting up GPS")
         val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
 
         myLocationOverlay =
             MyLocationNewOverlay(GpsMyLocationProvider(this), binding.mapView).apply {
                 enableMyLocation()
+                LogUploader.i(TAG, "MyLocationOverlay enabled")
 
                 // Ждём первого GPS-фикса
                 runOnFirstFix {
                     this@apply.myLocation?.let { loc ->
+                        LogUploader.i(TAG, "First GPS fix: ${loc.latitude}, ${loc.longitude}")
                         runOnUiThread {
                             binding.mapView.controller.animateTo(loc)
                             binding.mapView.controller.setZoom(15.0)
@@ -404,6 +409,8 @@ class MainActivity : AppCompatActivity() {
                                 ),
                             )
                         }
+                    } ?: run {
+                        LogUploader.w(TAG, "runOnFirstFix called but location is null")
                     }
                 }
             }
@@ -499,10 +506,14 @@ class MainActivity : AppCompatActivity() {
             val myLoc = myLocationOverlay?.myLocation
             if (myLoc != null) {
                 viewModel.setCurrentLocation(Location(myLoc.latitude, myLoc.longitude))
+                LogUploader.w(TAG, "Using location from MyLocationOverlay: ${myLoc.latitude}, ${myLoc.longitude}")
+            } else {
+                LogUploader.w(TAG, "No location available for charging search")
             }
             return
         }
 
+        LogUploader.i(TAG, "Searching charging stations at: ${currentLocation.latitude}, ${currentLocation.longitude}")
         val selectedConnectors = SettingsActivity.getSelectedConnectors(prefs)
 
         // Отменяем предыдущий поиск
@@ -521,7 +532,9 @@ class MainActivity : AppCompatActivity() {
                             currentLocation.longitude - radius,
                         )
 
+                    LogUploader.i(TAG, "Fetching stations from Overpass API...")
                     val stations = chargingStationRepository.getStationsInArea(bbox, 14)
+                    LogUploader.i(TAG, "Found ${stations.size} stations")
 
                     if (stations.isEmpty()) {
                         runOnUiThread {
@@ -540,6 +553,8 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                         }
+
+                    LogUploader.i(TAG, "Filtered ${filtered.size} stations with connectors: $selectedConnectors")
 
                     // Находим ближайшую
                     val nearest =
