@@ -361,6 +361,24 @@ function getHtml() {
         let countdown = 5;
         let autoScroll = true;
         
+        // Отслеживаем ручной скролл - отключаем автоскролл если пользователь скроллит вверх
+        document.addEventListener('DOMContentLoaded', function() {
+            const logsContainer = document.getElementById('logsList');
+            if (logsContainer) {
+                let userScrolled = false;
+                logsContainer.addEventListener('scroll', function() {
+                    const isAtBottom = this.scrollHeight - this.scrollTop - this.clientHeight < 50;
+                    if (!isAtBottom && autoScroll) {
+                        // Пользователь скроллит вверх - отключаем автоскролл
+                        autoScroll = false;
+                        updateAutoScrollButton();
+                    }
+                });
+            }
+            // Инициализируем кнопку
+            updateAutoScrollButton();
+        });
+        
         async function loadDevices() {
             try {
                 const res = await fetch('/api/devices');
@@ -765,20 +783,29 @@ function getHtml() {
                 </div>
             \`).join('');
             
-            // Автоскролл только если включен
-            if (autoScroll) {
+            // Автоскролл: если выключен - не скроллим
+            // Если включен - скроллим только если уже внизу
+            if (!autoScroll) return;
+            
+            const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 50;
+            if (isAtBottom) {
                 container.scrollTop = container.scrollHeight;
             }
         }
         
         function toggleAutoScroll() {
             autoScroll = !autoScroll;
+            updateAutoScrollButton();
+        }
+        
+        function updateAutoScrollButton() {
             const btn = document.getElementById('autoScrollBtn');
+            if (!btn) return;
             if (autoScroll) {
-                btn.textContent = '⬇️ Авто';
+                btn.textContent = '⬇️ Вкл';
                 btn.className = 'btn btn-secondary active';
             } else {
-                btn.textContent = '⏸️ Фикс';
+                btn.textContent = '⬆️ Выкл';
                 btn.className = 'btn btn-secondary inactive';
             }
         }
