@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.repository.RouteRepository
 import com.osmnav.pro.data.repository.RouteResult
 import com.osmnav.pro.domain.model.Location
@@ -137,8 +138,10 @@ class NavigationViewModel(
                     Location(it.latitude, it.longitude)
                 } ?: Location(55.7558, 37.6173) // Москва по умолчанию
 
-            Log.d(TAG, "Navigation start: ${startLocation.latitude},${startLocation.longitude}")
-            Log.d(TAG, "Navigation end: ${destination.latitude},${destination.longitude}")
+            LogUploader.i(
+                TAG,
+                "Building route from (${startLocation.latitude},${startLocation.longitude}) to (${destination.latitude},${destination.longitude})",
+            )
 
             val result =
                 routeRepository.buildRouteWithFallback(
@@ -150,6 +153,7 @@ class NavigationViewModel(
 
             when (result) {
                 is RouteResult.Success -> {
+                    LogUploader.i(TAG, "Route built successfully: ${result.route.distanceMeters}m, ${result.route.durationSeconds}s")
                     _route.value = result.route
                     _distanceRemaining.value = result.route.distanceMeters
                     _timeRemaining.value = result.route.durationSeconds

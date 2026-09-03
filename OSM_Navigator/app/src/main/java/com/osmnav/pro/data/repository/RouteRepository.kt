@@ -1,6 +1,7 @@
 package com.osmnav.pro.data.repository
 
 import android.util.Log
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.remote.OSRMRouteService
 import com.osmnav.pro.domain.model.Location
 import com.osmnav.pro.domain.model.Maneuver
@@ -83,11 +84,11 @@ class RouteRepository {
             val startLatLon = "${start.latitude},${start.longitude}"
             val endLatLon = "${end.latitude},${end.longitude}"
 
-            Log.d("RouteRepository", "Building route: $startLatLon -> $endLatLon")
+            LogUploader.i("RouteRepository", "Building route: $startLatLon -> $endLatLon")
 
             for ((index, serverUrl) in osrmServers.withIndex()) {
                 try {
-                    Log.d("RouteRepository", "[$index] Trying: $serverUrl")
+                    LogUploader.d("RouteRepository", "[$index] Trying server: $serverUrl")
 
                     val response =
                         service.getRoute(

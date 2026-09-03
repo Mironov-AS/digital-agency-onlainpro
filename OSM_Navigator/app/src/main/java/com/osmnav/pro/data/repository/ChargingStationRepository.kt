@@ -2,6 +2,7 @@ package com.osmnav.pro.data.repository
 
 import android.util.Log
 import com.google.gson.Gson
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.domain.model.ChargingStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -49,6 +50,11 @@ class ChargingStationRepository {
         zoom: Int = 14,
     ): List<ChargingStation> =
         withContext(Dispatchers.IO) {
+            LogUploader.i(
+                TAG,
+                "Searching charging stations in area: ${boundingBox.latSouth},${boundingBox.lonWest} - ${boundingBox.latNorth},${boundingBox.lonEast}",
+            )
+
             // Проверяем кеш
             val cacheKey = boundingBoxToKey(boundingBox)
             val cached =
@@ -57,7 +63,7 @@ class ChargingStationRepository {
                 }
 
             if (cached != null && System.currentTimeMillis() - cached.timestamp < CACHE_DURATION_MS) {
-                Log.d(TAG, "Using cached stations: ${cached.stations.size}")
+                LogUploader.d(TAG, "Using cached stations: ${cached.stations.size}")
                 return@withContext cached.stations
             }
 
@@ -68,6 +74,7 @@ class ChargingStationRepository {
                     Log.d(TAG, "Trying server $index: $serverUrl")
                     val stations = fetchFromServer(serverUrl, boundingBox)
                     if (stations.isNotEmpty()) {
+                        LogUploader.i(TAG, "Found ${stations.size} charging stations")
                         // Сохраняем в кеш
                         cacheMutex.withLock {
                             cache[cacheKey] = CachedStations(stations, System.currentTimeMillis())
@@ -76,7 +83,7 @@ class ChargingStationRepository {
                     }
                 } catch (e: Exception) {
                     lastError = e
-                    Log.w(TAG, "Server $index failed: ${e.message}")
+                    LogUploader.w(TAG, "Server $index failed: ${e.message}")
                 }
             }
 
@@ -86,7 +93,7 @@ class ChargingStationRepository {
                 return@withContext it.stations
             }
 
-            Log.e(TAG, "All servers failed", lastError)
+            LogUploader.e(TAG, "All servers failed: ${lastError?.message}")
             emptyList()
         }
 

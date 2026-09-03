@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.osmnav.pro.R
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.databinding.ActivityNavigationBinding
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -62,6 +63,8 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        LogUploader.i(TAG, "NavigationActivity started")
+
         // Инициализация OSMDroid
         Configuration.getInstance().userAgentValue = packageName
 
@@ -70,6 +73,12 @@ class NavigationActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NavigationViewModel::class.java]
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        // Получаем данные о маршруте
+        val destLat = intent.getDoubleExtra(EXTRA_DEST_LAT, 0.0)
+        val destLon = intent.getDoubleExtra(EXTRA_DEST_LON, 0.0)
+        val destName = intent.getStringExtra(EXTRA_DEST_NAME) ?: "Unknown"
+        LogUploader.i(TAG, "Destination: $destName at ($destLat, $destLon)")
 
         setupMap()
         setupUI()

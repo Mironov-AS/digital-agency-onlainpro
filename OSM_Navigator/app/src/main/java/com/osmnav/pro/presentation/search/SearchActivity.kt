@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.databinding.ActivitySearchBinding
 import com.osmnav.pro.domain.model.Location
 import com.osmnav.pro.presentation.navigation.NavigationActivity
@@ -105,6 +106,7 @@ class SearchActivity :
 
     private fun setupObservers() {
         viewModel.searchResults.observe(this) { results ->
+            LogUploader.i("SearchActivity", "Found ${results.size} search results")
             adapter.submitList(results)
             binding.tvNoResults.visibility =
                 if (results.isEmpty() &&
