@@ -103,35 +103,40 @@ class FusedLocationProvider(
      * Т-Бокс демон (tbox_clientd) подключается к нам и шлёт GPS данные
      */
     private fun startTBoxGps() {
-        tBoxGpsService =
-            TBoxGpsService(
-                port = 8630,
-                onLocationUpdate = { lat, lon, speed, heading ->
-                    val location =
-                        Location("tbox").apply {
-                            latitude = lat
-                            longitude = lon
-                            this.speed = speed / 3.6f // km/h to m/s
-                            this.bearing = heading
-                            accuracy = 10f // T-Box обычно достаточно точный
-                            time = System.currentTimeMillis()
-                            provider = "tbox"
-                        }
+        try {
+            tBoxGpsService =
+                TBoxGpsService(
+                    port = 8630,
+                    onLocationUpdate = { lat, lon, speed, heading ->
+                        val location =
+                            Location("tbox").apply {
+                                latitude = lat
+                                longitude = lon
+                                this.speed = speed / 3.6f // km/h to m/s
+                                this.bearing = heading
+                                accuracy = 10f // T-Box обычно достаточно точный
+                                time = System.currentTimeMillis()
+                                provider = "tbox"
+                            }
 
-                    lastTBoxLocation = location
-                    lastTBoxUpdate = System.currentTimeMillis()
+                        lastTBoxLocation = location
+                        lastTBoxUpdate = System.currentTimeMillis()
 
-                    LogUploader.d(TAG, "T-Box location: $lat, $lon, speed=${speed}km/h")
-                    emitBestLocation()
-                },
-                onTelemetryUpdate = { data ->
-                    // Передаём данные телематики
-                    tBoxTelemetryService?.processData(data)
-                },
-            )
+                        LogUploader.d(TAG, "T-Box location: $lat, $lon, speed=${speed}km/h")
+                        emitBestLocation()
+                    },
+                    onTelemetryUpdate = { data ->
+                        // Передаём данные телематики
+                        tBoxTelemetryService?.processData(data)
+                    },
+                )
 
-        tBoxGpsService?.startServer()
-        Log.i(TAG, "T-Box GPS server started on port 8630")
+            tBoxGpsService?.startServer()
+            Log.i(TAG, "T-Box GPS server started on port 8630")
+        } catch (e: Exception) {
+            Log.w(TAG, "T-Box GPS not available (no T-Box hardware): ${e.message}")
+            // Android GPS будет работать без T-Box
+        }
     }
 
     /**
@@ -200,16 +205,9 @@ class FusedLocationProvider(
         lastGpsLocation = location
         lastAndroidGpsUpdate = System.currentTimeMillis()
 
-        // Проверяем, не устарела ли T-Box локация
-        val tboxAge = System.currentTimeMillis() - lastTBoxUpdate
-        if (tboxAge > 30000) {
-            // T-Box не обновлялся более 30 сек, используем Android GPS
-            LogUploader.d(TAG, "Using Android GPS (T-Box stale): ${location.latitude}, ${location.longitude}")
-            onLocationUpdate(location)
-        } else {
-            // Выбираем лучший источник
-            emitBestLocation()
-        }
+        // Всегда используем Android GPS сразу, T-Box как дополнение
+        LogUploader.d(TAG, "Android GPS: ${location.latitude}, ${location.longitude}")
+        onLocationUpdate(location)
     }
 
     /**
