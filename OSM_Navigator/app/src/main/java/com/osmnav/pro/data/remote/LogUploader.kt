@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit
 object LogUploader {
     private const val TAG = "LogUploader"
     private const val LOG_SERVER_URL = "https://онлайнпро.рф/api/logs"
+    private const val TELEMETRY_SERVER_URL = "https://онлайнпро.рф/api/telemetry"
 
     private val client =
         OkHttpClient
@@ -132,6 +133,78 @@ object LogUploader {
                     }
             } ?: ""
         e(tag, "$message$stackTrace")
+    }
+
+    /**
+     * Отправить телематику Т-Бокс на сервер
+     */
+    fun uploadTelemetry(telemetryData: org.json.JSONObject) {
+        val id = deviceId ?: return
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val json =
+                    org.json.JSONObject().apply {
+                        put("deviceId", id)
+                        put("deviceName", "${Build.MANUFACTURER} ${Build.MODEL}")
+                        put("appVersion", getAppVersion())
+                        put("androidVersion", Build.VERSION.RELEASE)
+                        put("telemetry", telemetryData)
+                    }
+
+                val body = json.toString().toRequestBody("application/json".toMediaType())
+                val request =
+                    Request
+                        .Builder()
+                        .url(TELEMETRY_SERVER_URL)
+                        .post(body)
+                        .build()
+                val response = client.newCall(request).execute()
+                if (!response.isSuccessful) {
+                    Log.w(TAG, "Failed to upload telemetry: ${response.code}")
+                } else {
+                    Log.d(TAG, "Telemetry uploaded: ${telemetryData.optString("batterySoc")}%")
+                }
+            } catch (e: Exception) {
+                Log.v(TAG, "Telemetry upload failed: ${e.message}")
+            }
+        }
+    }
+
+    /**
+     * Отправить информацию о спутниках
+     */
+    fun uploadSatellites(satelliteData: org.json.JSONObject) {
+        val id = deviceId ?: return
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val json =
+                    org.json.JSONObject().apply {
+                        put("deviceId", id)
+                        put("deviceName", "${Build.MANUFACTURER} ${Build.MODEL}")
+                        put("appVersion", getAppVersion())
+                        put("androidVersion", Build.VERSION.RELEASE)
+                        put("satelliteInfo", satelliteData)
+                    }
+
+                val body = json.toString().toRequestBody("application/json".toMediaType())
+                val request =
+                    Request
+                        .Builder()
+                        .url(TELEMETRY_SERVER_URL)
+                        .post(body)
+                        .build()
+                val response = client.newCall(request).execute()
+                if (!response.isSuccessful) {
+                    Log.w(TAG, "Failed to upload satellites: ${response.code}")
+                } else {
+                    Log.d(TAG, "Satellites uploaded: ${satelliteData.optInt("totalSatellites")} sats")
+                }
+            } catch (e: Exception) {
+                Log.v(TAG, "Satellites upload failed: ${e.message}")
+            }
+        }
     }
 
     private fun getAppVersion(): String {

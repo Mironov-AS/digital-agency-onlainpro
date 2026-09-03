@@ -312,4 +312,33 @@ class SatelliteInfoService(
         locationListener = null
         Log.i(TAG, "SatelliteInfoService stopped")
     }
+
+    /**
+     * Загрузить текущее состояние спутников на сервер
+     */
+    fun uploadCurrentSatellites(
+        latitude: Double = 0.0,
+        longitude: Double = 0.0,
+        altitude: Double = 0.0,
+    ) {
+        val state = _satelliteState.value
+        val byConst = state.getByConstellation()
+        val json =
+            org.json.JSONObject().apply {
+                put("totalSatellites", state.totalSatellites)
+                put("usedInFix", state.usedInFix)
+                put("gps", byConst["GPS"]?.size ?: 0)
+                put("glonass", byConst["ГЛОНАСС"]?.size ?: 0)
+                put("beidou", byConst["BeiDou"]?.size ?: 0)
+                put("galileo", byConst["Galileo"]?.size ?: 0)
+                put("sbas", byConst["SBAS"]?.size ?: 0)
+                put("qzss", byConst["QZSS"]?.size ?: 0)
+                put("provider", state.provider)
+                put("accuracy", state.accuracy.toDouble())
+                put("latitude", latitude)
+                put("longitude", longitude)
+                put("altitude", altitude)
+            }
+        LogUploader.uploadSatellites(json)
+    }
 }

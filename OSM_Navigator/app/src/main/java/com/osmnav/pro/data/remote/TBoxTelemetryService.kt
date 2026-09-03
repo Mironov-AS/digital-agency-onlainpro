@@ -866,4 +866,51 @@ class TBoxTelemetryService {
         _telemetryState.value = ExtendedVehicleTelemetry()
         LogUploader.i(TAG, "Telemetry reset")
     }
+
+    /**
+     * Загрузить текущую телематику на удалённый сервер
+     */
+    fun uploadCurrentTelemetry() {
+        val tel = _telemetryState.value
+        val json =
+            org.json.JSONObject().apply {
+                put("batterySoc", tel.batterySoc)
+                put("batteryVoltage", tel.batteryVoltage.toDouble())
+                put("batteryCurrent", tel.batteryCurrent.toDouble())
+                put("batteryTemp", tel.batteryTemp)
+                put("batteryMaxTemp", tel.batteryMaxTemp)
+                put("batteryMinTemp", tel.batteryMinTemp)
+                put("batteryMaxCellVoltage", tel.batteryMaxCellVoltage.toDouble())
+                put("batteryMinCellVoltage", tel.batteryMinCellVoltage.toDouble())
+                put("batteryHealth", tel.batteryHealth)
+                put("speed", tel.speed)
+                put("odometer", tel.odometer)
+                put("gear", tel.gear.name)
+                put("ignitionStatus", tel.ignitionStatus.name)
+                put("doorStatus", tel.doorStatus.name)
+                put("steeringAngle", tel.steeringAngle)
+                put("motorSpeed", tel.motorSpeed)
+                put("motorTorque", tel.motorTorque.toDouble())
+                put("motorPower", tel.motorPower)
+                put("motorTemp", tel.motorTemp)
+                put("chargingStatus", tel.chargingStatus.name)
+                put("chargeGunConnected", tel.chargeGunConnected)
+                put("tireFLPressure", tel.tireFLPressure.toDouble())
+                put("tireFRPressure", tel.tireFRPressure.toDouble())
+                put("tireRLPressure", tel.tireRLPressure.toDouble())
+                put("tireRRPressure", tel.tireRRPressure.toDouble())
+                put("tireFLTemp", tel.tireFLTemp)
+                put("tireFRTemp", tel.tireFRTemp)
+                put("tireRLTemp", tel.tireRLTemp)
+                put("tireRRTemp", tel.tireRRTemp)
+                put("coolantTemp", tel.coolantTemp)
+                put("bmsCoolantTemp", tel.bmsCoolantTemp)
+                put("motorCoolantTemp", tel.motorCoolantTemp)
+                put("battery12V", tel.battery12V.toDouble())
+                put("battery12VTemp", tel.battery12VTemp)
+                put("canFramesReceived", tel.canFramesReceived)
+                put("isConnected", tel.isConnected)
+            }
+        LogUploader.uploadTelemetry(json)
+    }
 }
