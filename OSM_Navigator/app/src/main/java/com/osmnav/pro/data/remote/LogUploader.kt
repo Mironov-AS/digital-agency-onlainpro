@@ -1,10 +1,10 @@
 package com.osmnav.pro.data.remote
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import com.osmnav.pro.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
  */
 object LogUploader {
     private const val TAG = "LogUploader"
-    private const val LOG_SERVER_URL = "https://онлайнпро.рф/api/navi-logs/logs"
+    private const val LOG_SERVER_URL = "https://xn--e1afmkfe.xn--80adxhks/api/navi-logs/logs"
 
     private val client =
         OkHttpClient
@@ -35,11 +35,13 @@ object LogUploader {
             .build()
 
     private var deviceId: String? = null
+    private var appContext: Context? = null
 
     /**
      * Инициализировать отправщик логов
      */
     fun init(context: Context) {
+        appContext = context.applicationContext
         deviceId =
             Settings.Secure.getString(
                 context.contentResolver,
@@ -132,12 +134,15 @@ object LogUploader {
         e(tag, "$message$stackTrace")
     }
 
-    private fun getAppVersion(): String =
-        try {
-            BuildConfig.VERSION_NAME
-        } catch (e: Exception) {
+    private fun getAppVersion(): String {
+        val ctx = appContext ?: return "Unknown"
+        return try {
+            val packageInfo = ctx.packageManager.getPackageInfo(ctx.packageName, 0)
+            packageInfo.versionName ?: "Unknown"
+        } catch (e: PackageManager.NameNotFoundException) {
             "Unknown"
         }
+    }
 
     private fun getCurrentTimestamp(): String {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
