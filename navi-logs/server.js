@@ -360,12 +360,12 @@ function getHtml() {
         let refreshTimer = null;
         let countdown = 5;
         let autoScroll = true;
+        let lastRenderedCount = 0; // Количество логов при последнем рендере
         
         // Отслеживаем ручной скролл - отключаем автоскролл если пользователь скроллит вверх
         document.addEventListener('DOMContentLoaded', function() {
             const logsContainer = document.getElementById('logsList');
             if (logsContainer) {
-                let userScrolled = false;
                 logsContainer.addEventListener('scroll', function() {
                     const isAtBottom = this.scrollHeight - this.scrollTop - this.clientHeight < 50;
                     if (!isAtBottom && autoScroll) {
@@ -767,29 +767,60 @@ function getHtml() {
             document.getElementById('logCount').textContent = logs.length + ' записей';
             
             if (logs.length === 0) {
-                container.innerHTML = '<div class="no-data">Нет логов</div>';
+                if (container.innerHTML.indexOf('no-data') === -1) {
+                    container.innerHTML = '<div class="no-data">Нет логов</div>';
+                }
                 return;
             }
             
-            // Показываем последние 100
+            // Удаляем "нет логов" если есть
+            const noData = container.querySelector('.no-data');
+            if (noData) noData.remove();
+            
+            // Показываем последние 100 логов
             const recentLogs = logs.slice(-100);
             
-            container.innerHTML = recentLogs.map(log => \`
-                <div class="log-entry">
-                    <span class="log-time">\${formatTime(log.timestamp)}</span>
-                    <span class="log-level \${log.level}">\${log.level}</span>
-                    <span class="log-tag">\${log.tag || 'App'}</span>
-                    <span class="log-message">\${escapeHtml(log.message)}</span>
-                </div>
-            \`).join('');
+            // Если количество логов уменьшилось (сброс данных) - пересоздаём
+            if (recentLogs.length < lastRenderedCount) {
+                container.innerHTML = recentLogs.map(log => \`
+                    <div class="log-entry">
+                        <span class="log-time">\${formatTime(log.timestamp)}</span>
+                        <span class="log-level \${log.level}">\${log.level}</span>
+                        <span class="log-tag">\${log.tag || 'App'}</span>
+                        <span class="log-message">\${escapeHtml(log.message)}</span>
+                    </div>
+                \`).join('');
+                lastRenderedCount = recentLogs.length;
+                if (autoScroll) container.scrollTop = container.scrollHeight;
+                return;
+            }
             
-            // Автоскролл: если выключен - не скроллим
-            // Если включен - скроллим только если уже внизу
-            if (!autoScroll) return;
+            // Добавляем только новые логи (append only)
+            const newLogs = recentLogs.slice(lastRenderedCount);
             
-            const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 50;
-            if (isAtBottom) {
-                container.scrollTop = container.scrollHeight;
+            if (newLogs.length > 0) {
+                const fragment = document.createDocumentFragment();
+                newLogs.forEach(log => {
+                    const div = document.createElement('div');
+                    div.className = 'log-entry';
+                    div.innerHTML = \`
+                        <span class="log-time">\${formatTime(log.timestamp)}</span>
+                        <span class="log-level \${log.level}">\${log.level}</span>
+                        <span class="log-tag">\${log.tag || 'App'}</span>
+                        <span class="log-message">\${escapeHtml(log.message)}</span>
+                    \`;
+                    fragment.appendChild(div);
+                });
+                container.appendChild(fragment);
+                lastRenderedCount = recentLogs.length;
+                
+                // Автоскролл: если включен и мы внизу - скроллим к новым
+                if (autoScroll) {
+                    const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+                    if (isAtBottom) {
+                        container.scrollTop = container.scrollHeight;
+                    }
+                }
             }
         }
         
