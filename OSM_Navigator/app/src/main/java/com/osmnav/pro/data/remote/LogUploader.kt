@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
  */
 object LogUploader {
     private const val TAG = "LogUploader"
-    private const val LOG_SERVER_URL = "https://xn--e1afmkfe.xn--80adxhks/api/navi-logs/logs"
+    private const val LOG_SERVER_URL = "https://онлайнпро.рф/api/logs"
 
     private val client =
         OkHttpClient
