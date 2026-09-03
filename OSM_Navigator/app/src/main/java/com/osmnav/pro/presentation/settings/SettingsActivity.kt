@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.osmnav.pro.R
 import com.osmnav.pro.data.remote.LogUploader
 import com.osmnav.pro.data.remote.SatelliteInfoService
+import com.osmnav.pro.data.remote.TBoxTelemetryService
 import com.osmnav.pro.data.util.DownloadProgress
 import com.osmnav.pro.data.util.OfflineMapDownloader
 import com.osmnav.pro.databinding.ActivitySettingsBinding
@@ -27,6 +28,7 @@ class SettingsActivity : AppCompatActivity() {
     private var downloadJob: Job? = null
     private var downloadDialog: AlertDialog? = null
     private var satelliteService: SatelliteInfoService? = null
+    private var telemetryService: TBoxTelemetryService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,111 @@ class SettingsActivity : AppCompatActivity() {
         setupUI()
         updateCacheInfo()
         setupSatelliteMonitor()
+        setupTelemetryMonitor()
+    }
+
+    private fun setupTelemetryMonitor() {
+        telemetryService = TBoxTelemetryService()
+
+        // Наблюдаем за обновлениями телематики
+        lifecycleScope.launch {
+            telemetryService?.telemetryState?.collect { state ->
+                updateTelemetryUI(state)
+            }
+        }
+
+        LogUploader.i("SettingsActivity", "Telemetry monitor started")
+    }
+
+    private fun updateTelemetryUI(state: TBoxTelemetryService.ExtendedVehicleTelemetry) {
+        // Статус подключения
+        if (state.isConnected) {
+            binding.ivTelemetryStatus.setImageResource(android.R.drawable.presence_online)
+            binding.tvTelemetryStatus.text = "Подключено"
+        } else {
+            binding.ivTelemetryStatus.setImageResource(android.R.drawable.presence_invisible)
+            binding.tvTelemetryStatus.text = "Отключено"
+        }
+
+        // === БАТАРЕЯ ===
+        binding.tvBatterySoc.text = "${state.batterySoc}%"
+        binding.progressBatterySoc.progress = state.batterySoc
+
+        // Цвет SOC
+        val socColor =
+            when {
+                state.batterySoc <= 20 -> ContextCompat.getColor(this, R.color.error)
+                state.batterySoc <= 50 -> ContextCompat.getColor(this, R.color.warning)
+                else -> ContextCompat.getColor(this, R.color.charging_green)
+            }
+        binding.tvBatterySoc.setTextColor(socColor)
+
+        binding.tvBatteryVoltage.text = "${String.format("%.1f", state.batteryVoltage)} V"
+        binding.tvBatteryCurrent.text = "${String.format("%.1f", state.batteryCurrent)} A"
+        binding.tvBatteryTemp.text = "${state.batteryTemp} °C"
+        binding.tvBatteryTempRange.text = "${state.batteryMaxTemp}/${state.batteryMinTemp} °C"
+
+        // === ДВИГАТЕЛЬ ===
+        binding.tvSpeed.text = "${state.speed} км/ч"
+        binding.tvMotorSpeed.text = "${state.motorSpeed} об/мин"
+        binding.tvMotorTorque.text = "${String.format("%.1f", state.motorTorque)} Нм"
+        binding.tvMotorPower.text = "${state.motorPower} кВт"
+        binding.tvMotorTemp.text = "${state.motorTemp} °C"
+
+        // === АВТОМОБИЛЬ ===
+        binding.tvOdometer.text = "${state.odometer} км"
+        binding.tvGear.text = state.gear.shortName
+        binding.tvIgnition.text = state.ignitionStatus.displayName
+        binding.tvDoors.text = state.doorStatus.displayName
+
+        // === ЗАРЯДКА ===
+        binding.tvChargingStatus.text = state.chargingStatus.displayName
+        binding.tvChargeGun.text = if (state.chargeGunConnected) "Подключен" else "Отключен"
+
+        // Цвет статуса зарядки
+        val chargingColor =
+            when (state.chargingStatus) {
+                TBoxTelemetryService.ChargingStatus.SLOW_CHARGE,
+                TBoxTelemetryService.ChargingStatus.FAST_CHARGE,
+                TBoxTelemetryService.ChargingStatus.TRICKLE_CHARGE,
+                -> ContextCompat.getColor(this, R.color.charging_green)
+
+                TBoxTelemetryService.ChargingStatus.COMPLETED -> ContextCompat.getColor(this, R.color.success)
+
+                TBoxTelemetryService.ChargingStatus.ERROR -> ContextCompat.getColor(this, R.color.error)
+
+                else -> ContextCompat.getColor(this, R.color.on_surface_variant)
+            }
+        binding.tvChargingStatus.setTextColor(chargingColor)
+
+        // === ОХЛАЖДЕНИЕ ===
+        binding.tvCoolantTemp.text = "${state.coolantTemp} °C"
+
+        // === TPMS ===
+        binding.tvTireFL.text = "${String.format("%.1f", state.tireFLPressure)} PSI"
+        binding.tvTireFR.text = "${String.format("%.1f", state.tireFRPressure)} PSI"
+        binding.tvTireRL.text = "${String.format("%.1f", state.tireRLPressure)} PSI"
+        binding.tvTireRR.text = "${String.format("%.1f", state.tireRRPressure)} PSI"
+
+        // === 12V ===
+        binding.tvBattery12V.text = "${String.format("%.1f", state.battery12V)} V"
+
+        // === CAN ===
+        binding.tvCanFrames.text = "CAN фреймов: ${state.canFramesReceived}"
+
+        // Время обновления
+        if (state.lastUpdate > 0) {
+            val updateTime =
+                java.text
+                    .SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault())
+                    .format(java.util.Date(state.lastUpdate))
+            binding.tvLastTelemetryUpdate.text = "Обновление: $updateTime"
+        }
+
+        // Логируем телематику каждые 30 секунд
+        if (state.lastUpdate > 0 && System.currentTimeMillis() - state.lastUpdate < 31000) {
+            LogUploader.d("SettingsActivity", "Telemetry: ${telemetryService?.getTelemetrySummary()}")
+        }
     }
 
     private fun setupSatelliteMonitor() {

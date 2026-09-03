@@ -134,15 +134,15 @@ class MainActivity : AppCompatActivity() {
         LogUploader.i(TAG, "Telemetry service initialized")
     }
 
-    private fun updateTelemetryUI(telemetry: TBoxTelemetryService.VehicleTelemetry) {
+    private fun updateTelemetryUI(telemetry: TBoxTelemetryService.ExtendedVehicleTelemetry) {
         // Обновляем SOC
-        binding.tvBatterySoc.text = "${telemetry.stateOfCharge}%"
+        binding.tvBatterySoc.text = "${telemetry.batterySoc}%"
 
         // Цвет в зависимости от уровня заряда
         val socColor =
             when {
-                telemetry.stateOfCharge <= 20 -> ContextCompat.getColor(this, R.color.error)
-                telemetry.stateOfCharge <= 50 -> ContextCompat.getColor(this, R.color.warning)
+                telemetry.batterySoc <= 20 -> ContextCompat.getColor(this, R.color.error)
+                telemetry.batterySoc <= 50 -> ContextCompat.getColor(this, R.color.warning)
                 else -> ContextCompat.getColor(this, R.color.charging_green)
             }
         binding.tvBatterySoc.setTextColor(socColor)
@@ -163,13 +163,16 @@ class MainActivity : AppCompatActivity() {
         binding.tvDoorStatus.text = doorText
 
         // Статус зарядки
-        if (telemetry.chargingStatus != TBoxTelemetryService.ChargingStatus.NONE) {
+        val isCharging =
+            telemetry.chargingStatus != TBoxTelemetryService.ChargingStatus.NONE &&
+                telemetry.chargingStatus != TBoxTelemetryService.ChargingStatus.COMPLETED
+        if (isCharging) {
             binding.layoutCharging.visibility = View.VISIBLE
             binding.tvChargingStatus.text =
                 when (telemetry.chargingStatus) {
-                    TBoxTelemetryService.ChargingStatus.CHARGING -> "Зарядка 🔌"
-                    TBoxTelemetryService.ChargingStatus.FAST_CHARGING -> "Быстрая ⚡"
-                    TBoxTelemetryService.ChargingStatus.COMPLETED -> "Завершено ✓"
+                    TBoxTelemetryService.ChargingStatus.SLOW_CHARGE -> "Зарядка 🔌"
+                    TBoxTelemetryService.ChargingStatus.FAST_CHARGE -> "Быстрая ⚡"
+                    TBoxTelemetryService.ChargingStatus.TRICKLE_CHARGE -> "Капельная"
                     else -> "Зарядка"
                 }
         } else {

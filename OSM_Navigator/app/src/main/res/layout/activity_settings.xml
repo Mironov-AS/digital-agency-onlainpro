@@ -540,6 +540,663 @@
                 android:background="?attr/colorOutline"
                 android:layout_marginVertical="16dp" />
             
+            <!-- Секция: Телематика Т-Бокс -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Телематика Т-Бокс"
+                android:textSize="14sp"
+                android:textColor="@color/charging_green"
+                android:layout_marginBottom="8dp" />
+            
+            <!-- Карточка телематики -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    
+                    <!-- Заголовок и статус -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Данные автомобиля"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        
+                        <ImageView
+                            android:id="@+id/ivTelemetryStatus"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@android:drawable/presence_invisible"
+                            android:contentDescription="Status" />
+                        
+                        <TextView
+                            android:id="@+id/tvTelemetryStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="Отключено"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                    
+                    <!-- === БАТАРЕЯ === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Аккумуляторная батарея"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- SOC -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Уровень заряда (SOC)"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBatterySoc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--%"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/charging_green" />
+                    </LinearLayout>
+                    
+                    <!-- SOC Progress -->
+                    <ProgressBar
+                        android:id="@+id/progressBatterySoc"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="4dp"
+                        android:max="100"
+                        android:progress="0" />
+                    
+                    <!-- Напряжение -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Напряжение HV"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBatteryVoltage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- V"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Ток -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Ток"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBatteryCurrent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Температура батареи -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Температура батареи"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBatteryTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- °C"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Макс/Мин температура -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Макс/Мин темп. ячеек"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBatteryTempRange"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--/- °C"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === ДВИГАТЕЛЬ === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Электродвигатель"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- Скорость -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Скорость"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- км/ч"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    
+                    <!-- Обороты мотора -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Обороты мотора"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvMotorSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- об/мин"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Крутящий момент -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Крутящий момент"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvMotorTorque"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- Нм"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Мощность -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Мощность"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvMotorPower"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- кВт"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Температура мотора -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Температура мотора"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvMotorTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- °C"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === АВТОМОБИЛЬ === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Статус автомобиля"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- Пробег -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Общий пробег"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvOdometer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- км"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    
+                    <!-- передача -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Передача"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvGear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="P"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    
+                    <!-- Зажигание -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Зажигание"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvIgnition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Выкл"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- Двери -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Двери"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvDoors"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Закрыты"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === ЗАРЯДКА === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Зарядка"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- Статус зарядки -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Статус зарядки"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvChargingStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Не заряжается"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                    
+                    <!-- Зарядка подключена -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Разъём зарядки"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvChargeGun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === ОХЛАЖДЕНИЕ === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Охлаждение"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- Температура ОЖ -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Температура ОЖ"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvCoolantTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- °C"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === TPMS === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Давление в шинах (TPMS)"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <!-- Шины -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🛞 Передняя левая"
+                            android:textSize="12sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvTireFL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- PSI"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🛞 Передняя правая"
+                            android:textSize="12sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvTireFR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- PSI"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🛞 Задняя левая"
+                            android:textSize="12sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvTireRL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- PSI"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="2dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🛞 Задняя правая"
+                            android:textSize="12sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvTireRR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- PSI"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    
+                    <!-- === 12V === -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12V аккумулятор"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:drawableStart="@android:drawable/ic_menu_info_details"
+                        android:drawablePadding="8dp" />
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Напряжение 12V"
+                            android:textSize="14sp" />
+                        
+                        <TextView
+                            android:id="@+id/tvBattery12V"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- V"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <!-- === CAN === -->
+                    <TextView
+                        android:id="@+id/tvCanFrames"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CAN фреймов: 0"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:layout_marginTop="16dp" />
+                    
+                    <!-- Последнее обновление -->
+                    <TextView
+                        android:id="@+id/tvLastTelemetryUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Обновление: --"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:layout_marginTop="4dp" />
+                    
+                </LinearLayout>
+                
+            </com.google.android.material.card.MaterialCardView>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:layout_marginVertical="16dp" />
+            
             <!-- Секция: О приложении -->
             <TextView
                 android:layout_width="wrap_content"
