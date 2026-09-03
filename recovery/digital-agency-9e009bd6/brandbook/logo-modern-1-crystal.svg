@@ -1,0 +1,111 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Glow filters -->
+    <filter id="logo-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="logo-glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Gradients -->
+    <linearGradient id="crystal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    
+    <linearGradient id="crystal-inner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    
+    <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#22d3ee" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+    
+    <linearGradient id="ray-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#22d3ee" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Ambient glow background -->
+  <circle cx="100" cy="100" r="90" fill="url(#center-glow)" filter="url(#logo-glow-strong)">
+    <animate attributeName="r" values="85;95;85" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Outer crystal shape -->
+  <g filter="url(#logo-glow)">
+    <!-- Main diamond/crystal -->
+    <path d="M100 20 L170 70 L150 150 L100 180 L50 150 L30 70 Z" fill="url(#crystal-grad)" opacity="0.9">
+      <animate attributeName="opacity" values="0.85;0.95;0.85" dur="2s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Inner crystal facets -->
+    <path d="M100 35 L155 75 L100 100 L45 75 Z" fill="#22d3ee" opacity="0.4"/>
+    <path d="M45 75 L100 100 L55 145 L100 180 L50 150 L30 70 Z" fill="#7c3aed" opacity="0.3"/>
+    <path d="M155 75 L100 100 L145 145 L100 180 L150 150 L170 70 Z" fill="#a855f7" opacity="0.3"/>
+    
+    <!-- Center gem -->
+    <path d="M100 55 L130 80 L115 115 L100 135 L85 115 L70 80 Z" fill="url(#crystal-inner)" filter="url(#logo-glow)">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Inner highlight -->
+    <path d="M100 55 L115 75 L100 90 L85 75 Z" fill="white" opacity="0.3"/>
+    
+    <!-- Sparkle -->
+    <circle cx="100" cy="95" r="8" fill="white" opacity="0.5" filter="url(#logo-glow)">
+      <animate attributeName="r" values="6;10;6" dur="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Orbiting particles -->
+  <g>
+    <circle cx="100" cy="100" r="95" fill="none" stroke="url(#ray-grad)" stroke-width="1" stroke-dasharray="10 20">
+      <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="20s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="100" r="85" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="5 15">
+      <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="15s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Floating particles -->
+  <circle cx="50" cy="40" r="3" fill="#22d3ee" filter="url(#logo-glow)">
+    <animate attributeName="cy" values="40;35;40" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="160" cy="55" r="2.5" fill="#a855f7" filter="url(#logo-glow)">
+    <animate attributeName="cy" values="55;48;55" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="45" cy="130" r="2" fill="#c084fc" filter="url(#logo-glow)">
+    <animate attributeName="cy" values="130;122;130" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="155" cy="140" r="3" fill="#67e8f9" filter="url(#logo-glow)">
+    <animate attributeName="cy" values="140;132;140" dur="2.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- "ОП" letters inside -->
+  <text x="100" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" font-weight="900" fill="white" opacity="0.95">ОП</text>
+</svg>

@@ -21,6 +21,17 @@
     <!-- Hardware features -->
     <uses-feature android:name="android.hardware.location.gps" android:required="false" />
     <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.type.automotive" android:required="false" />
+    
+    <!-- Car API permissions for reading vehicle data -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_VEHICLE_STATE" />
+    <uses-permission android:name="android.permission.READ_VEHICLE_DIAGNOSTIC_DATA" />
+    <uses-permission android:name="android.car.permission.CAR_ENERGY_PORTS" />
+    <uses-permission android:name="android.car.permission.CAR_POWER" />
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <uses-permission android:name="android.car.permission.CAR_ENERGY" />
+    <uses-permission android:name="android.car.permission.CAR_INFO" />
+    <uses-permission android:name="android.car.permission.READ_CAR_DIAGNOSTIC_DATA" />
 
     <application
         android:name=".OSMNavApp"

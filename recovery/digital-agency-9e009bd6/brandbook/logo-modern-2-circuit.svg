@@ -1,0 +1,143 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="circuit-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="circuit-glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="circuit-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </linearGradient>
+    
+    <linearGradient id="circuit-line" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    
+    <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#circuit-bg)"/>
+  
+  <!-- Circuit pattern background -->
+  <g opacity="0.15">
+    <line x1="0" y1="50" x2="200" y2="50" stroke="#a855f7" stroke-width="0.5"/>
+    <line x1="0" y1="100" x2="200" y2="100" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="0" y1="150" x2="200" y2="150" stroke="#a855f7" stroke-width="0.5"/>
+    <line x1="50" y1="0" x2="50" y2="200" stroke="#a855f7" stroke-width="0.5"/>
+    <line x1="100" y1="0" x2="100" y2="200" stroke="#22d3ee" stroke-width="0.5"/>
+    <line x1="150" y1="0" x2="150" y2="200" stroke="#a855f7" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Main circuit "О" shape -->
+  <g filter="url(#circuit-glow-strong)">
+    <!-- Outer ring -->
+    <circle cx="100" cy="100" r="60" fill="none" stroke="url(#circuit-line)" stroke-width="4"/>
+    
+    <!-- Circuit nodes on ring -->
+    <circle cx="100" cy="40" r="6" fill="#22d3ee">
+      <animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="100" r="6" fill="#a855f7">
+      <animate attributeName="r" values="5;7;5" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="160" r="6" fill="#22d3ee">
+      <animate attributeName="r" values="5;7;5" dur="1.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="100" r="6" fill="#a855f7">
+      <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Inner circuit lines forming "П" -->
+  <g stroke="url(#circuit-line)" stroke-width="3" fill="none" filter="url(#circuit-glow)">
+    <!-- Left vertical -->
+    <line x1="70" y1="70" x2="70" y2="130"/>
+    <line x1="65" y1="75" x2="65" y2="125" stroke-dasharray="4 4" opacity="0.5">
+      <animate attributeName="stroke-dashoffset" values="0;8" dur="1s" repeatCount="indefinite"/>
+    </line>
+    
+    <!-- Right vertical -->
+    <line x1="130" y1="70" x2="130" y2="130"/>
+    <line x1="135" y1="75" x2="135" y2="125" stroke-dasharray="4 4" opacity="0.5">
+      <animate attributeName="stroke-dashoffset" values="8;0" dur="1s" repeatCount="indefinite"/>
+    </line>
+    
+    <!-- Top horizontal -->
+    <line x1="70" y1="70" x2="130" y2="70"/>
+    
+    <!-- Inner connection -->
+    <line x1="70" y1="100" x2="130" y2="100" stroke-dasharray="2 6" opacity="0.6">
+      <animate attributeName="stroke-dashoffset" values="0;8" dur="0.5s" repeatCount="indefinite"/>
+    </line>
+  </g>
+  
+  <!-- Central processor/core -->
+  <g filter="url(#circuit-glow-strong)">
+    <rect x="80" y="90" width="40" height="20" rx="3" fill="#16161d" stroke="#22d3ee" stroke-width="1.5"/>
+    <circle cx="90" cy="100" r="3" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="100" r="3" fill="#a855f7">
+      <animate attributeName="opacity" values="1;0.5;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="110" cy="100" r="3" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Connection dots -->
+  <g filter="url(#circuit-glow)">
+    <circle cx="70" cy="40" r="2.5" fill="#c084fc">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="130" cy="40" r="2" fill="#67e8f9">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="70" r="2.5" fill="#a855f7">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="130" r="2" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="130" cy="160" r="2.5" fill="#c084fc">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="70" cy="160" r="2" fill="#67e8f9">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="130" r="2.5" fill="#a855f7">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="70" r="2" fill="#22d3ee">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Pulse rings -->
+  <circle cx="100" cy="100" r="75" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0">
+    <animate attributeName="r" values="65;90" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="100" cy="100" r="75" fill="none" stroke="#a855f7" stroke-width="1" opacity="0">
+    <animate attributeName="r" values="65;90" dur="2s" begin="1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+</svg>

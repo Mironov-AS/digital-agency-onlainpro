@@ -1,0 +1,123 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow-consult" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="bg-consult" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    
+    <linearGradient id="bulb-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    
+    <linearGradient id="bulb-body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    
+    <radialGradient id="light-glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    
+    <linearGradient id="idea-lines" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="120" height="120" rx="28" fill="url(#bg-consult)"/>
+  
+  <!-- Light rays -->
+  <g opacity="0.6">
+    <line x1="60" y1="45" x2="60" y2="20" stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="60" y1="45" x2="85" y2="25" stroke="#a855f7" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="60" y1="45" x2="90" y2="45" stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="60" y1="45" x2="35" y2="25" stroke="#a855f7" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.4s" repeatCount="indefinite"/>
+    </line>
+    <line x1="60" y1="45" x2="30" y2="45" stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.6s" repeatCount="indefinite"/>
+    </line>
+  </g>
+  
+  <!-- Ambient glow -->
+  <circle cx="60" cy="55" r="45" fill="url(#light-glow)">
+    <animate attributeName="r" values="40;50;40" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Lightbulb -->
+  <g filter="url(#glow-consult)">
+    <!-- Bulb glow -->
+    <ellipse cx="60" cy="50" rx="30" ry="28" fill="url(#light-glow)" opacity="0.5"/>
+    
+    <!-- Bulb glass -->
+    <path d="M60 22 C75 22 85 35 85 50 C85 62 75 70 70 78 L70 85 L50 85 L50 78 C45 70 35 62 35 50 C35 35 45 22 60 22 Z" fill="url(#bulb-glow)" opacity="0.9"/>
+    
+    <!-- Bulb highlight -->
+    <path d="M50 35 C50 35 55 30 65 30 C72 30 78 38 78 45 C78 45 72 40 65 40 C58 40 52 42 50 35 Z" fill="white" opacity="0.3"/>
+    
+    <!-- Filament glow -->
+    <path d="M52 55 Q60 45 68 55 Q60 65 52 55" stroke="#22d3ee" stroke-width="2" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Bulb base -->
+    <rect x="50" y="85" width="20" height="5" rx="1" fill="#27272a"/>
+    <rect x="52" y="90" width="16" height="4" rx="1" fill="#3f3f46"/>
+    <rect x="54" y="94" width="12" height="4" rx="2" fill="#27272a"/>
+    
+    <!-- Bulb tip -->
+    <path d="M56 98 L60 105 L64 98 Z" fill="#3f3f46"/>
+  </g>
+  
+  <!-- Digital elements / circuit paths -->
+  <g stroke="url(#idea-lines)" stroke-width="1.5" fill="none" opacity="0.6">
+    <path d="M25 60 L15 60 L15 75">
+      <animate attributeName="stroke-dashoffset" values="10;0;10" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M95 60 L105 60 L105 75">
+      <animate attributeName="stroke-dashoffset" values="10;0;10" dur="2.3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Circuit nodes -->
+  <circle cx="15" cy="60" r="3" fill="#22d3ee" filter="url(#glow-consult)">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="105" cy="60" r="3" fill="#a855f7" filter="url(#glow-consult)">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="15" cy="75" r="2" fill="#67e8f9" filter="url(#glow-consult)">
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="105" cy="75" r="2" fill="#c084fc" filter="url(#glow-consult)">
+    <animate attributeName="opacity" values="0;1;0" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Floating idea particles -->
+  <circle cx="40" cy="25" r="2" fill="#22d3ee" filter="url(#glow-consult)">
+    <animate attributeName="cy" values="25;22;25" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="20" r="2.5" fill="#a855f7" filter="url(#glow-consult)">
+    <animate attributeName="cy" values="20;17;20" dur="1.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+</svg>

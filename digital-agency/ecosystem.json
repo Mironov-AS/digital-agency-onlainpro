@@ -1,0 +1,199 @@
+{
+  "apps": [
+    {
+      "name": "auth-service",
+      "script": "services/auth-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4001,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dauth",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "JWT_REFRESH_SECRET": "YW5vdGhlci1zZWNyZXQta2V5LWZvci1yZWZyZXNoLXRva2Vucy0zMg==",
+        "JWT_ACCESS_EXPIRES": "15m",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "ADMIN_EMAIL": "admin@onlinepro.rf",
+        "ADMIN_PASSWORD": "Admin2024Secure!",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true,
+      "max_restarts": 10,
+      "min_uptime": "10s"
+    },
+    {
+      "name": "catalog-service",
+      "script": "services/catalog-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4002,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dcatalog",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "clients-service",
+      "script": "services/clients-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4003,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dclients",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "PRODUCT_SHELF_URL": "http://127.0.0.1:4006",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "projects-service",
+      "script": "services/projects-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4004,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dprojects",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "UPLOAD_DIR": "/root/digital-agency/services/projects-service/src/uploads",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "admin-service",
+      "script": "services/admin-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4005,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dadmin",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "product-shelf-service",
+      "script": "services/product-shelf-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4006,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dshelf",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "queue-service",
+      "script": "services/queue-service/server/index.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 3001,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dqueue",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "JWT_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "booking-service",
+      "script": "services/booking-service/server/index.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4008,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dbooking",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "AUTH_SERVICE_URL": "http://127.0.0.1:4001",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "crm-service",
+      "script": "services/crm-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4009,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dcrm",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "BOOKING_SERVICE_URL": "http://127.0.0.1:4008",
+        "AUTH_SERVICE_URL": "http://127.0.0.1:4001",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "erp-service",
+      "script": "services/erp-service/server/index.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4010,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Derp",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "AUTH_SERVICE_URL": "http://127.0.0.1:4001",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "store-service",
+      "script": "services/store-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4011,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dstore",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "AUTH_SERVICE_URL": "http://127.0.0.1:4001",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "furniture-sorter-service",
+      "script": "services/furniture-photo-sorter-service/server/index.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4012,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dfurniture_sorter,shelf",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    },
+    {
+      "name": "label-merger-service",
+      "script": "services/label-merger-service/src/server.js",
+      "cwd": "/root/digital-agency",
+      "env": {
+        "PORT": 4013,
+        "DATABASE_URL": "postgresql://agency:agency_pass_2024@127.0.0.1:5432/digital_agency?options=-c%20search_path%3Dlabel_merger,shelf",
+        "JWT_ACCESS_SECRET": "dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktMzI=",
+        "CORS_ORIGIN": "http://5.129.252.107",
+        "NODE_ENV": "production"
+      },
+      "instances": 1,
+      "autorestart": true
+    }
+  ]
+}

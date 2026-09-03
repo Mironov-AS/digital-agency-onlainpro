@@ -1,0 +1,9 @@
+FROM node:20-alpine
+WORKDIR /repo
+COPY shared shared/
+COPY services/catalog-service/package*.json services/catalog-service/
+RUN cd services/catalog-service && npm install --omit=dev --no-audit --no-fund
+COPY services/catalog-service/src services/catalog-service/src/
+WORKDIR /repo/services/catalog-service
+EXPOSE 4002
+CMD ["sh","-c","node src/seed.js || true; node src/server.js"]

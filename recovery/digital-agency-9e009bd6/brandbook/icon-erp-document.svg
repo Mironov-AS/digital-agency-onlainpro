@@ -1,0 +1,47 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="gerp1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="gerp2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="gerp3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="20" fill="url(#gerp2)"/>
+  <ellipse cx="60" cy="55" rx="45" ry="40" fill="#a855f7" fill-opacity="0.08"/>
+  <!-- Document 1 -->
+  <rect x="28" y="25" width="44" height="56" rx="4" fill="#1a1a2e" stroke="#a855f7" stroke-width="1.5" transform="rotate(-5 50 53)"/>
+  <rect x="34" y="36" width="24" height="3" rx="1.5" fill="#22d3ee"/>
+  <rect x="34" y="44" width="32" height="2" rx="1" fill="#a855f7" fill-opacity="0.5"/>
+  <rect x="34" y="50" width="28" height="2" rx="1" fill="#a855f7" fill-opacity="0.5"/>
+  <rect x="34" y="56" width="20" height="2" rx="1" fill="#a855f7" fill-opacity="0.5"/>
+  <!-- Document 2 -->
+  <rect x="48" y="35" width="44" height="56" rx="4" fill="#1a1a2e" stroke="url(#gerp3)" stroke-width="2"/>
+  <rect x="56" y="46" width="28" height="4" rx="2" fill="#22d3ee"/>
+  <rect x="56" y="56" width="32" height="2" rx="1" fill="#a855f7" fill-opacity="0.6"/>
+  <rect x="56" y="62" width="26" height="2" rx="1" fill="#a855f7" fill-opacity="0.6"/>
+  <rect x="56" y="68" width="30" height="2" rx="1" fill="#a855f7" fill-opacity="0.6"/>
+  <rect x="56" y="74" width="18" height="2" rx="1" fill="#a855f7" fill-opacity="0.6"/>
+  <!-- AI brain overlay -->
+  <circle cx="82" cy="82" r="18" fill="#0a0a0f" stroke="url(#gerp3)" stroke-width="2"/>
+  <path d="M74 82 Q78 76 82 82 Q86 76 90 82 Q86 88 82 82 Q78 88 74 82" fill="#a855f7">
+    <animate attributeName="d" values="M74 82 Q78 76 82 82 Q86 76 90 82 Q86 88 82 82 Q78 88 74 82;M73 82 Q77 75 82 82 Q87 75 91 82 Q87 89 82 82 Q77 89 73 82;M74 82 Q78 76 82 82 Q86 76 90 82 Q86 88 82 82 Q78 88 74 82" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="78" cy="78" r="2" fill="#22d3ee">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="86" cy="78" r="2" fill="#22d3ee">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Connection lines -->
+  <path d="M68 78 Q74 80 76 82" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.6">
+    <animate attributeName="stroke-dashoffset" values="0;4" dur="0.5s" repeatCount="indefinite"/>
+  </path>
+</svg>

@@ -104,6 +104,9 @@ class FusedLocationProvider(
      */
     private fun startTBoxGps() {
         try {
+            // Используем синглтон для телематики
+            val telemetryService = tBoxTelemetryService ?: TBoxTelemetryService.shared
+            
             tBoxGpsService =
                 TBoxGpsService(
                     port = 8630,
@@ -126,8 +129,8 @@ class FusedLocationProvider(
                         emitBestLocation()
                     },
                     onTelemetryUpdate = { data ->
-                        // Передаём данные телематики
-                        tBoxTelemetryService?.processData(data)
+                        // Передаём данные телематики в синглтон
+                        telemetryService.processData(data)
                     },
                 )
 

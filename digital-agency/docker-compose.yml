@@ -322,17 +322,6 @@ services:
       - product-shelf-service
     restart: unless-stopped
 
-  # OSM Navigator Logs Service
-  navi-logs:
-    build:
-      context: ./navi-logs
-      dockerfile: Dockerfile
-    ports:
-      - "3005:3005"
-    restart: unless-stopped
-    volumes:
-      - ./navi-logs/logs:/app/logs
-
 volumes:
   furniture-uploads:
   furniture-results:

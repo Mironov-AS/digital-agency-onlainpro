@@ -122,7 +122,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTelemetry() {
-        tBoxTelemetryService = TBoxTelemetryService()
+        // Используем синглтон - все части приложения работают с одним экземпляром
+        tBoxTelemetryService = TBoxTelemetryService.shared
 
         // Наблюдаем за обновлениями телематики
         lifecycleScope.launch {
@@ -131,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        LogUploader.i(TAG, "Telemetry service initialized")
+        LogUploader.i(TAG, "Telemetry service initialized (singleton)")
     }
 
     private fun updateTelemetryUI(telemetry: TBoxTelemetryService.ExtendedVehicleTelemetry) {

@@ -1,0 +1,135 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="inf-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="inf-glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="inf-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    
+    <linearGradient id="inf-grad-vertical" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    
+    <radialGradient id="inf-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    
+    <linearGradient id="inf-inner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background glow -->
+  <ellipse cx="100" cy="100" rx="90" ry="70" fill="url(#inf-core)" filter="url(#inf-glow-strong)">
+    <animate attributeName="rx" values="85;95;85" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="65;75;65" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <!-- Infinity loop path -->
+  <g filter="url(#inf-glow)">
+    <!-- Main infinity shape -->
+    <path d="M100 100 
+             C100 60 60 60 60 100 
+             C60 140 100 140 100 100 
+             C100 60 140 60 140 100 
+             C140 140 100 140 100 100" 
+          fill="none" stroke="url(#inf-grad)" stroke-width="8" stroke-linecap="round">
+      <animate attributeName="stroke-opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Inner glow line -->
+    <path d="M100 100 
+             C100 60 60 60 60 100 
+             C60 140 100 140 100 100 
+             C100 60 140 60 140 100 
+             C140 140 100 140 100 100" 
+          fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  </g>
+  
+  <!-- Center node -->
+  <g filter="url(#inf-glow-strong)">
+    <circle cx="100" cy="100" r="12" fill="url(#inf-grad-vertical)">
+      <animate attributeName="r" values="10;14;10" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="100" r="6" fill="white" opacity="0.5"/>
+    <circle cx="97" cy="97" r="2" fill="white"/>
+  </g>
+  
+  <!-- Left loop node -->
+  <g filter="url(#inf-glow)">
+    <circle cx="60" cy="100" r="8" fill="#a855f7">
+      <animate attributeName="r" values="6;10;6" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="100" r="4" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- Right loop node -->
+  <g filter="url(#inf-glow)">
+    <circle cx="140" cy="100" r="8" fill="#22d3ee">
+      <animate attributeName="r" values="6;10;6" dur="1.5s" begin="0.75s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="140" cy="100" r="4" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- Flow particles along infinity -->
+  <g filter="url(#inf-glow)">
+    <!-- Moving dot on left loop -->
+    <circle r="4" fill="#c084fc">
+      <animateMotion dur="3s" repeatCount="indefinite" path="M100 100 C100 60 60 60 60 100 C60 140 100 140 100 100"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Moving dot on right loop -->
+    <circle r="4" fill="#67e8f9">
+      <animateMotion dur="3s" repeatCount="indefinite" begin="1.5s" path="M100 100 C100 60 140 60 140 100 C140 140 100 140 100 100"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Orbiting sparkles -->
+  <g filter="url(#inf-glow)">
+    <circle cx="45" cy="70" r="2.5" fill="#22d3ee">
+      <animate attributeName="cy" values="70;65;70" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="70" r="2.5" fill="#a855f7">
+      <animate attributeName="cy" values="70;65;70" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="45" cy="130" r="2" fill="#67e8f9">
+      <animate attributeName="cy" values="130;135;130" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="130" r="2" fill="#c084fc">
+      <animate attributeName="cy" values="130;135;130" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Pulse rings -->
+  <ellipse cx="100" cy="100" rx="70" ry="50" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0">
+    <animate attributeName="rx" values="50;100" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="35;70" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0" dur="2.5s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>

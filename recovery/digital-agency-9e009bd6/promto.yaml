@@ -1,0 +1,46 @@
+# Digital Agency — production publish configuration
+# Full-stack deployment: one Docker backend service runs nginx + Node.js microservices.
+
+services:
+  db:
+    friendly_name: "PostgreSQL Database"
+    description: "Primary PostgreSQL database for all digital-agency microservices"
+    purpose: "Persistent storage for auth, catalog, clients, projects, admin, shelf, queue, booking, CRM, ERP and store schemas"
+    order: 1
+    type: database
+    framework: postgresql
+    preset_id: 357
+    env_vars:
+      - DATABASE_URL
+
+  app:
+    friendly_name: "Цифровое агентство"
+    description: "Full digital-agency stack: nginx static frontend + Express microservices in one Docker container"
+    purpose: "Serve landing, /app, client portal and product modules; proxy /api/* to internal Node.js services"
+    order: 2
+    type: backend
+    framework: docker
+    deployment_strategy: docker
+    preset_id: 1018
+    build_command: "docker build -t app ."
+    start_command: "/bin/sh /start.sh"
+    root_dir: ""
+    env_file: ".env.production"
+    env_vars:
+      - JWT_ACCESS_SECRET
+      - JWT_REFRESH_SECRET
+      - JWT_ACCESS_EXPIRES
+      - CORS_ORIGIN
+      - DATABASE_URL
+      - ADMIN_EMAIL
+      - ADMIN_PASSWORD
+      - DB_SCHEMA_MODE
+      - PG_POOL_MAX
+      - SMTP_HOST
+      - SMTP_PORT
+      - SMTP_USER
+      - SMTP_PASS
+      - SMTP_FROM
+      - NODE_ENV
+    requires:
+      - db

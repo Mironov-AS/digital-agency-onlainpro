@@ -1,0 +1,17 @@
+<svg viewBox="0 0 280 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="12" fill="url(#logoGrad)"/>
+    <path d="M15 25L25 15L35 25L25 35L15 25Z" fill="white" fill-opacity="0.9"/>
+    <path d="M20 25L25 20L30 25L25 30L20 25Z" fill="url(#logoGrad2)"/>
+    <text x="62" y="28" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="16" fill="#ffffff">ОнлайнПро</text>
+    <text x="62" y="44" font-family="Inter, Arial, sans-serif" font-weight="400" font-size="12" fill="#a1a1aa">.рф</text>
+    <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <linearGradient id="logoGrad2" x1="20" y1="20" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#22d3ee"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+    </defs>
+</svg>

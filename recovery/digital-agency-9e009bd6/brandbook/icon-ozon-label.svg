@@ -1,0 +1,73 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="goz1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="goz2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="goz3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="20" fill="url(#goz2)"/>
+  <ellipse cx="60" cy="60" rx="45" ry="45" fill="#22d3ee" fill-opacity="0.06"/>
+  <!-- Label -->
+  <rect x="18" y="28" width="84" height="64" rx="6" fill="#1a1a2e" stroke="url(#goz3)" stroke-width="2"/>
+  <!-- QR Code representation -->
+  <rect x="26" y="36" width="28" height="28" rx="2" fill="#fff"/>
+  <rect x="28" y="38" width="8" height="8" rx="1" fill="#0a0a0f"/>
+  <rect x="38" y="38" width="4" height="4" rx="1" fill="#0a0a0f"/>
+  <rect x="44" y="38" width="8" height="8" rx="1" fill="#0a0a0f"/>
+  <rect x="28" y="48" width="4" height="4" rx="1" fill="#0a0a0f"/>
+  <rect x="34" y="48" width="8" height="8" rx="1" fill="#0a0a0f"/>
+  <rect x="28" y="54" width="8" height="8" rx="1" fill="#0a0a0f"/>
+  <rect x="38" y="54" width="4" height="4" rx="1" fill="#0a0a0f"/>
+  <rect x="44" y="52" width="4" height="4" rx="1" fill="#0a0a0f"/>
+  <rect x="52" y="56" width="4" height="4" rx="1" fill="#0a0a0f"/>
+  <!-- Text lines -->
+  <rect x="60" y="38" width="36" height="4" rx="2" fill="#a855f7"/>
+  <rect x="60" y="46" width="30" height="3" rx="1.5" fill="#22d3ee" fill-opacity="0.6"/>
+  <rect x="60" y="52" width="34" height="3" rx="1.5" fill="#22d3ee" fill-opacity="0.6"/>
+  <!-- Barcode representation -->
+  <rect x="26" y="70" width="76" height="16" rx="2" fill="#fff"/>
+  <rect x="30" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="34" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="37" y="72" width="3" height="12" fill="#0a0a0f"/>
+  <rect x="42" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="46" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="49" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="53" y="72" width="3" height="12" fill="#0a0a0f"/>
+  <rect x="58" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="61" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="65" y="72" width="3" height="12" fill="#0a0a0f"/>
+  <rect x="70" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="73" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="77" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="80" y="72" width="3" height="12" fill="#0a0a0f"/>
+  <rect x="85" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <rect x="89" y="72" width="1" height="12" fill="#0a0a0f"/>
+  <rect x="92" y="72" width="2" height="12" fill="#0a0a0f"/>
+  <!-- Ozon badge -->
+  <rect x="76" y="22" width="32" height="14" rx="4" fill="#a855f7"/>
+  <text x="92" y="32" text-anchor="middle" fill="#fff" font-size="8" font-weight="bold">Ozon</text>
+  <!-- Animation dots -->
+  <circle cx="96" cy="18" r="2" fill="#22d3ee">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="104" cy="18" r="2" fill="#22d3ee">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="112" cy="18" r="2" fill="#22d3ee">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Checkmark -->
+  <circle cx="100" cy="92" r="10" fill="#22c55e" filter="url(#goz1)">
+    <animate attributeName="r" values="10;11;10" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <path d="M95 92 L98 95 L105 88" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

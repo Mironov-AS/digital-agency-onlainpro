@@ -24,8 +24,10 @@ import java.util.concurrent.TimeUnit
  */
 object LogUploader {
     private const val TAG = "LogUploader"
-    private const val LOG_SERVER_URL = "https://онлайнпро.рф/api/logs"
-    private const val TELEMETRY_SERVER_URL = "https://онлайнпро.рф/api/telemetry"
+    // Сервер для логов и телематики
+    // Используем IP адрес напрямую для надёжности
+    private const val LOG_SERVER_URL = "http://5.129.252.107:3005/api/logs"
+    private const val TELEMETRY_SERVER_URL = "http://5.129.252.107:3005/api/telemetry"
 
     private val client =
         OkHttpClient

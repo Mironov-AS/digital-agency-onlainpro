@@ -1,0 +1,117 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="signal-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="signal-glow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <linearGradient id="signal-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    
+    <linearGradient id="signal-cyan" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    
+    <radialGradient id="signal-center" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    
+    <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#22d3ee" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background glow -->
+  <circle cx="100" cy="100" r="90" fill="url(#signal-center)" filter="url(#signal-glow-strong)">
+    <animate attributeName="r" values="85;95;85" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- WiFi/Signal waves -->
+  <g stroke="url(#signal-grad)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#signal-glow)">
+    <!-- Wave 1 -->
+    <path d="M60 130 Q100 90 140 130" opacity="0.3">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Wave 2 -->
+    <path d="M45 115 Q100 55 155 115" opacity="0.5">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Wave 3 -->
+    <path d="M30 100 Q100 20 170 100" opacity="0.7">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Wave 4 (outermost) -->
+    <path d="M15 85 Q100 -15 185 85" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Central dot/base -->
+  <g filter="url(#signal-glow-strong)">
+    <circle cx="100" cy="150" r="15" fill="url(#signal-cyan)">
+      <animate attributeName="r" values="13;16;13" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="150" r="8" fill="white" opacity="0.5"/>
+    <circle cx="96" cy="146" r="3" fill="white"/>
+  </g>
+  
+  <!-- Floating signal particles -->
+  <g filter="url(#signal-glow)">
+    <circle cx="60" cy="70" r="3" fill="#22d3ee">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="60;65;60" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="140" cy="65" r="2.5" fill="#a855f7">
+      <animate attributeName="opacity" values="0;1;0" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="140;135;140" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="35" cy="95" r="2" fill="#c084fc">
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="165" cy="90" r="3" fill="#67e8f9">
+      <animate attributeName="opacity" values="0;1;0" dur="2.2s" begin="0.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="30" r="2.5" fill="#22d3ee">
+      <animate attributeName="opacity" values="0;1;0" dur="1.5s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Speed lines -->
+  <g stroke="url(#wave-grad)" stroke-width="1.5" stroke-linecap="round" opacity="0.4">
+    <line x1="20" y1="140" x2="50" y2="140">
+      <animate attributeName="x1" values="20;30;20" dur="1.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="150" y1="140" x2="180" y2="140">
+      <animate attributeName="x2" values="180;170;180" dur="1.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="25" y1="155" x2="55" y2="155">
+      <animate attributeName="x1" values="25;35;25" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="145" y1="155" x2="175" y2="155">
+      <animate attributeName="x2" values="175;165;175" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+  </g>
+</svg>

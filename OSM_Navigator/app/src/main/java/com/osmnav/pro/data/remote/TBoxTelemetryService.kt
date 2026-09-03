@@ -15,6 +15,18 @@ class TBoxTelemetryService {
     companion object {
         private const val TAG = "TBoxTelemetry"
 
+        // Singleton instance - все части приложения используют один экземпляр
+        @Volatile
+        private var instance: TBoxTelemetryService? = null
+
+        fun getInstance(): TBoxTelemetryService =
+            instance ?: synchronized(this) {
+                instance ?: TBoxTelemetryService().also { instance = it }
+            }
+
+        // Alias для удобства
+        val shared: TBoxTelemetryService get() = getInstance()
+
         // CAN ID для BMS (Battery Management System)
         private const val CAN_ID_BMS_SOC = 0x105
         private const val CAN_ID_BATTERY_VOLTAGE = 0x2F3
@@ -199,29 +211,51 @@ class TBoxTelemetryService {
     fun processData(data: ByteArray) {
         if (data.size < 8) return
 
+        // Отладочный лог - показываем первые 32 байта
+        val hexDump = data.take(32).joinToString("") { String.format("%02X ", it) }
+        LogUploader.d(TAG, "Telemetry raw(${(data as? ByteArray)?.size ?: data.size} bytes): $hexDump")
+
         try {
             val buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN)
 
             // Проверяем заголовок
             val header = buffer.int
+            LogUploader.d(TAG, "Telemetry header: 0x${String.format("%08X", header)}, expected 0x0000AAAA")
+
             if (header and 0xFFFF != 0xAAAA) {
                 // Текстовый формат
+                val text = String(data).take(100)
+                LogUploader.d(TAG, "Telemetry text format: $text")
                 processTextData(String(data))
                 return
             }
 
             val msgType = buffer.get().toInt() and 0xFF
             val length = buffer.short.toInt() and 0xFFFF
+            LogUploader.d(TAG, "Telemetry msgType: 0x${String.format("%02X", msgType)}, length: $length")
 
             when (msgType) {
-                0x10 -> parseCanFrame(buffer, length)
-                0x11 -> parseCanFrame(buffer, length)
-                0x20 -> parseTelemetryFrame(buffer, length)
-                else -> parseCanFrame(buffer, length)
+                0x10 -> {
+                    parseCanFrame(buffer, length)
+                }
+
+                0x11 -> {
+                    parseCanFrame(buffer, length)
+                }
+
+                0x20 -> {
+                    parseTelemetryFrame(buffer, length)
+                }
+
+                else -> {
+                    LogUploader.d(TAG, "Unknown msgType 0x${String.format("%02X", msgType)}, trying generic parse")
+                    parseCanFrame(buffer, length)
+                }
             }
 
             updateConnectionStatus(true)
         } catch (e: Exception) {
+            LogUploader.e(TAG, "Telemetry parse error: ${e.message}")
             Log.w(TAG, "Parse error: ${e.message}")
         }
     }

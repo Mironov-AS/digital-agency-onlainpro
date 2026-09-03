@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /repo
+COPY shared shared/
+COPY services/product-shelf-service/package*.json services/product-shelf-service/
+RUN cd services/product-shelf-service && npm install --omit=dev --no-audit --no-fund
+COPY services/product-shelf-service/src services/product-shelf-service/src/
+WORKDIR /repo/services/product-shelf-service
+RUN mkdir -p uploads
+EXPOSE 4006
+CMD ["sh","-c","node src/seed.js || true; node src/server.js"]

@@ -1,8 +1,0 @@
---------------------------- PROCESS STARTED (25406) for package com.osmnav.pro ----------------------------
-2026-09-02 11:59:31.590 25406-25769 RouteRepository         com.osmnav.pro                       D  Building route with coordinates: 37.6173,55.7558;37.4639942,55.1510969
-2026-09-02 11:59:31.590 25406-25769 RouteRepository         com.osmnav.pro                       D  [0] Trying: https://router.project-osrm.org/
-2026-09-02 11:59:31.839 25406-25769 RouteRepository         com.osmnav.pro                       E  [0] Exception: HTTP 400 
-2026-09-02 11:59:31.839 25406-25769 RouteRepository         com.osmnav.pro                       D  [1] Trying: https://routing.openstreetmap.de/routed-car/
-2026-09-02 11:59:32.141 25406-25769 RouteRepository         com.osmnav.pro                       E  [1] Exception: HTTP 400 
-2026-09-02 11:59:32.141 25406-25769 RouteRepository         com.osmnav.pro                       D  [2] Trying: https://osrm.routing.smirnovint.ru/
-2026-09-02 11:59:32.174 25406-25769 RouteRepository         com.osmnav.pro                       E  [2] Exception: Unable to resolve host "osrm.routing.smirnovint.ru": No address associated with hostname

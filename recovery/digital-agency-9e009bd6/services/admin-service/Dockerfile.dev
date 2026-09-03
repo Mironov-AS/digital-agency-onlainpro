@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /repo
+COPY shared shared/
+COPY services/admin-service/package*.json services/admin-service/
+RUN cd services/admin-service && npm install --omit=dev --no-audit --no-fund
+COPY services/admin-service/src services/admin-service/src/
+WORKDIR /repo/services/admin-service
+RUN mkdir -p logs
+EXPOSE 4005
+CMD ["node","src/server.js"]

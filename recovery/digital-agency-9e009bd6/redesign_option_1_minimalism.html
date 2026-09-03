@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вариант 1: Минималистичный стиль — Цифровое агентство</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --primary: #18181b;
+        --accent: #2563eb;
+        --accent-light: #eff6ff;
+        --text: #18181b;
+        --text-muted: #71717a;
+        --border: #e4e4e7;
+        --radius: 16px;
+        --radius-sm: 10px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          "Manrope",
+          -apple-system,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(250, 250, 250, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        background: var(--primary);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 14px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-links a.active {
+        color: var(--text);
+      }
+      .btn-nav {
+        background: var(--primary);
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-nav:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Hero */
+      .hero {
+        padding: 160px 32px 120px;
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 8px 16px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 32px;
+        color: var(--text-muted);
+      }
+      .hero-badge span {
+        color: var(--accent);
+      }
+      .hero h1 {
+        font-size: clamp(40px, 6vw, 64px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -2px;
+        margin-bottom: 24px;
+      }
+      .hero h1 .accent {
+        color: var(--accent);
+      }
+      .hero p {
+        font-size: 18px;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto 40px;
+        font-weight: 400;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+        padding: 16px 32px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text);
+        padding: 16px 32px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        border: 1px solid var(--border);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+      }
+      .btn-secondary:hover {
+        border-color: var(--text);
+      }
+
+      /* Stats */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        max-width: 900px;
+        margin: 80px auto;
+        padding: 0 32px;
+      }
+      .stat {
+        text-align: center;
+        padding: 32px;
+        background: var(--surface);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+      .stat-value {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .stat-label {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      /* Products Grid */
+      .products-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 32px;
+      }
+      .section-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+      .section-title {
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 16px;
+      }
+      .section-desc {
+        font-size: 16px;
+        color: var(--text-muted);
+        max-width: 500px;
+        margin-bottom: 48px;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .product-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      .product-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.08);
+        transform: translateY(-4px);
+      }
+      .product-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--accent-light);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .product-icon svg {
+        width: 24px;
+        height: 24px;
+        color: var(--accent);
+      }
+      .product-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .product-card p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .product-link {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .product-link svg {
+        transition: transform 0.2s;
+      }
+      .product-card:hover .product-link svg {
+        transform: translateX(4px);
+      }
+
+      /* Dashboard Preview */
+      .dashboard-preview {
+        background: var(--primary);
+        margin: 80px 0;
+      }
+      .dashboard-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 32px;
+      }
+      .dashboard-inner .section-label {
+        color: #60a5fa;
+      }
+      .dashboard-inner .section-title {
+        color: #fff;
+      }
+      .dashboard-inner .section-desc {
+        color: #a1a1aa;
+      }
+      .dashboard-mock {
+        background: #27272a;
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-top: 48px;
+      }
+      .dash-header {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .dash-card {
+        background: #3f3f46;
+        border-radius: var(--radius-sm);
+        padding: 20px;
+        flex: 1;
+      }
+      .dash-card-label {
+        font-size: 12px;
+        color: #a1a1aa;
+        margin-bottom: 8px;
+      }
+      .dash-card-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .dash-table {
+        background: #27272a;
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .dash-table-header {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        padding: 16px 20px;
+        border-bottom: 1px solid #3f3f46;
+        font-size: 12px;
+        color: #a1a1aa;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .dash-table-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        padding: 16px 20px;
+        border-bottom: 1px solid #3f3f46;
+        align-items: center;
+      }
+      .dash-table-row:last-child {
+        border-bottom: none;
+      }
+      .dash-table-row:hover {
+        background: #3f3f46;
+      }
+      .client-name {
+        font-weight: 600;
+        color: #fff;
+      }
+      .client-email {
+        font-size: 12px;
+        color: #a1a1aa;
+      }
+      .badge {
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .badge-success {
+        background: #166534;
+        color: #86efac;
+      }
+      .badge-warning {
+        background: #854d0e;
+        color: #fde047;
+      }
+
+      /* CTA */
+      .cta-section {
+        text-align: center;
+        padding: 120px 32px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .cta-section h2 {
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 16px;
+      }
+      .cta-section p {
+        font-size: 18px;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 48px 32px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <div class="logo">
+          <div class="logo-mark">ОП</div>
+          ОнлайнПро.РФ
+        </div>
+        <div class="nav-links">
+          <a href="#" class="active">Главная</a>
+          <a href="#">Услуги</a>
+          <a href="#">Продукты</a>
+          <a href="#">О нас</a>
+          <a href="#">Контакты</a>
+        </div>
+        <a href="#" class="btn-nav">Войти</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-badge">С 2009 года <span>·</span> 15+ лет опыта</div>
+      <h1>Цифровые решения<br />для вашего бизнеса</h1>
+      <p>
+        Разрабатываем сайты, запускаем MVP за 2 недели, автоматизируем
+        бизнес-процессы. Полный цикл — от идеи до запуска.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-primary">
+          Обсудить проект
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button class="btn-secondary">Смотреть кейсы</button>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">150+</div>
+        <div class="stat-label">Проектов</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">50+</div>
+        <div class="stat-label">Клиентов</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">15</div>
+        <div class="stat-label">Лет опыта</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Поддержка</div>
+      </div>
+    </div>
+
+    <section class="products-section">
+      <div class="section-label">Продукты</div>
+      <h2 class="section-title">Решения для бизнеса</h2>
+      <p class="section-desc">
+        Готовые продукты и услуги, которые помогут автоматизировать и
+        масштабировать ваш бизнес
+      </p>
+
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </div>
+          <h3>Электронная очередь</h3>
+          <p>
+            Система управления очередью для офисов, клиник и государственных
+            учреждений
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h3>CRM Light</h3>
+          <p>
+            Простая и удобная CRM для малого бизнеса. Управление клиентами и
+            сделками
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          <h3>Веб-разработка</h3>
+          <p>
+            Создание сайтов, лендингов, интернет-магазинов и веб-приложений под
+            ключ
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h3>MVP за 2 недели</h3>
+          <p>
+            Быстрый запуск MVP для тестирования бизнес-гипотез и привлечения
+            инвестиций
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+              />
+            </svg>
+          </div>
+          <h3>Автоматизация</h3>
+          <p>
+            Настройка бизнес-процессов, интеграции и автоматизация рутинных
+            задач
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+              />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+          </div>
+          <h3>ERP система</h3>
+          <p>
+            Комплексное управление ресурсами предприятия: финансы, склад,
+            производство
+          </p>
+          <div class="product-link">
+            Подробнее
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-preview">
+      <div class="dashboard-inner">
+        <div class="section-label">Личный кабинет</div>
+        <h2 class="section-title">Управление в одном месте</h2>
+        <p class="section-desc">
+          Единая платформа для работы с клиентами, продуктами и финансами
+        </p>
+
+        <div class="dashboard-mock">
+          <div class="dash-header">
+            <div class="dash-card">
+              <div class="dash-card-label">Активных клиентов</div>
+              <div class="dash-card-value">47</div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-label">MRR</div>
+              <div class="dash-card-value">₽328 500</div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-label">Просрочено</div>
+              <div class="dash-card-value" style="color: #fca5a5">₽12 000</div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-label">Услуг</div>
+              <div class="dash-card-value">89</div>
+            </div>
+          </div>
+          <div class="dash-table">
+            <div class="dash-table-header">
+              <span>Клиент</span>
+              <span>Услуга</span>
+              <span>Сумма</span>
+              <span>Статус</span>
+            </div>
+            <div class="dash-table-row">
+              <div>
+                <div class="client-name">ООО «СтройМир»</div>
+                <div class="client-email">info@stroymir.ru</div>
+              </div>
+              <span style="color: #a1a1aa">Сайт + CRM</span>
+              <span style="color: #fff">₽45 000</span>
+              <span class="badge badge-success">Активна</span>
+            </div>
+            <div class="dash-table-row">
+              <div>
+                <div class="client-name">ИП Сидоров А.С.</div>
+                <div class="client-email">sidorov@email.ru</div>
+              </div>
+              <span style="color: #a1a1aa">Эл. очередь</span>
+              <span style="color: #fff">₽12 000</span>
+              <span class="badge badge-warning">Ожидает</span>
+            </div>
+            <div class="dash-table-row">
+              <div>
+                <div class="client-name">Клиника «Здоровье»</div>
+                <div class="client-email">clinic@zdorovie.ru</div>
+              </div>
+              <span style="color: #a1a1aa">MVP проект</span>
+              <span style="color: #fff">₽180 000</span>
+              <span class="badge badge-success">Активна</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Готовы обсудить проект?</h2>
+      <p>
+        Свяжитесь с нами для бесплатной консультации. Ответим в течение 2 часов.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-primary">Начать проект</button>
+        <button class="btn-secondary">Написать в Telegram</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2024 ОнлайнПро.РФ — Цифровое агентство полного цикла</p>
+    </footer>
+  </body>
+</html>

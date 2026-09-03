@@ -167,48 +167,6 @@ app.get("/navigator-api/info", (req, res) => {
 	}
 });
 
-// Navigator API - список всех версий
-app.get("/navigator-api/versions", (req, res) => {
-	try {
-		const versionsFile = path.join(NAVIGATOR_APK_DIR, "versions.json");
-
-		if (fs.existsSync(versionsFile)) {
-			const versions = JSON.parse(fs.readFileSync(versionsFile, "utf8"));
-			return res.json(versions);
-		}
-
-		// Fallback - возвращаем текущую сборку как одну версию
-		const apkExists = fs.existsSync(NAVIGATOR_APK_FILE);
-		const stat = apkExists ? fs.statSync(NAVIGATOR_APK_FILE) : null;
-		const versionData = fs.existsSync(NAVIGATOR_VERSION_FILE)
-			? JSON.parse(fs.readFileSync(NAVIGATOR_VERSION_FILE, "utf8"))
-			: {};
-
-		res.json([
-			{
-				id: "latest",
-				version_name: versionData.version || "1.0.0",
-				version: versionData.version || "1.0.0",
-				build_number: versionData.buildNumber || 1,
-				build_date: versionData.buildDate || new Date().toISOString(),
-				file_name: "osm-navigator.apk",
-				file_size: stat?.size || 0,
-				channel: "stable",
-				description: "Последняя сборка навигатора",
-				features: versionData.changelog || [
-					"Голосовые подсказки на русском",
-					"Проекция на приборную панель",
-					"Запись треков",
-					"OSRM роутинг",
-					"Камеры ГИБДД",
-				],
-			},
-		]);
-	} catch (e) {
-		res.status(500).json({ error: e.message });
-	}
-});
-
 // Navigator API - запуск сборки
 app.post("/navigator-api/build", (req, res) => {
 	const buildScript = path.join(__dirname, "build-navigator.sh");

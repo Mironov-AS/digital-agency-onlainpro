@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Production Brand — ОнлайнПро.РФ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="colors.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 40px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 8px;
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      h2 {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 48px 0 24px;
+        color: var(--text);
+      }
+
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      p {
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+
+      /* Секции */
+      .section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        margin-bottom: 32px;
+      }
+
+      /* Цветовые палитры */
+      .colors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+      }
+
+      .color-card {
+        text-align: center;
+      }
+
+      .color-swatch {
+        width: 100%;
+        height: 80px;
+        border-radius: var(--radius-sm);
+        margin-bottom: 8px;
+        border: 1px solid var(--border);
+      }
+
+      .color-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      .color-hex {
+        font-size: 12px;
+        color: var(--text-dim);
+        font-family: monospace;
+      }
+
+      /* Иконки */
+      .icons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+      }
+
+      .icon-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .icon-card:hover {
+        border-color: var(--purple);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-glow-purple);
+      }
+
+      .icon-wrapper {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .icon-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      /* Анимации иконок */
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+        }
+        50% {
+          filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.9));
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      @keyframes rotate-slow {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .icon-animated-pulse {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      .icon-animated-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .icon-animated-rotate {
+        animation: rotate-slow 8s linear infinite;
+      }
+
+      /* Кнопки */
+      .buttons-grid {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border-radius: var(--radius-xs);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--gradient-brand);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        box-shadow: var(--shadow-glow-purple);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--purple);
+        color: var(--purple);
+      }
+
+      /* Карточки */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        transition: all 0.3s ease;
+      }
+
+      .card:hover {
+        border-color: var(--purple);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-glow-purple);
+      }
+
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+      }
+
+      /* Badges */
+      .badges-grid {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 6px 12px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .badge-purple {
+        background: rgba(168, 85, 247, 0.15);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        color: var(--purple-light);
+      }
+
+      .badge-cyan {
+        background: rgba(34, 211, 238, 0.15);
+        border: 1px solid rgba(34, 211, 238, 0.3);
+        color: var(--cyan-light);
+      }
+
+      .badge-success {
+        background: var(--success-bg);
+        color: var(--success);
+      }
+
+      .badge-warning {
+        background: var(--warning-bg);
+        color: var(--warning);
+      }
+
+      .badge-info {
+        background: var(--info-bg);
+        color: var(--info);
+      }
+
+      /* Теги */
+      .tags-grid {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        padding: 4px 10px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .tag-green {
+        background: rgba(34, 197, 94, 0.15);
+        color: var(--success);
+        border-color: rgba(34, 197, 94, 0.3);
+      }
+      .tag-yellow {
+        background: rgba(234, 179, 8, 0.15);
+        color: var(--warning);
+        border-color: rgba(234, 179, 8, 0.3);
+      }
+      .tag-blue {
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--info);
+        border-color: rgba(59, 130, 246, 0.3);
+      }
+
+      /* Таблица */
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .table th {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .table tr:hover td {
+        background: var(--bg-card-hover);
+      }
+
+      /* Логотип */
+      .logo-grid {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo-item {
+        text-align: center;
+      }
+
+      .logo-item svg {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Production Brand</h1>
+      <p>Брендбук для ОнлайнПро.РФ — цвета production</p>
+
+      <!-- Логотип -->
+      <h2>Логотип</h2>
+      <div class="section">
+        <div class="logo-grid">
+          <div class="logo-item">
+            <svg width="180" height="48" viewBox="0 0 180 48" fill="none">
+              <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#a855f7" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+              </defs>
+              <!-- Hexagon icon -->
+              <path
+                d="M24 4L44 14V34L24 44L4 34V14L24 4Z"
+                fill="url(#logoGrad)"
+                opacity="0.2"
+              />
+              <path
+                d="M24 8L40 16V32L24 40L8 32V16L24 8Z"
+                fill="url(#logoGrad)"
+              />
+              <path d="M24 16L32 20V28L24 32L16 28V20L24 16Z" fill="#0a0a0f" />
+              <!-- Text -->
+              <text
+                x="52"
+                y="28"
+                fill="url(#logoGrad)"
+                font-family="Inter"
+                font-weight="700"
+                font-size="18"
+              >
+                ОнлайнПро.РФ
+              </text>
+            </svg>
+            <div class="color-hex">Горизонтальный логотип</div>
+          </div>
+          <div class="logo-item">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path
+                d="M24 4L44 14V34L24 44L4 34V14L24 4Z"
+                fill="url(#logoGrad)"
+                opacity="0.2"
+              />
+              <path
+                d="M24 8L40 16V32L24 40L8 32V16L24 8Z"
+                fill="url(#logoGrad)"
+              />
+              <path d="M24 16L32 20V28L24 32L16 28V20L24 16Z" fill="#0a0a0f" />
+            </svg>
+            <div class="color-hex">Иконка</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Цвета -->
+      <h2>Цветовая палитра</h2>
+      <div class="section">
+        <h3>Основные</h3>
+        <div class="colors-grid" style="margin-bottom: 32px">
+          <div class="color-card">
+            <div class="color-swatch" style="background: #0a0a0f"></div>
+            <div class="color-name">Background</div>
+            <div class="color-hex">#0a0a0f</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #111118"></div>
+            <div class="color-name">Background Secondary</div>
+            <div class="color-hex">#111118</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #16161d"></div>
+            <div class="color-name">Card</div>
+            <div class="color-hex">#16161d</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #1e1e28"></div>
+            <div class="color-name">Card Hover</div>
+            <div class="color-hex">#1e1e28</div>
+          </div>
+        </div>
+
+        <h3>Бренд</h3>
+        <div class="colors-grid" style="margin-bottom: 32px">
+          <div class="color-card">
+            <div
+              class="color-swatch"
+              style="background: linear-gradient(135deg, #a855f7, #22d3ee)"
+            ></div>
+            <div class="color-name">Gradient Brand</div>
+            <div class="color-hex">#a855f7 → #22d3ee</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #a855f7"></div>
+            <div class="color-name">Purple</div>
+            <div class="color-hex">#a855f7</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #22d3ee"></div>
+            <div class="color-name">Cyan</div>
+            <div class="color-hex">#22d3ee</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #c084fc"></div>
+            <div class="color-name">Purple Light</div>
+            <div class="color-hex">#c084fc</div>
+          </div>
+        </div>
+
+        <h3>Текст</h3>
+        <div class="colors-grid">
+          <div class="color-card">
+            <div class="color-swatch" style="background: #ffffff"></div>
+            <div class="color-name">Text</div>
+            <div class="color-hex">#ffffff</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #a1a1aa"></div>
+            <div class="color-name">Text Muted</div>
+            <div class="color-hex">#a1a1aa</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #71717a"></div>
+            <div class="color-name">Text Dim</div>
+            <div class="color-hex">#71717a</div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background: #27272a"></div>
+            <div class="color-name">Border</div>
+            <div class="color-hex">#27272a</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Анимированные иконки -->
+      <h2>Анимированные иконки</h2>
+      <div class="section">
+        <div class="icons-grid">
+          <!-- Иконка очереди -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <rect
+                  x="8"
+                  y="8"
+                  width="48"
+                  height="48"
+                  rx="8"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <path
+                  d="M24 20L40 20M24 32L40 32M24 44L36 44"
+                  stroke="#a855f7"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <circle
+                  cx="48"
+                  cy="44"
+                  r="8"
+                  fill="#22d3ee"
+                  class="icon-animated-float"
+                />
+                <text
+                  x="45"
+                  y="48"
+                  fill="#0a0a0f"
+                  font-size="10"
+                  font-weight="bold"
+                >
+                  +
+                </text>
+              </svg>
+            </div>
+            <div class="icon-name">IconQueue — Очередь</div>
+          </div>
+
+          <!-- Иконка аналитики -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-float">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <rect
+                  x="8"
+                  y="8"
+                  width="48"
+                  height="48"
+                  rx="8"
+                  fill="rgba(34, 211, 238, 0.2)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <path
+                  d="M16 48V32L24 28L32 36L40 24L48 20"
+                  stroke="#22d3ee"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle
+                  cx="48"
+                  cy="20"
+                  r="4"
+                  fill="#22d3ee"
+                  class="icon-animated-pulse"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconAnalytics — Аналитика</div>
+          </div>
+
+          <!-- Иконка щита -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M32 8L12 16V32C12 44 20 52 32 56C44 52 52 44 52 32V16L32 8Z"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <path
+                  d="M24 32L30 38L42 26"
+                  stroke="#22d3ee"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconShield — Безопасность</div>
+          </div>
+
+          <!-- Иконка ракеты -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-float">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M32 8C32 8 44 16 44 32C44 40 40 48 32 56C24 48 20 40 20 32C20 16 32 8 32 8Z"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <circle cx="32" cy="28" r="6" fill="#22d3ee" />
+                <path
+                  d="M24 48L20 56L28 52L32 60L36 52L44 56L40 48"
+                  fill="#22d3ee"
+                  class="icon-animated-pulse"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconRocket — Старт</div>
+          </div>
+
+          <!-- Иконка QR-кода -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <rect
+                  x="8"
+                  y="8"
+                  width="20"
+                  height="20"
+                  rx="4"
+                  fill="rgba(34, 211, 238, 0.3)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <rect
+                  x="36"
+                  y="8"
+                  width="20"
+                  height="20"
+                  rx="4"
+                  fill="rgba(34, 211, 238, 0.3)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <rect
+                  x="8"
+                  y="36"
+                  width="20"
+                  height="20"
+                  rx="4"
+                  fill="rgba(34, 211, 238, 0.3)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <rect
+                  x="36"
+                  y="36"
+                  width="8"
+                  height="8"
+                  rx="2"
+                  fill="#a855f7"
+                />
+                <rect
+                  x="48"
+                  y="36"
+                  width="8"
+                  height="8"
+                  rx="2"
+                  fill="#a855f7"
+                />
+                <rect
+                  x="36"
+                  y="48"
+                  width="8"
+                  height="8"
+                  rx="2"
+                  fill="#a855f7"
+                />
+                <rect
+                  x="48"
+                  y="48"
+                  width="8"
+                  height="8"
+                  rx="2"
+                  fill="#a855f7"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconQR — QR-код</div>
+          </div>
+
+          <!-- Иконка чата -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M8 16C8 12 12 8 16 8H48C52 8 56 12 56 16V40C56 44 52 48 48 48H20L8 56V16Z"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <circle cx="20" cy="24" r="2" fill="#22d3ee" />
+                <circle cx="28" cy="24" r="2" fill="#22d3ee" />
+                <circle cx="36" cy="24" r="2" fill="#22d3ee" />
+                <path
+                  d="M16 36H40"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconChat — Чат</div>
+          </div>
+
+          <!-- Иконка часов -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-float">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="24"
+                  fill="rgba(34, 211, 238, 0.2)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <path
+                  d="M32 16V32L42 38"
+                  stroke="#22d3ee"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="32" cy="32" r="3" fill="#a855f7" />
+              </svg>
+            </div>
+            <div class="icon-name">IconClock — Время</div>
+          </div>
+
+          <!-- Иконка денег -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="24"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <text
+                  x="24"
+                  y="40"
+                  fill="#22d3ee"
+                  font-size="24"
+                  font-weight="bold"
+                >
+                  ₽
+                </text>
+              </svg>
+            </div>
+            <div class="icon-name">IconMoney — Деньги</div>
+          </div>
+
+          <!-- Иконка цели -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-float">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="24"
+                  fill="rgba(168, 85, 247, 0.1)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="16"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="8"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <circle cx="32" cy="32" r="3" fill="#22d3ee" />
+                <path
+                  d="M48 16L56 8"
+                  stroke="#22d3ee"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconTarget — Цель</div>
+          </div>
+
+          <!-- Иконка идеи -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M32 8C20 8 12 16 12 28C12 36 16 42 22 46V52C22 54 24 56 26 56H38C40 56 42 54 42 52V46C48 42 52 36 52 28C52 16 44 8 32 8Z"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                />
+                <path d="M26 56V60H38V56" stroke="#a855f7" stroke-width="2" />
+                <path
+                  d="M24 28H40"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M26 34H38"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M28 40H36"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconIdea — Идея</div>
+          </div>
+
+          <!-- Иконка звёзды -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-pulse">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M32 8L38 24H56L42 34L48 52L32 42L16 52L22 34L8 24H26L32 8Z"
+                  fill="rgba(168, 85, 247, 0.2)"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M32 16L36 26H48L38 32L42 44L32 36L22 44L26 32L16 26H28L32 16Z"
+                  fill="#22d3ee"
+                  class="icon-animated-float"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconStar — Звезда</div>
+          </div>
+
+          <!-- Иконка чеклиста -->
+          <div class="icon-card">
+            <div class="icon-wrapper icon-animated-float">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <rect
+                  x="8"
+                  y="8"
+                  width="48"
+                  height="52"
+                  rx="4"
+                  fill="rgba(34, 211, 238, 0.2)"
+                  stroke="#22d3ee"
+                  stroke-width="2"
+                />
+                <rect
+                  x="16"
+                  y="20"
+                  width="32"
+                  height="4"
+                  rx="2"
+                  fill="#22d3ee"
+                />
+                <rect
+                  x="16"
+                  y="30"
+                  width="24"
+                  height="4"
+                  rx="2"
+                  fill="#22d3ee"
+                />
+                <rect
+                  x="16"
+                  y="40"
+                  width="28"
+                  height="4"
+                  rx="2"
+                  fill="#22d3ee"
+                />
+                <path
+                  d="M22 24L26 28L34 20"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="icon-name">IconChecklist — Чеклист</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кнопки -->
+      <h2>Кнопки</h2>
+      <div class="section">
+        <div class="buttons-grid">
+          <button class="btn btn-primary">Попробовать бесплатно</button>
+          <button class="btn btn-outline">Как это работает</button>
+          <button
+            class="btn btn-primary"
+            style="padding: 16px 32px; font-size: 16px"
+          >
+            Оставить заявку
+          </button>
+          <button
+            class="btn btn-outline"
+            style="padding: 16px 32px; font-size: 16px"
+          >
+            Задать вопрос
+          </button>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <h2>Badges</h2>
+      <div class="section">
+        <div class="badges-grid">
+          <span class="badge badge-purple">Готовое решение</span>
+          <span class="badge badge-cyan">Облако без серверов</span>
+          <span class="badge badge-success">Активен</span>
+          <span class="badge badge-warning">В работе</span>
+          <span class="badge badge-info">Новый</span>
+        </div>
+      </div>
+
+      <!-- Теги статусов -->
+      <h2>Теги статусов</h2>
+      <div class="section">
+        <div class="tags-grid">
+          <span class="tag">Все</span>
+          <span class="tag tag-green">В продаже</span>
+          <span class="tag tag-yellow">Мало</span>
+          <span class="tag tag-blue">Нет в наличии</span>
+        </div>
+      </div>
+
+      <!-- Карточки -->
+      <h2>Карточки</h2>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon icon-animated-pulse">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect
+                x="4"
+                y="4"
+                width="40"
+                height="40"
+                rx="8"
+                fill="rgba(168, 85, 247, 0.2)"
+                stroke="#a855f7"
+                stroke-width="2"
+              />
+              <path
+                d="M16 24L22 30L34 18"
+                stroke="#22d3ee"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Быстрый старт</h3>
+          <p style="font-size: 14px">
+            Развёртывание за один день. Запуститесь сегодня.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-animated-float">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle
+                cx="24"
+                cy="24"
+                r="18"
+                fill="rgba(34, 211, 238, 0.2)"
+                stroke="#22d3ee"
+                stroke-width="2"
+              />
+              <path
+                d="M24 12V24L32 28"
+                stroke="#22d3ee"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <h3>Меньше ожидания</h3>
+          <p style="font-size: 14px">Сокращение времени ожидания на 25–35%.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-animated-pulse">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path
+                d="M24 6L10 12V24C10 32 16 40 24 44C32 40 38 32 38 24V12L24 6Z"
+                fill="rgba(168, 85, 247, 0.2)"
+                stroke="#a855f7"
+                stroke-width="2"
+              />
+              <path
+                d="M18 24L22 28L30 20"
+                stroke="#22d3ee"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Безопасность данных</h3>
+          <p style="font-size: 14px">
+            JWT-аутентификация и защищённые заголовки.
+          </p>
+        </div>
+      </div>
+
+      <!-- Таблица -->
+      <h2>Таблица</h2>
+      <div class="section">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Имя</th>
+              <th>Телефон</th>
+              <th>Услуга</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Сидорова М.</td>
+              <td>+7 900 111-22-33</td>
+              <td>Стрижка</td>
+              <td><span class="tag tag-green">Активен</span></td>
+            </tr>
+            <tr>
+              <td>Петров И.</td>
+              <td>+7 912 345-67-89</td>
+              <td>Консультация</td>
+              <td><span class="tag tag-green">Активен</span></td>
+            </tr>
+            <tr>
+              <td>Иванова А.</td>
+              <td>+7 903 456-78-90</td>
+              <td>Маникюр</td>
+              <td><span class="tag tag-blue">Новый</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
