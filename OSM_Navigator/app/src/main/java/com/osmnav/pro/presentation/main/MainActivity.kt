@@ -396,7 +396,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Обновляем маркер на карте
                 runOnUiThread {
-                    myLocationOverlay?.myLocation = GeoPoint(location.latitude, location.longitude)
+                    myLocationOverlay?.setMyLocation(GeoPoint(location.latitude, location.longitude))
                     binding.mapView.invalidate()
                 }
 

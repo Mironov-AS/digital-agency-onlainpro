@@ -321,7 +321,7 @@ class TBoxGpsService(
     ): ByteArray {
         val length = data.size + 4
         val buffer = ByteBuffer.allocate(length + 4).order(ByteOrder.LITTLE_ENDIAN)
-        buffer.putInt(0xAAAA0000 or (length and 0xFFFF))
+        buffer.putInt(0xAAAA0000.toInt() or (length and 0xFFFF))
         buffer.put(type.toByte())
         buffer.put((data.size and 0xFF).toByte())
         buffer.put((data.size shr 8 and 0xFF).toByte())

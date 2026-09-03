@@ -63,7 +63,7 @@ class SatelliteInfoService(
             val parts =
                 byConst.map { (name, list) ->
                     val used = list.count { it.usedInFix }
-                    val avgCno = if (list.isNotEmpty()) list.map { it.cn0DbHz }.average() else 0.0
+                    val avgCno = if (list.isNotEmpty()) list.map { it.snr }.average() else 0.0
                     "$name: ${list.size}($used) avg=${String.format("%.1f", avgCno)}dB"
                 }
             return "Всего: $totalSatellites, в фиксе: $usedInFix, acc=${String.format("%.1f", accuracy)}m | ${parts.joinToString(" | ")}"
@@ -187,7 +187,7 @@ class SatelliteInfoService(
                     constellation = constellation.first,
                     constellationName = constellation.second,
                     usedInFix = used,
-                    snr = satellite.signalStrength.toFloat(),
+                    snr = satellite.getSnr(),
                     elevation = satellite.elevation,
                     azimuth = satellite.azimuth,
                 ),
