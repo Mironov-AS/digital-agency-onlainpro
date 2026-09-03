@@ -21,6 +21,7 @@ import kotlinx.coroutines.*
 class FusedLocationProvider(
     private val context: Context,
     private val onLocationUpdate: (Location) -> Unit,
+    private val tBoxTelemetryService: TBoxTelemetryService? = null,
 ) {
     companion object {
         private const val TAG = "FusedLocationProvider"
@@ -103,24 +104,31 @@ class FusedLocationProvider(
      */
     private fun startTBoxGps() {
         tBoxGpsService =
-            TBoxGpsService(port = 8630) { lat, lon, speed, heading ->
-                val location =
-                    Location("tbox").apply {
-                        latitude = lat
-                        longitude = lon
-                        this.speed = speed / 3.6f // km/h to m/s
-                        this.bearing = heading
-                        accuracy = 10f // T-Box обычно достаточно точный
-                        time = System.currentTimeMillis()
-                        provider = "tbox"
-                    }
+            TBoxGpsService(
+                port = 8630,
+                onLocationUpdate = { lat, lon, speed, heading ->
+                    val location =
+                        Location("tbox").apply {
+                            latitude = lat
+                            longitude = lon
+                            this.speed = speed / 3.6f // km/h to m/s
+                            this.bearing = heading
+                            accuracy = 10f // T-Box обычно достаточно точный
+                            time = System.currentTimeMillis()
+                            provider = "tbox"
+                        }
 
-                lastTBoxLocation = location
-                lastTBoxUpdate = System.currentTimeMillis()
+                    lastTBoxLocation = location
+                    lastTBoxUpdate = System.currentTimeMillis()
 
-                LogUploader.d(TAG, "T-Box location: $lat, $lon, speed=${speed}km/h")
-                emitBestLocation()
-            }
+                    LogUploader.d(TAG, "T-Box location: $lat, $lon, speed=${speed}km/h")
+                    emitBestLocation()
+                },
+                onTelemetryUpdate = { data ->
+                    // Передаём данные телематики
+                    tBoxTelemetryService?.processData(data)
+                },
+            )
 
         tBoxGpsService?.startServer()
         Log.i(TAG, "T-Box GPS server started on port 8630")

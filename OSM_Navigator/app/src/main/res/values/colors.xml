@@ -40,4 +40,7 @@
     <!-- Charging station -->
     <color name="charging_green">#4CAF50</color>
     <color name="charging_active_bg">#388E3C</color>
+    
+    <!-- Card background -->
+    <color name="card_background">#E8F5E9</color>
 </resources>

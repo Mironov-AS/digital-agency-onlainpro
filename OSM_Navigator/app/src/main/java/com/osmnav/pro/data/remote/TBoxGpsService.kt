@@ -17,6 +17,7 @@ import java.nio.ByteOrder
 class TBoxGpsService(
     private val port: Int = 8630,
     private val onLocationUpdate: (latitude: Double, longitude: Double, speed: Float, heading: Float) -> Unit,
+    private val onTelemetryUpdate: ((ByteArray) -> Unit)? = null,
 ) {
     companion object {
         private const val TAG = "TBoxGpsService"
@@ -121,7 +122,10 @@ class TBoxGpsService(
                 while (isRunning && socket.isConnected) {
                     val bytesRead = input.read(buffer)
                     if (bytesRead > 0) {
-                        parseFrame(buffer.copyOf(bytesRead), output)
+                        val data = buffer.copyOf(bytesRead)
+                        parseFrame(data, output)
+                        // Передаём данные телематики
+                        onTelemetryUpdate?.invoke(data)
                     }
                     delay(100)
                 }

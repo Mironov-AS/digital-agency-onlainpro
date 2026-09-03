@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.osmnav.pro.R
 import com.osmnav.pro.data.remote.FusedLocationProvider
 import com.osmnav.pro.data.remote.LogUploader
+import com.osmnav.pro.data.remote.TBoxTelemetryService
 import com.osmnav.pro.data.repository.ChargingStationRepository
 import com.osmnav.pro.databinding.ActivityMainBinding
 import com.osmnav.pro.domain.model.ChargingStation
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private var myLocationOverlay: MyLocationNewOverlay? = null
     private var fusedLocationProvider: FusedLocationProvider? = null
+    private var tBoxTelemetryService: TBoxTelemetryService? = null
     private var destinationMarker: Marker? = null
     private val chargingStationMarkers = mutableListOf<Marker>()
     private var showChargingStations = false
@@ -114,6 +116,77 @@ class MainActivity : AppCompatActivity() {
 
         // Запрос разрешений
         requestLocationPermission()
+
+        // Инициализация телематики Т-Бокс
+        setupTelemetry()
+    }
+
+    private fun setupTelemetry() {
+        tBoxTelemetryService = TBoxTelemetryService()
+
+        // Наблюдаем за обновлениями телематики
+        lifecycleScope.launch {
+            tBoxTelemetryService?.telemetryState?.collect { telemetry ->
+                updateTelemetryUI(telemetry)
+            }
+        }
+
+        LogUploader.i(TAG, "Telemetry service initialized")
+    }
+
+    private fun updateTelemetryUI(telemetry: TBoxTelemetryService.VehicleTelemetry) {
+        // Обновляем SOC
+        binding.tvBatterySoc.text = "${telemetry.stateOfCharge}%"
+
+        // Цвет в зависимости от уровня заряда
+        val socColor =
+            when {
+                telemetry.stateOfCharge <= 20 -> ContextCompat.getColor(this, R.color.error)
+                telemetry.stateOfCharge <= 50 -> ContextCompat.getColor(this, R.color.warning)
+                else -> ContextCompat.getColor(this, R.color.charging_green)
+            }
+        binding.tvBatterySoc.setTextColor(socColor)
+
+        // Скорость
+        binding.tvSpeed.text = "${telemetry.speed} км/ч"
+
+        // Статус дверей
+        val doorText =
+            when (telemetry.doorStatus) {
+                TBoxTelemetryService.DoorStatus.ALL_CLOSED -> "Закрыто"
+                TBoxTelemetryService.DoorStatus.ANY_OPEN -> "Открыты"
+                TBoxTelemetryService.DoorStatus.DRIVER_OPEN -> "Водительская"
+                TBoxTelemetryService.DoorStatus.PASSENGER_OPEN -> "Пассажирская"
+                TBoxTelemetryService.DoorStatus.TRUNK_OPEN -> "Багажник"
+                else -> "Открыто"
+            }
+        binding.tvDoorStatus.text = doorText
+
+        // Статус зарядки
+        if (telemetry.chargingStatus != TBoxTelemetryService.ChargingStatus.NONE) {
+            binding.layoutCharging.visibility = View.VISIBLE
+            binding.tvChargingStatus.text =
+                when (telemetry.chargingStatus) {
+                    TBoxTelemetryService.ChargingStatus.CHARGING -> "Зарядка 🔌"
+                    TBoxTelemetryService.ChargingStatus.FAST_CHARGING -> "Быстрая ⚡"
+                    TBoxTelemetryService.ChargingStatus.COMPLETED -> "Завершено ✓"
+                    else -> "Зарядка"
+                }
+        } else {
+            binding.layoutCharging.visibility = View.GONE
+        }
+
+        // Индикатор статуса подключения
+        if (telemetry.isConnected) {
+            binding.ivTelemetryStatus.setImageResource(android.R.drawable.presence_online)
+        } else {
+            binding.ivTelemetryStatus.setImageResource(android.R.drawable.presence_invisible)
+        }
+
+        // Логируем телематику каждые 30 секунд
+        if (System.currentTimeMillis() - telemetry.lastUpdate < 31000) {
+            LogUploader.d(TAG, "Telemetry: ${tBoxTelemetryService?.getTelemetrySummary()}")
+        }
     }
 
     private fun setupUI() {
@@ -378,28 +451,32 @@ class MainActivity : AppCompatActivity() {
 
         // 1. Запускаем объединённый провайдер геолокации (Android GPS + T-Box GPS)
         fusedLocationProvider =
-            FusedLocationProvider(this) { location ->
-                val appLocation =
-                    Location(
-                        latitude = location.latitude,
-                        longitude = location.longitude,
+            FusedLocationProvider(
+                context = this,
+                onLocationUpdate = { location ->
+                    val appLocation =
+                        Location(
+                            latitude = location.latitude,
+                            longitude = location.longitude,
+                        )
+
+                    // Логируем источник
+                    LogUploader.d(
+                        TAG,
+                        "Location update from ${fusedLocationProvider?.getBestSource() ?: "unknown"}: ${location.latitude}, ${location.longitude}",
                     )
 
-                // Логируем источник
-                LogUploader.d(
-                    TAG,
-                    "Location update from ${fusedLocationProvider?.getBestSource() ?: "unknown"}: ${location.latitude}, ${location.longitude}",
-                )
+                    // Обновляем ViewModel
+                    viewModel.setCurrentLocation(appLocation)
 
-                // Обновляем ViewModel
-                viewModel.setCurrentLocation(appLocation)
+                    // Обновляем маркер на карте через enableMyLocation
+                    // MyLocationNewOverlay сам обновляется при enableMyLocation()
 
-                // Обновляем маркер на карте через enableMyLocation
-                // MyLocationNewOverlay сам обновляется при enableMyLocation()
-
-                // Обновляем ближайшую зарядную станцию
-                checkShowNearestCharging()
-            }
+                    // Обновляем ближайшую зарядную станцию
+                    checkShowNearestCharging()
+                },
+                tBoxTelemetryService = tBoxTelemetryService,
+            )
         fusedLocationProvider?.start()
 
         // 2. OSMDroid overlay для визуализации
@@ -467,6 +544,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationProvider?.stop()
+        tBoxTelemetryService?.reset()
     }
 
     /**
