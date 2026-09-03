@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             setMultiTouchControls(true)
 
             // Скрываем встроенные кнопки зума - используем сенсорный ввод
-            setBuiltInZoomControls(false)
+            setZoomControlsEnabled(false)
 
             // Начальная позиция - будет обновлена при получении GPS
             controller.setZoom(15.0)
@@ -361,8 +361,8 @@ class MainActivity : AppCompatActivity() {
             binding.mapView.controller.setZoom(16.0)
         } else {
             // Если местоположение ещё не получено
-            myLocationOverlay?.myLocation?.let { location ->
-                binding.mapView.controller.animateTo(location)
+            myLocationOverlay?.myLocation?.let { myLoc ->
+                binding.mapView.controller.animateTo(myLoc)
                 binding.mapView.controller.setZoom(16.0)
             } ?: run {
                 Toast.makeText(this, "Ожидание GPS...", Toast.LENGTH_SHORT).show()

@@ -183,6 +183,7 @@ class NaviAIDLService : Service() {
     /**
      * Обработка broadcast обновлений навигации
      */
+    @Suppress("UNUSED_PARAMETER")
     private fun handleNaviUpdate(intent: Intent) {
         // HU может отправлять обновления статуса
         Log.d(TAG, "Navigation update from HU")
